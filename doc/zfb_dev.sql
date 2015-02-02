@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost-mysql
+Source Server         : localhost
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-02 18:20:49
+Date: 2015-02-03 00:25:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,11 +32,12 @@ CREATE TABLE `accept_merchant` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货单位信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='收货单位信息表';
 
 -- ----------------------------
 -- Records of accept_merchant
 -- ----------------------------
+INSERT INTO `accept_merchant` VALUES ('1', '001', '成都', '苏宁电器', '草泥马', '15633221236', '49846491879881', '招商银行', '荆轲刺青王', '2015-02-02 23:15:29', 'VALID');
 
 -- ----------------------------
 -- Table structure for input_info
@@ -47,7 +48,7 @@ CREATE TABLE `input_info` (
   `code` varchar(50) DEFAULT NULL COMMENT '入库单号',
   `project_name` varchar(50) DEFAULT NULL COMMENT '项目工程名',
   `purchase_type_code` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
-  `purchase_type_name` varchar(20) DEFAULT NULL COMMENT '供应商名称',
+  `purchase_type_name` varchar(20) DEFAULT NULL COMMENT '采购类别名称',
   `contract_num` varchar(50) DEFAULT NULL COMMENT '合同编号',
   `provide_merchant_code` varchar(50) DEFAULT NULL COMMENT '供应商编码',
   `provide_merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
@@ -66,13 +67,17 @@ CREATE TABLE `input_info` (
   `input_time` datetime DEFAULT NULL COMMENT '入库日期',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
   `send_person_code` varchar(50) DEFAULT NULL COMMENT '发货人编码',
-  `accept_pserson_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `accept_person_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `standard_code` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
+  `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
 
 -- ----------------------------
 -- Records of input_info
 -- ----------------------------
+INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1', '1000', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null);
+INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2', '2000', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级');
 
 -- ----------------------------
 -- Table structure for loan
@@ -128,11 +133,13 @@ CREATE TABLE `material` (
   `create_time` datetime DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='材料信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='材料信息表';
 
 -- ----------------------------
 -- Records of material
 -- ----------------------------
+INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000', '100', '800', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
+INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000', '100', '4000', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
 
 -- ----------------------------
 -- Table structure for material_standard
@@ -181,7 +188,7 @@ CREATE TABLE `output_info` (
   `is_clear` tinyint(4) DEFAULT '0' COMMENT '是否结清（0-未结清，1-已结清）',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
   `send_person_code` varchar(50) DEFAULT NULL COMMENT '发货人编码',
-  `accept_pserson_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `accept_person_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出库信息表';
 
@@ -203,11 +210,15 @@ CREATE TABLE `person` (
   `status` varchar(20) DEFAULT NULL COMMENT '类型',
   `code` varchar(50) DEFAULT NULL COMMENT '编码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
+INSERT INTO `person` VALUES ('1', '金三胖', '13566998547', '001', 'SEND', '2015-02-02 22:18:37', 'VALID', '001');
+INSERT INTO `person` VALUES ('2', '奥巴马', '15622113657', '001', 'SEND', '2015-02-02 22:19:04', 'VALID', '002');
+INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '002', 'ACCEPT', '2015-02-02 22:19:53', 'VALID', '003');
+INSERT INTO `person` VALUES ('4', '王尼玛', '15788662365', '001', 'ACCEPT', '2015-02-02 23:02:13', 'VALID', '004');
 
 -- ----------------------------
 -- Table structure for project
@@ -291,11 +302,13 @@ CREATE TABLE `provide_merchant` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='供货单位信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='供货单位信息表';
 
 -- ----------------------------
 -- Records of provide_merchant
 -- ----------------------------
+INSERT INTO `provide_merchant` VALUES ('1', '001', '成都1', '国美电器1', '张三1', '13088889999', '2222222233333336', '花旗英航1', '没什么可说的1', '2015-02-02 21:59:24', 'VALID');
+INSERT INTO `provide_merchant` VALUES ('2', '002', '成都2', '国美电器2', '张三2', '13088889999', '2222222233333336', '花旗英航2', '没什么可说的2', '2015-02-02 22:00:54', 'VALID');
 
 -- ----------------------------
 -- Table structure for purchase_type
