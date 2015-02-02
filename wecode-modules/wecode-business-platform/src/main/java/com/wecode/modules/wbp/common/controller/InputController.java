@@ -1,18 +1,25 @@
 package com.wecode.modules.wbp.common.controller;
 
+import com.jfinal.aop.Before;
 import com.jfinal.ext.route.ControllerBind;
+import com.jfinal.kit.JsonKit;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wecode.framework.json.JsonResult;
-import com.wecode.modules.wbp.common.model.Material;
-import com.wecode.modules.wbp.common.model.Person;
-import com.wecode.modules.wbp.common.model.ProvideMerchant;
+import com.wecode.modules.wbp.common.model.*;
+import com.wecode.modules.wbp.project.reserve.model.ProjectReserve;
+import jdk.internal.util.xml.impl.Input;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zkdu on 2015/2/2.
@@ -24,20 +31,107 @@ public class InputController extends BaseController{
         renderFreeMarker("input.ftl");
     }
 
+    public void list(){
+        Page<InputInfo> page = InputInfo.getPage(getParaToInt("page", 1),getParaToInt("rows", 10));
+        setAttr("infoList",page.getList());
+        setAttr("page",page);
+        Map root = new HashMap();
+        root.put("total", page.getTotalPage());
+        root.put("page", page.getPageNumber());
+        root.put("records", page.getTotalRow());
+        root.put("rows", page.getList());
+        renderJson(JsonKit.toJson(root));
+    }
+
     public void add(){
         List<ProvideMerchant> merchants = ProvideMerchant.getList();
         List<Material> materials = Material.getList();
+        List<AcceptMerchant> accepts = AcceptMerchant.getList();
         setAttr("providers",merchants);
         setAttr("materials",materials);
+        setAttr("accepts",accepts);
         renderFreeMarker("input_add.ftl");
+    }
+
+    @Before(Tx.class)
+    public void save(){
+        String code = currentTimeMillis();
+        String project_name = getPara("project_name");
+        String contract_num = getPara("contract_num");
+        String provide_merchant_code = getPara("provide_merchant_code");
+        String provide_merchant_name = ProvideMerchant.getByCode(provide_merchant_code).get("name");
+        String warehouse = getPara("warehouse");
+        String material_code = getPara("material_code");
+        Material material = Material.getByCode(material_code);
+        String material_name = material.get("name");
+        String purchase_type_code = material.get("type_code");
+        String purchase_type_name = material.get("type_name");
+        String standard_code = material.get("standard_code");
+        String standard_name = material.get("standard_name");
+        BigDecimal count = getBigDecimal("count");
+        String transport_person = getPara("transport_person");
+        String car_num = getPara("car_num");
+        String weigh_person = getPara("weigh_person");
+        String send_person_code = getPara("send_person_code");
+        Person person = Person.getByCode(send_person_code);
+        String send_person = person.get("name");
+        String accept_person_code = getPara("accept_person_code");
+        person = Person.getByCode(accept_person_code);
+        String accept_person = person.get("name");
+        String remark = getPara("remark");
+        InputInfo info = new InputInfo();
+        info.set("code",code);
+        info.set("project_name",project_name);
+        info.set("contract_num",contract_num);
+        info.set("provide_merchant_code",provide_merchant_code);
+        info.set("provide_merchant_name",provide_merchant_name);
+        info.set("warehouse",warehouse);
+        info.set("material_code",material_code);
+        info.set("material_name",material_name);
+        info.set("purchase_type_code",purchase_type_code);
+        info.set("purchase_type_name",purchase_type_name);
+        info.set("standard_name",standard_name);
+        info.set("standard_code",standard_code);
+        info.set("count",count);
+        info.set("money",count.multiply(material.getBigDecimal("price")));
+        info.set("transport_person",transport_person);
+        info.set("car_num",car_num);
+        info.set("weigh_person",weigh_person);
+        info.set("send_person_code",send_person_code);
+        info.set("send_person",send_person);
+        info.set("accept_person_code",accept_person_code);
+        info.set("accept_person",accept_person);
+        info.set("input_time",new Date());
+        info.set("remark",remark);
+        info.set("create_time",new Date());
+        info.set("status",Status.VALID.name());
+        info.save();
+        redirect("/input/index");
     }
 
     public void getSendPersons(){
         String merchantCode = getPara("merchantCode");
         List<Person> persons = Person.getPersons(merchantCode, Person.PersonType.SEND);
-        JsonResult json = JsonResult.success();
-        json.data("senders",persons);
-        renderJson(json.toJson());
+        Map root = new HashMap();
+        root.put("data", persons);
+        renderJson(JsonKit.toJson(root));
+    }
+
+    public void getAcceptPersons(){
+        String merchantCode = getPara("merchantCode");
+        List<Person> persons = Person.getPersons(merchantCode, Person.PersonType.ACCEPT);
+        Map root = new HashMap();
+        root.put("data", persons);
+        renderJson(JsonKit.toJson(root));
+    }
+
+    public void getUnit(){
+        String code = getPara("material");
+        Material material = Material.getByCode(code);
+        if (material != null) {
+            renderJson(material.get("unit"));
+        }
+
     }
 
     public void importExcel(){

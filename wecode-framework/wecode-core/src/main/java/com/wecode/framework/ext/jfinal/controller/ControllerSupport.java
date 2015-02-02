@@ -1,5 +1,6 @@
 package com.wecode.framework.ext.jfinal.controller;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
@@ -16,7 +17,7 @@ import com.jfinal.core.Controller;
 import com.wecode.framework.json.JsonResult;
 
 /**
- * @author yangfan 2014年6月2日 下午4:13:33
+ * @author heaven.zyc 2014年6月2日 下午4:13:33
  */
 public class ControllerSupport extends Controller {
 	
@@ -123,5 +124,16 @@ public class ControllerSupport extends Controller {
 			return new Date(v);
 		}
 		return null;
+	}
+
+	public BigDecimal getBigDecimal(String para){
+		String value = super.getPara(para);
+		try {
+			BigDecimal big = new BigDecimal(value);
+			return big;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return BigDecimal.ZERO;
 	}
 }

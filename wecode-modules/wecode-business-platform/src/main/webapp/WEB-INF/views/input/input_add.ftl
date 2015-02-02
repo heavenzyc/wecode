@@ -7,25 +7,30 @@
             <!-- PAGE CONTENT BEGINS -->
 
             <form id="add_house_type_form" class="form-horizontal" houseType="form" action="/input/save" method="post">
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目工程名</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" id="project_name" class="col-xs-10 col-sm-5" name="project_name" maxlength="20"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">供货单位</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="form-field-select-projects" data-placeholder="请选择..." name="provide_merchant_code">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="provide_merchant_code" onchange="getSender()">
+                            <#list providers as provide>
+                                <option value="${provide.code}">${provide.name}</option>
+                            </#list>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">物品名称</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="form-field-select-projects" data-placeholder="请选择..." name="material_code">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                        <select class="width-40 chosen-select" id="material" data-placeholder="请选择..." name="material_code" onchange="getUnit()">
+                            <#list materials as mat>
+                                <option value="${mat.code}">${mat.name}</option>
+                            </#list>
                         </select>
                     </div>
                 </div>
@@ -33,39 +38,26 @@
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">数量</label>
                     <div class="col-sm-10">
                         <input type="text" id="count" class="col-xs-10 col-sm-5" name="count" maxlength="20" datatype="s2-20" nullmsg="请输入数量"/>
+                        <label id="unit"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">发货人</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="form-field-select-projects" data-placeholder="请选择..." name="send_person_code">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
+                    <div class="col-sm-10" id="senderDiv"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货单位</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="form-field-select-projects" data-placeholder="请选择..." name="accept_merchant_code">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                        <select class="width-40 chosen-select" id="acceptMerchant" data-placeholder="请选择..." name="accept_merchant_code" onchange="getAccepter()">
+                            <#list accepts as ac>
+                                <option value="${ac.code}">${ac.name}</option>
+                            </#list>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货人</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="form-field-select-projects" data-placeholder="请选择..." name="accept_pserson_code">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
+                    <div class="col-sm-10" id="accepterDiv">
                     </div>
                 </div>
 
@@ -129,7 +121,7 @@
         $(".chosen-select").chosen();
 
         // 验证插件
-        $("#add_house_type_form").validity(function(){
+        /*$("#add_house_type_form").validity(function(){
             var content = editor.getContent();
             $("#description").val(content);
         //    $("#list_pic").require("请上传列表图");
@@ -140,27 +132,64 @@
             $("#structure").require("请输入户型解析");
             $("#price").require("请输入价格");
         });
-
-        //**
-        $("#house_type_name").on("focusout",function(){
-            var _val = $(this).val();
-            $(".picture-info .title").text(_val)
-        })
-        $("#area").on("focusout",function(){
-            var _val = $(this).val();
-            $(".Js_area1").text(_val)
-        })
-        $("#gift_area").on("focusout",function(){
-            var _val = $(this).val();
-            $(".Js_area2").text(_val)
-        })
-        $("#price").on("focusout",function(){
-            var _val = $(this).val();
-            $(".Js_price").text(_val)
-        })
-
-
+*/
+        getSender();
+        getUnit();
+        getAccepter();
     })
+
+    function getSender(){
+        var code = $("#provideMerchant").val();
+        $.ajax({
+            url:'/input/getSendPersons',
+            type:'get',
+            data:{merchantCode:code},
+            success:function(json){
+                var data = json.data;
+                $("#senderDiv").empty();
+                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="send_person_code">'
+                for(var i=0; i<data.length; i++) {
+                    html += "<option value="+data[i].code+">"+data[i].name+"</option>";
+                }
+                html += "</select>"
+                $("#senderDiv").append(html);
+                $(".chosen-select").chosen();
+            }
+        });
+    }
+
+    function getAccepter(){
+        var code = $("#acceptMerchant").val();
+        $.ajax({
+            url:'/input/getAcceptPersons',
+            type:'get',
+            data:{merchantCode:code},
+            success:function(json){
+                var data = json.data;
+                $("#accepterDiv").empty();
+                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="accept_person_code">'
+                for(var i=0; i<data.length; i++) {
+                    html += "<option value="+data[i].code+">"+data[i].name+"</option>";
+                }
+                html += "</select>"
+                $("#accepterDiv").append(html);
+                $(".chosen-select").chosen();
+            }
+        });
+    }
+
+    function getUnit(){
+        var code = $("#material").val();
+        $.ajax({
+            url:'/input/getUnit',
+            type:'get',
+            data:{material:code},
+            success:function(json){
+                $("#unit").html("").html(json);
+            }
+        });
+    }
+
 </script>
 
 </@we.html>

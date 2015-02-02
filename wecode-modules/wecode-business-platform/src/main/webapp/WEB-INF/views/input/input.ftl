@@ -9,76 +9,16 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 title"> <center>入  库  单（带过磅单）</center></div>
-        <div class="col-xs-12" style="font-size: 18px">
-            <div class="col-xs-1">入库日期：</div>
-            <div class="col-xs-3">2015-01-29</div>
-            <div class="col-xs-1">入库单编号：</div>
-            <div class="col-xs-3">0000001</div>
-            <div class="col-xs-1">收货人：</div>
-            <div class="col-xs-3">张三</div>
-        </div>
-        <div class="col-xs-12" style="font-size: 18px">
-            <div class="col-xs-1">供应矿：</div>
-            <div class="col-xs-3">玉石山矿</div>
-            <div class="col-xs-1">入库数量：</div>
-            <div class="col-xs-3">10000</div>
-            <div class="col-xs-1">发货人：</div>
-            <div class="col-xs-3">张三</div>
-        </div>
+
         <div class="col-xs-12" >
             <div class="table-responsive">
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>物品编号</th>
-                        <th>物品名称</th>
-                        <th>类别</th>
-                        <th>规格</th>
-                        <th>单位</th>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>总额</th>
-                        <th>所入仓库</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>3,330</td>
-                        <td>Feb 12</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>合计</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>3,330</td>
-                        <td>Feb 12</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>备注</td>
-                        <td colspan="8">的所发生的发生的发生的发大水发违法</td>
-                    </tr>
-                    <tr>
-                        <td>司机车号：</td>
-                        <td colspan="3">川A 000001</td>
-                        <td>过磅人：</td>
-                        <td colspan="4">张三</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <table id="grid-table"></table>
+                <div id="grid-pager"></div>
+                <script type="text/javascript">
+                    var $path_base = "/";
+                    //this will be used in gritter alerts containing images
+                </script>
+            </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
 
@@ -86,6 +26,101 @@
 </@we.html>
 
 <script>
+    jQuery(function($){
+        var pager_selector = "#grid-pager";
+        var table = $("#grid-table");
+        table.jqGrid({
+            url : "/admin/project/reserve/list",
+            datatype : "json",
+            mtype : 'get',
+            height : 380,
+            caption:'入  库  单（带过磅单）',
+            rownumbers: true,
+            colModel :
+                    [
+                        {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
+                        {name : 'customer_name',label:'客户姓名',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'mobile',index : 'id',label:'手机号',width :10,editable : false},
+                        {name : 'reserve_time',index :'reserve_time',label:'看房时间', width : 10,editable : false,formatter:"date",formatoptions: {newformat:'Y-m-d'}},
+                        {name : 'consultant_name',index : 'consultant_name',label:'预约顾问',width : 10,editable : false},
+                        {name : 'status',index : 'status',label:'状态',width : 10,editable : false,formatter:function(value){
+                            if(value==0){ return '<span class="label label-success arrowed-in">待处理</span>';}
+                            else{
+                                return '<span class="label">已处理</span>';
+                            }
+                        }},
+                        {name : 'remark',index : 'remark',label:'备注',width : 300,fixed : true,sortable : false},
+                        {name : 'submit_time',index : 'submit_time',label:'提交时间',width : 200,fixed : true,sortable : false},
+                        {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                            if(rData.status == 0){
+                                return '<button class="btn no-border btn-minier btn-warning process" onclick="enterReserve('+value+')" >确认</button>';
+                            }else{
+                                return '<button disabled class="btn no-border btn-minier btn-warning process" onclick="enterReserve('+value+')" >确认</button>';
+                            }
+                        }}
+                    ],
+            viewrecords : true,
+            rowNum : 10,
+            rowList : [10, 20, 30],
+            pager : pager_selector,
+            altRows : true,
+            autowidth:true,
+            multiselect : false,
+            multiboxonly : false,
+            loadComplete : function(data) {
+                var table = this;
+                setTimeout(function() {
+                    //styleCheckbox(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            }
+        });
+
+    });
+
+    function updateActionIcons(table) {
+
+        var replacement = {
+            'ui-icon-pencil' : 'icon-pencil blue',
+            'ui-icon-trash' : 'icon-trash red',
+            'ui-icon-disk' : 'icon-ok green',
+            'ui-icon-cancel' : 'icon-remove red'
+        };
+        $(table).find('.ui-pg-div span.ui-icon').each(function() {
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            if ( $class in replacement)
+                icon.attr('class', 'ui-icon ' + replacement[$class]);
+        })
+    }
+
+    //replace icons with FontAwesome icons like above
+    function updatePagerIcons(table) {
+        var replacement = {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+            if ( $class in replacement)
+                icon.attr('class', 'ui-icon ' + replacement[$class]);
+        })
+    }
+
+    function enableTooltips(table) {
+        $('.navtable .ui-pg-button').tooltip({
+            container : 'body'
+        });
+        $(table).find('.ui-pg-div').tooltip({
+            container : 'body'
+        });
+    }
 
 
 

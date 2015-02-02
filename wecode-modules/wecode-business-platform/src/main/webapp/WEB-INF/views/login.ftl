@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="login">
-    <title>找房通微信营销平台</title>
+    <title>管理平台</title>
 	<link rel="stylesheet" href="/assets/css/style.css">
 	
 </head>

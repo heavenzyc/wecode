@@ -2,6 +2,7 @@ package com.wecode.modules.wbp.common.controller;
 
 import com.wecode.framework.ext.jfinal.controller.ControllerSupport;
 import com.wecode.framework.json.JsonResult;
+import com.wecode.modules.wbp.common.config.SysConfig;
 import com.wecode.modules.wbp.common.model.Project;
 
 /**
@@ -33,5 +34,8 @@ public class BaseController extends ControllerSupport{
 
     }
 
+    public String currentTimeMillis(){
+        return System.currentTimeMillis()+"";
+    }
 
 }
