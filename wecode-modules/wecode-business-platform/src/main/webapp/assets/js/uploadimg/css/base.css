@@ -1,0 +1,21 @@
+html,body{ word-break:break-all; word-wrap:break-word; color:#333; height: 100%; font-family: "Arial","sumsin";}
+html,body { font-size: 12px;}
+*{outline:none;}
+.clearfix::before, .clearfix::after {content: "";display: table;}
+.clearfix::after {clear: both;}
+.clear{ clear: both;}
+/*左右浮动*/
+.fl{ float: left;}
+.fr{ float: right;}
+.fn{ float: none;}
+/*常用宽度*/
+.w1160 { width: 1160px; margin: 0 auto}
+/*链接通用颜色*/
+a{ color: #027EFF; text-decoration: none}
+a:hover{ text-decoration: underline;}
+/*输入框*/
+input[type="text"],input[type="password"] { padding: 0 5px; border-width: 1px; border-style: solid; height: 30px; box-sizing:border-box; resize:none;}
+textarea {border: 1px solid #ddd; box-sizing:border-box; resize:none }
+/*间隔*/
+.height_10{ height: 10px; width: 100%; clear: both; overflow: hidden;}
+.height_20{ height: 20px; width: 100%; clear: both; overflow: hidden;}

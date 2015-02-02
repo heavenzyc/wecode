@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>系统相关配置</comment>
+    <entry key="app.devMode">true</entry>
+
+    <!-- 数据库配置 -->
+    <!-- <entry key="jdbc.driverClassName">com.p6spy.engine.spy.P6SpyDriver</entry> -->
+    <entry key="jdbc.driverClassName">com.mysql.jdbc.Driver</entry>
+    <entry key="jdbc.url">jdbc:mysql://127.0.0.1:3309/zfb_dev?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</entry>
+    <entry key="jdbc.username">dev</entry>
+    <entry key="jdbc.password">123456~!@</entry>
+    
+    <!-- 微信机器人接口地址（对接公众平台回调） -->
+    <entry key="app.wxrobot.domain">http://218.244.147.85/weixin/</entry>
+    
+    <!-- wap站点地址 -->
+    <entry key="app.wap.url">http://money.zhaofangtong.com/wap</entry>
+    
+    <!-- 内部api调用地址 -->
+    <entry key="api.wap.url">http://localhost:9080/api/wap</entry>
+    <entry key="api.admin.url">http://localhost:9090/api/admin</entry>
+    <entry key="api.weixin.url">http://localhost:9070/api/weixin</entry>
+</properties>

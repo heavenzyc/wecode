@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <comment>web配置</comment>
+        <entry key="path"></entry><!-- 已废弃，后面改为base -->
+        <entry key="base"></entry>
+        <entry key="assetspath">/assets</entry>
+        <entry key="jspath">/assets/js</entry>
+        <entry key="csspath">/assets/css</entry>
+        <entry key="fontpath">/assets/font</entry>
+        <entry key="imgpath">/assets/images</entry>
+        <entry key="static_ver">1.1.0-20140704_001</entry>
+</properties>
