@@ -2,6 +2,9 @@ package com.wecode.modules.wbp.common.controller;
 
 import com.jfinal.ext.route.ControllerBind;
 import com.wecode.framework.json.JsonResult;
+import com.wecode.modules.wbp.common.model.Material;
+import com.wecode.modules.wbp.common.model.Person;
+import com.wecode.modules.wbp.common.model.ProvideMerchant;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -9,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zkdu on 2015/2/2.
@@ -21,7 +25,19 @@ public class InputController extends BaseController{
     }
 
     public void add(){
+        List<ProvideMerchant> merchants = ProvideMerchant.getList();
+        List<Material> materials = Material.getList();
+        setAttr("providers",merchants);
+        setAttr("materials",materials);
         renderFreeMarker("input_add.ftl");
+    }
+
+    public void getSendPersons(){
+        String merchantCode = getPara("merchantCode");
+        List<Person> persons = Person.getPersons(merchantCode, Person.PersonType.SEND);
+        JsonResult json = JsonResult.success();
+        json.data("senders",persons);
+        renderJson(json.toJson());
     }
 
     public void importExcel(){
