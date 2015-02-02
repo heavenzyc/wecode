@@ -52,3 +52,10 @@ Temporary Items
 /wecode-modules/*.iml
 /wecode-modules/wecode-business-platform/wecode-business-platform.iml
 /wecode-modules/wecode-business-platform/target
+
+/target
+
+/wecode-framework/target
+
+/wecode-framework/wecode-parent/target
+/wecode-modules/target
