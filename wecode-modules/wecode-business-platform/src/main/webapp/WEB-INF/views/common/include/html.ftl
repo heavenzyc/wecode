@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="/assets/css/ace.min.css" />
     <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/js/jquery.validity/jquery.validity.css" />
+    <link rel="stylesheet" href="/assets/js/qTip2/jquery.qtip.min.css" />
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="/assets/css/ace-ie.min.css" />
     <![endif]-->
@@ -77,6 +79,7 @@
     <script src="/assets/js/jquery.fancybox.min.js"></script>
     <script src="/assets/js/jquery.gritter.min.js"></script>
     <script src="/assets/js/ajaxfileupload.js"></script>
+    <script src="/assets/js/bootbox.min.js"></script>
 <#--############################################################-->
     <!--[if lte IE 8]>
     <script src="/assets/js/excanvas.min.js"></script>
@@ -86,6 +89,9 @@
 
     <script src="/assets/js/ace-elements.min.js"></script>
     <script src="/assets/js/ace.min.js"></script>
+    <script src="/assets/js/jquery.validity/jquery.validity.js"></script>
+    <script src="/assets/js/qTip2/jquery.qtip.min.js"></script>
+    <script src="/assets/js/jquery.validity/jquery.validity.extend.js"></script>
 
 
 </head>

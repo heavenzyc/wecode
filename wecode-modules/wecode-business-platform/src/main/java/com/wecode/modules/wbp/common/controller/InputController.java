@@ -7,8 +7,6 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.wecode.framework.json.JsonResult;
 import com.wecode.modules.wbp.common.model.*;
-import com.wecode.modules.wbp.project.reserve.model.ProjectReserve;
-import jdk.internal.util.xml.impl.Input;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
@@ -74,10 +72,16 @@ public class InputController extends BaseController{
         String weigh_person = getPara("weigh_person");
         String send_person_code = getPara("send_person_code");
         Person person = Person.getByCode(send_person_code);
-        String send_person = person.get("name");
+        String send_person = "";
+        if (person != null) {
+            send_person = person.get("name");
+        }
         String accept_person_code = getPara("accept_person_code");
         person = Person.getByCode(accept_person_code);
-        String accept_person = person.get("name");
+        String accept_person = "";
+        if (person != null) {
+            accept_person = person.get("name");
+        }
         String remark = getPara("remark");
         InputInfo info = new InputInfo();
         info.set("code",code);
@@ -94,6 +98,8 @@ public class InputController extends BaseController{
         info.set("standard_code",standard_code);
         info.set("count",count);
         info.set("money",count.multiply(material.getBigDecimal("price")));
+        info.set("price",material.getBigDecimal("price"));
+        info.set("unit",material.getStr("unit"));
         info.set("transport_person",transport_person);
         info.set("car_num",car_num);
         info.set("weigh_person",weigh_person);
@@ -107,6 +113,90 @@ public class InputController extends BaseController{
         info.set("status",Status.VALID.name());
         info.save();
         redirect("/input/index");
+    }
+
+    public void update(){
+        Integer id = getParaToInt();
+        InputInfo info = InputInfo.dao.findById(id);
+        setAttr("data",info);
+        List<ProvideMerchant> merchants = ProvideMerchant.getList();
+        List<Material> materials = Material.getList();
+        List<AcceptMerchant> accepts = AcceptMerchant.getList();
+        setAttr("providers",merchants);
+        setAttr("materials",materials);
+        setAttr("accepts",accepts);
+        renderFreeMarker("input_edit.ftl");
+    }
+
+    @Before(Tx.class)
+    public void modify(){
+        Integer id = getParaToInt("id");
+        InputInfo info = InputInfo.dao.findById(id);
+        String project_name = getPara("project_name");
+        String contract_num = getPara("contract_num");
+        String provide_merchant_code = getPara("provide_merchant_code");
+        String provide_merchant_name = ProvideMerchant.getByCode(provide_merchant_code).get("name");
+        String warehouse = getPara("warehouse");
+        String material_code = getPara("material_code");
+        Material material = Material.getByCode(material_code);
+        String material_name = material.get("name");
+        String purchase_type_code = material.get("type_code");
+        String purchase_type_name = material.get("type_name");
+        String standard_code = material.get("standard_code");
+        String standard_name = material.get("standard_name");
+        BigDecimal count = getBigDecimal("count");
+        String transport_person = getPara("transport_person");
+        String car_num = getPara("car_num");
+        String weigh_person = getPara("weigh_person");
+        String send_person_code = getPara("send_person_code");
+        Person person = Person.getByCode(send_person_code);
+        String send_person = "";
+        if (person != null) {
+            send_person = person.get("name");
+        }
+        String accept_person_code = getPara("accept_person_code");
+        person = Person.getByCode(accept_person_code);
+        String accept_person = "";
+        if (person != null) {
+            accept_person = person.get("name");
+        }
+        String remark = getPara("remark");
+        info.set("project_name",project_name);
+        info.set("contract_num",contract_num);
+        info.set("provide_merchant_code",provide_merchant_code);
+        info.set("provide_merchant_name",provide_merchant_name);
+        info.set("warehouse",warehouse);
+        info.set("material_code",material_code);
+        info.set("material_name",material_name);
+        info.set("purchase_type_code",purchase_type_code);
+        info.set("purchase_type_name",purchase_type_name);
+        info.set("standard_name",standard_name);
+        info.set("standard_code",standard_code);
+        info.set("count",count);
+        info.set("money",count.multiply(material.getBigDecimal("price")));
+        info.set("price",material.getBigDecimal("price"));
+        info.set("unit",material.getStr("unit"));
+        info.set("transport_person",transport_person);
+        info.set("car_num",car_num);
+        info.set("weigh_person",weigh_person);
+        info.set("send_person_code",send_person_code);
+        info.set("send_person",send_person);
+        info.set("accept_person_code",accept_person_code);
+        info.set("accept_person",accept_person);
+        info.set("remark",remark);
+        info.update();
+        redirect("/input/index");
+    }
+
+
+    public void delete(){
+        Integer id = getParaToInt("id");
+        InputInfo info = InputInfo.dao.findById(id);
+        if (info != null) {
+            info.set("status",Status.INVALID);
+            info.update();
+        }
+        renderJson(JsonResult.success());
     }
 
     public void getSendPersons(){

@@ -5,7 +5,7 @@
     <div class="page-header">
         <button class="btn btn-primary JS_improt">导入数据</button>
         <a class="btn btn-danger" href="/input/exportExcel">导出数据</a>
-        <a class="btn btn-danger" href="/input/add">添加数据</a>
+        <a class="btn btn-success" href="/input/add">添加数据</a>
     </div>
 
     <div class="row">
@@ -30,33 +30,35 @@
         var pager_selector = "#grid-pager";
         var table = $("#grid-table");
         table.jqGrid({
-            url : "/admin/project/reserve/list",
+            url : "/input/list",
             datatype : "json",
             mtype : 'get',
             height : 380,
             caption:'入  库  单（带过磅单）',
             rownumbers: true,
+            scrollOffset:1,
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'customer_name',label:'客户姓名',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'mobile',index : 'id',label:'手机号',width :10,editable : false},
-                        {name : 'reserve_time',index :'reserve_time',label:'看房时间', width : 10,editable : false,formatter:"date",formatoptions: {newformat:'Y-m-d'}},
-                        {name : 'consultant_name',index : 'consultant_name',label:'预约顾问',width : 10,editable : false},
-                        {name : 'status',index : 'status',label:'状态',width : 10,editable : false,formatter:function(value){
-                            if(value==0){ return '<span class="label label-success arrowed-in">待处理</span>';}
-                            else{
-                                return '<span class="label">已处理</span>';
-                            }
+                        {name : 'code',label:'入库单号',index :'code',width :10,sorttype : "int",editable : false},
+                        {name : 'provide_merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
+                        {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
+                        {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
+                        {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
+                        {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
+                            return rDate.price+"/"+rDate.unit;
                         }},
-                        {name : 'remark',index : 'remark',label:'备注',width : 300,fixed : true,sortable : false},
-                        {name : 'submit_time',index : 'submit_time',label:'提交时间',width : 200,fixed : true,sortable : false},
+                        {name : 'count',index : 'consultant_name',label:'数量',width : 10,editable : false},
+                        {name : 'money',index : 'consultant_name',label:'总额',width : 10,editable : false},
+                        {name : 'warehouse',index : 'consultant_name',label:'所入仓库',width : 10,editable : false},
+                        {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 10,editable : false},
+                        {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
+                        {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
-                            if(rData.status == 0){
-                                return '<button class="btn no-border btn-minier btn-warning process" onclick="enterReserve('+value+')" >确认</button>';
-                            }else{
-                                return '<button disabled class="btn no-border btn-minier btn-warning process" onclick="enterReserve('+value+')" >确认</button>';
-                            }
+                            var html = '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';
+                            return html;
                         }}
                     ],
             viewrecords : true,
@@ -207,6 +209,25 @@
             time : time || 1000,
             text : text,
             class_name : 'gritter-info gritter-center'
+        });
+    }
+
+    function deleteInfo(id) {
+        bootbox.confirm("确定删除该数据吗?", function(result) {
+            if(result) {
+                $.ajax({
+                    url:"/input/delete",
+                    async: false,
+                    type:'GET',
+                    data:{id:id},
+                    success:function(json) {
+                        if(json.success) {
+                            $("#grid-table").trigger("reloadGrid");
+                            showToast("删除成功！");
+                        }
+                    }
+                });
+            }
         });
     }
 
