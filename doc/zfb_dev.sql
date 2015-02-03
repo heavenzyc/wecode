@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost-mysql
+Source Server         : localhost
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-03 18:20:25
+Date: 2015-02-03 23:35:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,15 +47,15 @@ CREATE TABLE `input_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) DEFAULT NULL COMMENT '入库单号',
   `project_name` varchar(50) DEFAULT NULL COMMENT '项目工程名',
-  `purchase_type_code` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
+  `purchase_type_id` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
   `purchase_type_name` varchar(20) DEFAULT NULL COMMENT '采购类别名称',
   `contract_num` varchar(50) DEFAULT NULL COMMENT '合同编号',
-  `provide_merchant_code` varchar(50) DEFAULT NULL COMMENT '供应商编码',
-  `provide_merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
+  `merchant_id` varchar(50) DEFAULT NULL COMMENT '供应商编码',
+  `merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
   `warehouse` varchar(50) DEFAULT NULL COMMENT '入库仓库',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
-  `material_code` varchar(50) DEFAULT NULL COMMENT '材料编码',
+  `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `material_name` varchar(50) DEFAULT NULL COMMENT '材料名称',
   `count` int(11) DEFAULT NULL COMMENT '入库数量',
   `money` decimal(10,0) DEFAULT NULL COMMENT '总金额',
@@ -66,16 +66,16 @@ CREATE TABLE `input_info` (
   `accept_person` varchar(20) DEFAULT NULL COMMENT '收货人',
   `input_time` datetime DEFAULT NULL COMMENT '入库日期',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
-  `send_person_code` varchar(50) DEFAULT NULL COMMENT '发货人编码',
-  `accept_person_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
-  `standard_code` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
+  `send_person_id` varchar(50) DEFAULT NULL COMMENT '发货人编码',
+  `accept_person_id` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `standard_id` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
   `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
   `price` decimal(10,2) DEFAULT NULL COMMENT '单价',
   `unit` varchar(10) DEFAULT NULL COMMENT '单位',
-  `accept_merchant_code` varchar(50) DEFAULT NULL COMMENT '收货单位编码',
+  `accept_merchant_id` varchar(50) DEFAULT NULL COMMENT '收货单位编码',
   `accept_merchant_name` varchar(50) DEFAULT NULL COMMENT '收货单位名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
 
 -- ----------------------------
 -- Records of input_info
@@ -84,6 +84,9 @@ INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, nul
 INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2', '2000', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null);
 INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224', '224000', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null);
 INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21', '21000', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null);
+INSERT INTO `input_info` VALUES ('6', '1422975545526', 'cc', '001', '类型2', null, '2', '国美电器2', 'cc', '2015-02-03 22:59:05', 'VALID', '2', '金矿', '2', '100000', 'cc', 'cc', 'cc', '敖厂长', '敖厂长', '2015-02-03 22:59:05', 'cc', '6', '6', '001', 'B级', '50000.00', '克', null, null);
+INSERT INTO `input_info` VALUES ('7', '1422977404108', 'ss', '001', '类型2', null, '1', '国美电器1', 'vv', '2015-02-03 23:30:04', 'VALID', '2', '金矿', '2', '100000', 'vv', 'vv', 'vv', '王尼玛', '王尼玛', '2015-02-03 23:30:04', 'vv', '4', '4', '001', 'B级', '50000.00', '克', null, null);
+INSERT INTO `input_info` VALUES ('8', '1422977492529', '', '001', '类型2', null, '2', '国美电器2', '', '2015-02-03 23:32:32', 'VALID', '2', '金矿', '1', '50000', '', '', '', '敖厂长', '敖厂长', '2015-02-03 23:32:32', '', '6', '6', '001', 'B级', '50000.00', '克', null, null);
 
 -- ----------------------------
 -- Table structure for loan
@@ -97,9 +100,9 @@ CREATE TABLE `loan` (
   `money_lower` decimal(10,0) DEFAULT NULL COMMENT '借款金额小写',
   `money_capital` varchar(50) DEFAULT NULL COMMENT '借款金额大写',
   `reason` varchar(2000) DEFAULT NULL COMMENT '借款用途及理由',
-  `loan_dept_code` varchar(50) DEFAULT NULL COMMENT '借款部门编码',
+  `loan_dept_id` varchar(50) DEFAULT NULL COMMENT '借款部门编码',
   `loan_dept_name` varchar(50) DEFAULT NULL COMMENT '借款部门名称',
-  `use_dept_code` varchar(50) DEFAULT NULL COMMENT '使用部门编码',
+  `use_dept_id` varchar(50) DEFAULT NULL COMMENT '使用部门编码',
   `use_dept_name` varchar(50) DEFAULT NULL COMMENT '使用部门名称',
   `loan_type` varchar(20) DEFAULT NULL COMMENT '借款类别',
   `check_num` varchar(50) DEFAULT NULL COMMENT '支票编号',
@@ -128,13 +131,13 @@ CREATE TABLE `material` (
   `code` varchar(50) DEFAULT NULL COMMENT '材料代码',
   `num` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `name` varchar(50) DEFAULT NULL COMMENT '名称',
-  `standard_code` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
+  `standard_id` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
   `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
   `unit` varchar(50) DEFAULT NULL COMMENT '材料单位',
   `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
   `count` int(11) DEFAULT NULL COMMENT '材料数量',
   `discount` int(11) DEFAULT NULL COMMENT '材料折扣',
-  `type_code` varchar(50) DEFAULT NULL COMMENT '材料类别编码',
+  `type_id` varchar(50) DEFAULT NULL COMMENT '材料类别编码',
   `type_name` varchar(50) DEFAULT NULL COMMENT '材料类别名称',
   `create_time` datetime DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
@@ -155,7 +158,7 @@ CREATE TABLE `material_standard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) DEFAULT NULL COMMENT '编码',
   `name` varchar(20) DEFAULT NULL COMMENT '类别名称',
-  `material_code` varchar(50) DEFAULT NULL COMMENT '材料编码',
+  `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `create_time` datetime DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -166,6 +169,31 @@ CREATE TABLE `material_standard` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for merchant
+-- ----------------------------
+DROP TABLE IF EXISTS `merchant`;
+CREATE TABLE `merchant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) DEFAULT NULL COMMENT '供货单位代码',
+  `address` varchar(200) DEFAULT NULL COMMENT '供货单位地址',
+  `name` varchar(50) DEFAULT NULL COMMENT '供货单位名称',
+  `contacts` varchar(20) DEFAULT NULL COMMENT '供货单位联系人',
+  `tel` varchar(50) DEFAULT NULL COMMENT '供货人联系电话',
+  `bank_account` varchar(50) DEFAULT NULL COMMENT '供货单位银行账户',
+  `bank_name` varchar(50) DEFAULT NULL COMMENT '供货单位银行名称',
+  `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='供货单位信息表';
+
+-- ----------------------------
+-- Records of merchant
+-- ----------------------------
+INSERT INTO `merchant` VALUES ('1', '001', '成都1', '国美电器1', '张三1', '13088889999', '2222222233333336', '花旗英航1', '没什么可说的1', '2015-02-02 21:59:24', 'VALID');
+INSERT INTO `merchant` VALUES ('2', '002', '成都2', '国美电器2', '张三2', '13088889999', '2222222233333336', '花旗英航2', '没什么可说的2', '2015-02-02 22:00:54', 'VALID');
+
+-- ----------------------------
 -- Table structure for output_info
 -- ----------------------------
 DROP TABLE IF EXISTS `output_info`;
@@ -173,15 +201,15 @@ CREATE TABLE `output_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) DEFAULT NULL COMMENT '出库单号',
   `project_name` varchar(50) DEFAULT NULL COMMENT '项目工程名',
-  `purchase_type_code` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
+  `purchase_type_id` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
   `purchase_type_name` varchar(20) DEFAULT NULL COMMENT '供应商名称',
   `contract_num` varchar(50) DEFAULT NULL COMMENT '合同编号',
-  `provide_merchant_code` varchar(50) DEFAULT NULL COMMENT '供应商编码',
+  `provide_merchant_id` varchar(50) DEFAULT NULL COMMENT '供应商编码',
   `provide_merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
   `warehouse` varchar(50) DEFAULT NULL COMMENT '出库仓库',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
-  `material_code` varchar(50) DEFAULT NULL COMMENT '材料编码',
+  `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `material_name` varchar(50) DEFAULT NULL COMMENT '材料名称',
   `count` int(11) DEFAULT NULL COMMENT '出库数量',
   `money` decimal(10,0) DEFAULT NULL COMMENT '总金额',
@@ -193,8 +221,14 @@ CREATE TABLE `output_info` (
   `output_time` datetime DEFAULT NULL COMMENT '出库日期',
   `is_clear` tinyint(4) DEFAULT '0' COMMENT '是否结清（0-未结清，1-已结清）',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
-  `send_person_code` varchar(50) DEFAULT NULL COMMENT '发货人编码',
-  `accept_person_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `send_person_id` varchar(50) DEFAULT NULL COMMENT '发货人编码',
+  `accept_person_id` varchar(50) DEFAULT NULL COMMENT '收货人编码',
+  `standard_id` varchar(50) DEFAULT NULL,
+  `standard_name` varchar(50) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `unit` varchar(10) DEFAULT NULL,
+  `accept_merchant_id` varchar(50) DEFAULT NULL,
+  `accept_merchant_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出库信息表';
 
@@ -210,7 +244,7 @@ CREATE TABLE `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
-  `merchant_code` varchar(50) DEFAULT NULL COMMENT '商家编码',
+  `merchant_id` varchar(50) DEFAULT NULL COMMENT '商家编码',
   `type` varchar(20) DEFAULT NULL COMMENT '类型（SEND-发货人， ACCEPT-收货人）',
   `craete_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '类型',
@@ -221,12 +255,12 @@ CREATE TABLE `person` (
 -- ----------------------------
 -- Records of person
 -- ----------------------------
-INSERT INTO `person` VALUES ('1', '金三胖', '13566998547', '001', 'SEND', '2015-02-02 22:18:37', 'VALID', '001');
-INSERT INTO `person` VALUES ('2', '奥巴马', '15622113657', '001', 'SEND', '2015-02-02 22:19:04', 'VALID', '002');
-INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '001', 'ACCEPT', '2015-02-02 22:19:53', 'VALID', '003');
-INSERT INTO `person` VALUES ('4', '王尼玛', '15788662365', '001', 'ACCEPT', '2015-02-02 23:02:13', 'VALID', '004');
-INSERT INTO `person` VALUES ('5', '完尼玛', '18625654394', '002', 'SEND', '2015-02-03 14:19:56', 'VALID', '005');
-INSERT INTO `person` VALUES ('6', '敖厂长', '15852526363', '002', 'ACCEPT', '2015-02-03 14:20:34', 'VALID', '006');
+INSERT INTO `person` VALUES ('1', '金三胖', '13566998547', '1', 'SEND', '2015-02-02 22:18:37', 'VALID', '001');
+INSERT INTO `person` VALUES ('2', '奥巴马', '15622113657', '1', 'SEND', '2015-02-02 22:19:04', 'VALID', '002');
+INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '1', 'ACCEPT', '2015-02-02 22:19:53', 'VALID', '003');
+INSERT INTO `person` VALUES ('4', '王尼玛', '15788662365', '1', 'ACCEPT', '2015-02-02 23:02:13', 'VALID', '004');
+INSERT INTO `person` VALUES ('5', '完尼玛', '18625654394', '2', 'SEND', '2015-02-03 14:19:56', 'VALID', '005');
+INSERT INTO `person` VALUES ('6', '敖厂长', '15852526363', '2', 'ACCEPT', '2015-02-03 14:20:34', 'VALID', '006');
 
 -- ----------------------------
 -- Table structure for project
@@ -326,7 +360,7 @@ CREATE TABLE `purchase_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) DEFAULT NULL COMMENT '编码',
   `name` varchar(20) DEFAULT NULL COMMENT '类别名称',
-  `material_code` varchar(50) DEFAULT NULL COMMENT '材料编码',
+  `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `create_time` datetime DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -335,3 +369,27 @@ CREATE TABLE `purchase_type` (
 -- ----------------------------
 -- Records of purchase_type
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for staff
+-- ----------------------------
+DROP TABLE IF EXISTS `staff`;
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) DEFAULT NULL COMMENT '编码',
+  `name` varchar(20) DEFAULT NULL COMMENT '姓名',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `craete_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `status` varchar(20) DEFAULT NULL COMMENT '类型',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of staff
+-- ----------------------------
+INSERT INTO `staff` VALUES ('1', '001', '金三胖', '13566998547', '2015-02-02 22:18:37', 'VALID');
+INSERT INTO `staff` VALUES ('2', '002', '奥巴马', '15622113657', '2015-02-02 22:19:04', 'VALID');
+INSERT INTO `staff` VALUES ('3', '003', '长全蛋', '18622365986', '2015-02-02 22:19:53', 'VALID');
+INSERT INTO `staff` VALUES ('4', '004', '王尼玛', '15788662365', '2015-02-02 23:02:13', 'VALID');
+INSERT INTO `staff` VALUES ('5', '005', '完尼玛', '18625654394', '2015-02-03 14:19:56', 'VALID');
+INSERT INTO `staff` VALUES ('6', '006', '敖厂长', '15852526363', '2015-02-03 14:20:34', 'VALID');
