@@ -4,8 +4,8 @@
 <div class="page-content">
     <div class="page-header">
         <button class="btn btn-primary JS_improt">导入数据</button>
-        <a class="btn btn-danger" href="/input/exportExcel">导出数据</a>
-        <a class="btn btn-success" href="/input/add">添加数据</a>
+        <a class="btn btn-danger" href="/output/exportExcel">导出数据</a>
+        <a class="btn btn-success" href="/output/add">添加数据</a>
     </div>
 
     <div class="row">
@@ -30,7 +30,7 @@
         var pager_selector = "#grid-pager";
         var table = $("#grid-table");
         table.jqGrid({
-            url : "/input/list",
+            url : "/output/list",
             datatype : "json",
             mtype : 'get',
             height : 380,
@@ -41,9 +41,9 @@
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
                         {name : 'code',label:'入库单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'provide_merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
+                        {name : 'output_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
                         {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
                         {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
@@ -56,7 +56,7 @@
                         {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
                         {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
-                            var html = '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            var html = '<a class="btn no-border btn-minier btn-primary process" href="/output/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';
                             return html;
                         }}
@@ -136,7 +136,7 @@
             '	<div class="widget-body no-border">',
             '		<div class="widget-main no-padding">',
             '			<div class="material-list-wrap" style="height:auto">',
-            '				<form id="inputExcel" enctype="multipart/form-data">',
+            '				<form id="outputExcel" enctype="multipart/form-data">',
             '					<div class="space-10"></div>',
             '					<div class="form-group clearfix">',
             '						<div class="col-sm-12">',
@@ -181,7 +181,7 @@
                 $(".Js_confirm").on("click", function(){
                     //showSelectWordpic($this)
                     $.ajaxFileUpload({
-                        url:'/input/importExcel',
+                        url:'/output/importExcel',
                         type:'post',
                         fileElementId:'id-input-file-2',
                         dataType:'text',
@@ -216,7 +216,7 @@
         bootbox.confirm("确定删除该数据吗?", function(result) {
             if(result) {
                 $.ajax({
-                    url:"/input/delete",
+                    url:"/output/delete",
                     async: false,
                     type:'GET',
                     data:{id:id},

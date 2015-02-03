@@ -22,15 +22,15 @@ import java.util.Map;
 /**
  * Created by zkdu on 2015/2/2.
  */
-@ControllerBind(controllerKey = "/input", viewPath = "/input")
-public class InputController extends BaseController{
+@ControllerBind(controllerKey = "/output", viewPath = "/output")
+public class OutputController extends BaseController{
 
     public void index(){
-        renderFreeMarker("input.ftl");
+        renderFreeMarker("output.ftl");
     }
 
     public void list(){
-        Page<InputInfo> page = InputInfo.getPage(getParaToInt("page", 1),getParaToInt("rows", 10));
+        Page<OutputInfo> page = OutputInfo.getPage(getParaToInt("page", 1),getParaToInt("rows", 10));
         setAttr("infoList",page.getList());
         setAttr("page",page);
         Map root = new HashMap();
@@ -42,13 +42,13 @@ public class InputController extends BaseController{
     }
 
     public void add(){
-        List<Merchant> merchants = Merchant.getList();
+        List<ProvideMerchant> merchants = ProvideMerchant.getList();
         List<Material> materials = Material.getList();
-        List<Staff> staffs = Staff.getList();
+        List<AcceptMerchant> accepts = AcceptMerchant.getList();
         setAttr("providers",merchants);
         setAttr("materials",materials);
-        setAttr("staffs",staffs);
-        renderFreeMarker("input_add.ftl");
+        setAttr("accepts",accepts);
+        renderFreeMarker("output_add.ftl");
     }
 
     @Before(Tx.class)
@@ -56,46 +56,46 @@ public class InputController extends BaseController{
         String code = currentTimeMillis();
         String project_name = getPara("project_name");
         String contract_num = getPara("contract_num");
-        String merchant_id = getPara("merchant_id");
-        String merchant_name = ProvideMerchant.dao.findById(merchant_id).get("name");
+        String provide_merchant_code = getPara("provide_merchant_code");
+        String provide_merchant_name = ProvideMerchant.getByCode(provide_merchant_code).get("name");
         String warehouse = getPara("warehouse");
-        String material_id = getPara("material_id");
-        Material material = Material.dao.findById(material_id);
+        String material_code = getPara("material_code");
+        Material material = Material.getByCode(material_code);
         String material_name = material.get("name");
-        String purchase_type_id = material.get("type_id");
+        String purchase_type_code = material.get("type_code");
         String purchase_type_name = material.get("type_name");
-        String standard_id = material.get("standard_id");
+        String standard_code = material.get("standard_code");
         String standard_name = material.get("standard_name");
         BigDecimal count = getBigDecimal("count");
         String transport_person = getPara("transport_person");
         String car_num = getPara("car_num");
         String weigh_person = getPara("weigh_person");
-        String send_person_id = getPara("send_person_id");
-        Person person = Person.dao.findById(send_person_id);
+        String send_person_code = getPara("send_person_code");
+        Person person = Person.dao.findById(send_person_code);
         String send_person = "";
         if (person != null) {
             send_person = person.get("name");
         }
-        String accept_person_id = getPara("accept_person_id");
+        String accept_person_code = getPara("accept_person_code");
+        person = Person.dao.findById(accept_person_code);
         String accept_person = "";
-        Staff staff = Staff.dao.findById(accept_person_id);
-        if (staff != null) {
-            accept_person = staff.get("name");
+        if (person != null) {
+            accept_person = person.get("name");
         }
         String remark = getPara("remark");
-        InputInfo info = new InputInfo();
+        OutputInfo info = new OutputInfo();
         info.set("code",code);
         info.set("project_name",project_name);
         info.set("contract_num",contract_num);
-        info.set("merchant_id",merchant_id);
-        info.set("merchant_name",merchant_name);
+        info.set("provide_merchant_code",provide_merchant_code);
+        info.set("provide_merchant_name",provide_merchant_name);
         info.set("warehouse",warehouse);
-        info.set("material_id",material_id);
+        info.set("material_code",material_code);
         info.set("material_name",material_name);
-        info.set("purchase_type_id",purchase_type_id);
+        info.set("purchase_type_code",purchase_type_code);
         info.set("purchase_type_name",purchase_type_name);
         info.set("standard_name",standard_name);
-        info.set("standard_id",standard_id);
+        info.set("standard_code",standard_code);
         info.set("count",count);
         info.set("money",count.multiply(material.getBigDecimal("price")));
         info.set("price",material.getBigDecimal("price"));
@@ -103,77 +103,75 @@ public class InputController extends BaseController{
         info.set("transport_person",transport_person);
         info.set("car_num",car_num);
         info.set("weigh_person",weigh_person);
-        info.set("send_person_id",send_person_id);
+        info.set("send_person_code",send_person_code);
         info.set("send_person",send_person);
-        info.set("accept_person_id",accept_person_id);
+        info.set("accept_person_code",accept_person_code);
         info.set("accept_person",accept_person);
-        info.set("input_time",new Date());
+        info.set("output_time",new Date());
         info.set("remark",remark);
         info.set("create_time",new Date());
         info.set("status",Status.VALID.name());
         info.save();
-        redirect("/input/index");
+        redirect("/output/index");
     }
 
     public void update(){
         Integer id = getParaToInt();
-        InputInfo info = InputInfo.dao.findById(id);
+        OutputInfo info = OutputInfo.dao.findById(id);
         setAttr("data",info);
         List<ProvideMerchant> merchants = ProvideMerchant.getList();
         List<Material> materials = Material.getList();
         List<AcceptMerchant> accepts = AcceptMerchant.getList();
-        List<Staff> staffs = Staff.getList();
         setAttr("providers",merchants);
         setAttr("materials",materials);
         setAttr("accepts",accepts);
-        setAttr("staffs",staffs);
-        renderFreeMarker("input_edit.ftl");
+        renderFreeMarker("output_edit.ftl");
     }
 
     @Before(Tx.class)
     public void modify(){
         Integer id = getParaToInt("id");
-        InputInfo info = InputInfo.dao.findById(id);
+        OutputInfo info = OutputInfo.dao.findById(id);
         String project_name = getPara("project_name");
         String contract_num = getPara("contract_num");
-        String merchant_id = getPara("merchant_id");
-        String merchant_name = ProvideMerchant.dao.findById(merchant_id).get("name");
+        String provide_merchant_code = getPara("provide_merchant_code");
+        String provide_merchant_name = ProvideMerchant.getByCode(provide_merchant_code).get("name");
         String warehouse = getPara("warehouse");
-        String material_id = getPara("material_id");
-        Material material = Material.dao.findById(material_id);
+        String material_code = getPara("material_code");
+        Material material = Material.getByCode(material_code);
         String material_name = material.get("name");
-        String purchase_type_id = material.get("type_id");
+        String purchase_type_code = material.get("type_code");
         String purchase_type_name = material.get("type_name");
-        String standard_id = material.get("standard_id");
+        String standard_code = material.get("standard_code");
         String standard_name = material.get("standard_name");
         BigDecimal count = getBigDecimal("count");
         String transport_person = getPara("transport_person");
         String car_num = getPara("car_num");
         String weigh_person = getPara("weigh_person");
-        String send_person_id = getPara("send_person_id");
-        Person person = Person.dao.findById(send_person_id);
+        String send_person_code = getPara("send_person_code");
+        Person person = Person.dao.findById(send_person_code);
         String send_person = "";
         if (person != null) {
             send_person = person.get("name");
         }
-        String accept_person_id = getPara("accept_person_id");
+        String accept_person_code = getPara("accept_person_code");
+        person = Person.dao.findById(accept_person_code);
         String accept_person = "";
-        Staff staff = Staff.dao.findById(accept_person_id);
-        if (staff != null) {
-            accept_person = staff.get("name");
+        if (person != null) {
+            accept_person = person.get("name");
         }
         String remark = getPara("remark");
         info.set("project_name",project_name);
         info.set("contract_num",contract_num);
-        info.set("merchant_id",merchant_id);
-        info.set("merchant_name",merchant_name);
+        info.set("provide_merchant_code",provide_merchant_code);
+        info.set("provide_merchant_name",provide_merchant_name);
         info.set("warehouse",warehouse);
-        info.set("material_id",material_id);
+        info.set("material_code",material_code);
         info.set("material_name",material_name);
-        info.set("purchase_type_id",purchase_type_id);
+        info.set("purchase_type_code",purchase_type_code);
         info.set("purchase_type_name",purchase_type_name);
         info.set("standard_name",standard_name);
-        info.set("standard_id",standard_id);
+        info.set("standard_code",standard_code);
         info.set("count",count);
         info.set("money",count.multiply(material.getBigDecimal("price")));
         info.set("price",material.getBigDecimal("price"));
@@ -181,19 +179,19 @@ public class InputController extends BaseController{
         info.set("transport_person",transport_person);
         info.set("car_num",car_num);
         info.set("weigh_person",weigh_person);
-        info.set("send_person_id",send_person_id);
+        info.set("send_person_code",send_person_code);
         info.set("send_person",send_person);
-        info.set("accept_person_id",accept_person_id);
+        info.set("accept_person_code",accept_person_code);
         info.set("accept_person",accept_person);
         info.set("remark",remark);
         info.update();
-        redirect("/input/index");
+        redirect("/output/index");
     }
 
 
     public void delete(){
         Integer id = getParaToInt("id");
-        InputInfo info = InputInfo.dao.findById(id);
+        OutputInfo info = OutputInfo.dao.findById(id);
         if (info != null) {
             info.set("status",Status.INVALID);
             info.update();
@@ -202,24 +200,24 @@ public class InputController extends BaseController{
     }
 
     public void getSendPersons(){
-        String merchantId = getPara("merchantId");
-        List<Person> persons = Person.getPersons(merchantId);
+        String merchantCode = getPara("merchantCode");
+        List<Person> persons = Person.getPersons(merchantCode);
         Map root = new HashMap();
         root.put("data", persons);
         renderJson(JsonKit.toJson(root));
     }
 
-    /*public void getAcceptPersons(){
+    public void getAcceptPersons(){
         String merchantCode = getPara("merchantCode");
-        List<Person> persons = Person.getPersons(merchantCode, Person.PersonType.ACCEPT);
+        List<Person> persons = Person.getPersons(merchantCode);
         Map root = new HashMap();
         root.put("data", persons);
         renderJson(JsonKit.toJson(root));
-    }*/
+    }
 
     public void getUnit(){
-        String id = getPara("material");
-        Material material = Material.dao.findById(id);
+        String code = getPara("material");
+        Material material = Material.getByCode(code);
         if (material != null) {
             renderJson(material.get("unit"));
         }

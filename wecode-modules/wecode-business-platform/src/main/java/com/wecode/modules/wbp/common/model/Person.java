@@ -43,13 +43,8 @@ public class Person extends BaseModel<Person, Integer> {
         return PersonType.valueOf(i);
     }
 
-    public static List<Person> getPersons(String merchantCode, PersonType type) {
-        String sql = "select * from person where merchant_code=? and type=?";
-        return dao.find(sql,merchantCode,type.name());
-    }
-
-    public static Person getByCode(String code) {
-        String sql = "select * from person where code=?";
-        return dao.findFirst(sql,code);
+    public static List<Person> getPersons(String merchantCode) {
+        String sql = "select * from person where merchant_id=?";
+        return dao.find(sql,merchantCode);
     }
 }

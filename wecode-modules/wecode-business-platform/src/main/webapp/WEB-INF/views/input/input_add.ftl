@@ -17,9 +17,9 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">供货单位</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="provide_merchant_code" onchange="getSender()">
+                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="merchant_id" onchange="getSender()">
                             <#list providers as provide>
-                                <option value="${provide.code}">${provide.name}</option>
+                                <option value="${provide.id}">${provide.name}</option>
                             </#list>
                         </select>
                     </div>
@@ -27,9 +27,9 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">物品名称</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="material" data-placeholder="请选择..." name="material_code" onchange="getUnit()">
+                        <select class="width-40 chosen-select" id="material" data-placeholder="请选择..." name="material_id" onchange="getUnit()">
                             <#list materials as mat>
-                                <option value="${mat.code}">${mat.name}</option>
+                                <option value="${mat.id}">${mat.name}</option>
                             </#list>
                         </select>
                     </div>
@@ -45,7 +45,7 @@
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">发货人</label>
                     <div class="col-sm-10" id="senderDiv"></div>
                 </div>
-                <div class="form-group">
+                <#--<div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货单位</label>
                     <div class="col-sm-10">
                         <select class="width-40 chosen-select" id="acceptMerchant" data-placeholder="请选择..." name="accept_merchant_code" onchange="getAccepter()">
@@ -54,10 +54,15 @@
                             </#list>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货人</label>
                     <div class="col-sm-10" id="accepterDiv">
+                        <select class="width-40 chosen-select" data-placeholder="请选择..." name="accept_person_id">
+                            <#list staffs as ac>
+                                <option value="${ac.id}">${ac.name}</option>
+                            </#list>
+                        </select>
                     </div>
                 </div>
 
@@ -126,21 +131,20 @@
         });
         getSender();
         getUnit();
-        getAccepter();
     })
 
     function getSender(){
-        var code = $("#provideMerchant").val();
+        var id = $("#provideMerchant").val();
         $.ajax({
             url:'/input/getSendPersons',
             type:'get',
-            data:{merchantCode:code},
+            data:{merchantId:id},
             success:function(json){
                 var data = json.data;
                 $("#senderDiv").empty();
-                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="send_person_code">'
+                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="send_person_id">'
                 for(var i=0; i<data.length; i++) {
-                    html += "<option value="+data[i].code+">"+data[i].name+"</option>";
+                    html += "<option value="+data[i].id+">"+data[i].name+"</option>";
                 }
                 html += "</select>"
                 $("#senderDiv").append(html);
@@ -149,7 +153,7 @@
         });
     }
 
-    function getAccepter(){
+    /*function getAccepter(){
         var code = $("#acceptMerchant").val();
         $.ajax({
             url:'/input/getAcceptPersons',
@@ -167,14 +171,14 @@
                 $(".chosen-select").chosen();
             }
         });
-    }
+    }*/
 
     function getUnit(){
-        var code = $("#material").val();
+        var id = $("#material").val();
         $.ajax({
             url:'/input/getUnit',
             type:'get',
-            data:{material:code},
+            data:{material:id},
             success:function(json){
                 $("#unit").html("").html(json);
             }
