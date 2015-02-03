@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : localhost-mysql
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-03 00:25:44
+Date: 2015-02-03 18:20:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,14 +70,20 @@ CREATE TABLE `input_info` (
   `accept_person_code` varchar(50) DEFAULT NULL COMMENT '收货人编码',
   `standard_code` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
   `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '单价',
+  `unit` varchar(10) DEFAULT NULL COMMENT '单位',
+  `accept_merchant_code` varchar(50) DEFAULT NULL COMMENT '收货单位编码',
+  `accept_merchant_name` varchar(50) DEFAULT NULL COMMENT '收货单位名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
 
 -- ----------------------------
 -- Records of input_info
 -- ----------------------------
-INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1', '1000', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null);
-INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2', '2000', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级');
+INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1', '1000', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null, '2000.00', '吨', null, null);
+INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2', '2000', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null);
+INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224', '224000', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null);
+INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21', '21000', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null);
 
 -- ----------------------------
 -- Table structure for loan
@@ -125,7 +131,7 @@ CREATE TABLE `material` (
   `standard_code` varchar(50) DEFAULT NULL COMMENT '材料规格编码',
   `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
   `unit` varchar(50) DEFAULT NULL COMMENT '材料单位',
-  `price` decimal(10,0) DEFAULT NULL COMMENT '价格',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
   `count` int(11) DEFAULT NULL COMMENT '材料数量',
   `discount` int(11) DEFAULT NULL COMMENT '材料折扣',
   `type_code` varchar(50) DEFAULT NULL COMMENT '材料类别编码',
@@ -138,8 +144,8 @@ CREATE TABLE `material` (
 -- ----------------------------
 -- Records of material
 -- ----------------------------
-INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000', '100', '800', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
-INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000', '100', '4000', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
+INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100', '800', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
+INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100', '4000', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
 
 -- ----------------------------
 -- Table structure for material_standard
@@ -210,15 +216,17 @@ CREATE TABLE `person` (
   `status` varchar(20) DEFAULT NULL COMMENT '类型',
   `code` varchar(50) DEFAULT NULL COMMENT '编码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
 INSERT INTO `person` VALUES ('1', '金三胖', '13566998547', '001', 'SEND', '2015-02-02 22:18:37', 'VALID', '001');
 INSERT INTO `person` VALUES ('2', '奥巴马', '15622113657', '001', 'SEND', '2015-02-02 22:19:04', 'VALID', '002');
-INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '002', 'ACCEPT', '2015-02-02 22:19:53', 'VALID', '003');
+INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '001', 'ACCEPT', '2015-02-02 22:19:53', 'VALID', '003');
 INSERT INTO `person` VALUES ('4', '王尼玛', '15788662365', '001', 'ACCEPT', '2015-02-02 23:02:13', 'VALID', '004');
+INSERT INTO `person` VALUES ('5', '完尼玛', '18625654394', '002', 'SEND', '2015-02-03 14:19:56', 'VALID', '005');
+INSERT INTO `person` VALUES ('6', '敖厂长', '15852526363', '002', 'ACCEPT', '2015-02-03 14:20:34', 'VALID', '006');
 
 -- ----------------------------
 -- Table structure for project
