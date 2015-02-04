@@ -45,7 +45,7 @@ public class OutputInfo extends BaseModel<OutputInfo, Integer> {
             params.add(start);
             params.add(end);
         }
-        sqlExceptSelect += " order by input_time desc ";
+        sqlExceptSelect += " order by output_time desc ";
         return OutputInfo.dao.paginate(curPage,pageSize,sql,sqlExceptSelect,params.toArray());
     }
 }
