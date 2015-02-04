@@ -63,9 +63,6 @@
         var myDate = new Date();
         var yesterday = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay());
         var today = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay()+1);
-//        $("#id-date-range-picker-1").val(yesterday+' - '+today);
-//        $("#id-date-range-picker-1").attr("start",yesterday);
-//        $("#id-date-range-picker-1").attr("end",today);
         $('input[name=date-range-picker]').daterangepicker({
             format: 'YYYY/MM/DD',
             startDate: yesterday,
@@ -85,8 +82,14 @@
         var transport = $("#transport").val();
         var accepter = $("#accepter").val();
         var weighter = $("#weighter").val();
-        var start = $("#id-date-range-picker-1").attr("start");
-        var end = $("#id-date-range-picker-1").attr("end");
+        var range = $("#id-date-range-picker-1").val();
+        var start ;
+        var end ;
+        if(range.length>0){
+            range = range.split("-");
+            start = range[0];
+            end = range[1];
+        }
         $("#grid-table").jqGrid('setGridParam',{
             url:"/input/list",
             postData:{transport:transport,accepter:accepter,weighter:weighter,start:start,end:end}
@@ -109,6 +112,7 @@
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
                         {name : 'code',label:'入库单号',index :'code',width :10,sorttype : "int",editable : false},
                         {name : 'merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'send_person',label:'发货人',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
                         {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
@@ -119,6 +123,7 @@
                         {name : 'count',index : 'consultant_name',label:'数量',width : 10,editable : false},
                         {name : 'money',index : 'consultant_name',label:'总额',width : 10,editable : false},
                         {name : 'warehouse',index : 'consultant_name',label:'所入仓库',width : 10,editable : false},
+                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 10,editable : false},
                         {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 10,editable : false},
                         {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
                         {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},

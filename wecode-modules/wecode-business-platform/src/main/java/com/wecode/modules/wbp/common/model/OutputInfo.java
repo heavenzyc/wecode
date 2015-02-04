@@ -24,7 +24,7 @@ public class OutputInfo extends BaseModel<OutputInfo, Integer> {
         return dao.find(sql);
     }
 
-    public static Page getPage(Integer curPage,Integer pageSize,String transport, String accepter, String weighter, Date start, Date end) {
+    public static Page getPage(Integer curPage,Integer pageSize,String transport, String accepter, String weighter, String start, String end) {
         String sql = "select * ";
         String sqlExceptSelect = " from output_info where status='VALID' ";
         List<Object> params = new ArrayList<Object>();
@@ -40,8 +40,8 @@ public class OutputInfo extends BaseModel<OutputInfo, Integer> {
             sqlExceptSelect += " and weigh_person=? ";
             params.add(weighter);
         }
-        if (start != null && end != null) {
-            sqlExceptSelect += " and input_time>=? and input_time<=?";
+        if (StringUtils.isNotBlank(start) && StringUtils.isNotBlank(end)) {
+            sqlExceptSelect += " and output_time>=? and output_time<=?";
             params.add(start);
             params.add(end);
         }

@@ -23,15 +23,17 @@
                             <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" value="" start="" end="">
                         </div>
                     </div>
-
+                    <label class="pull-left" style="margin-top:5px">运输人：</label>
                     <div class="pull-left" style="margin-right:30px;">
-                        <input id="transport" name="transport" type="text" class="" placeholder="运输人">
+                        <input id="transport" name="transport" type="text" class="" placeholder="">
                     </div>
+                    <label class="pull-left" style="margin-top:5px">收货人：</label>
                     <div class="pull-left" style="margin-right:30px;">
-                        <input id="accepter" name="accepter" type="text" class="" placeholder="收货人">
+                        <input id="accepter" name="accepter" type="text" class="" placeholder="">
                     </div>
+                    <label class="pull-left" style="margin-top:5px">过磅人：</label>
                     <div class="pull-left">
-                        <input id="weighter" name="weighter" type="text" class="" placeholder="过磅人">
+                        <input id="weighter" name="weighter" type="text" class="" placeholder="">
                     </div>
                     <span class="pull-left" style="margin:3px 0 0 10px;">
                         <button id="find_btn" type="button" class="btn btn-purple btn-sm" style="position: relative; padding:2px 8px; top:-2px">
@@ -61,9 +63,6 @@
         var myDate = new Date();
         var yesterday = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay());
         var today = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay()+1);
-//        $("#id-date-range-picker-1").val(yesterday+' - '+today);
-//        $("#id-date-range-picker-1").attr("start",yesterday);
-//        $("#id-date-range-picker-1").attr("end",today);
         $('input[name=date-range-picker]').daterangepicker({
             format: 'YYYY/MM/DD',
             startDate: yesterday,
@@ -83,8 +82,14 @@
         var transport = $("#transport").val();
         var accepter = $("#accepter").val();
         var weighter = $("#weighter").val();
-        var start = $("#id-date-range-picker-1").attr("start");
-        var end = $("#id-date-range-picker-1").attr("end");
+        var range = $("#id-date-range-picker-1").val();
+        var start ;
+        var end ;
+        if(range.length>0){
+            range = range.split("-");
+            start = range[0];
+            end = range[1];
+        }
         $("#grid-table").jqGrid('setGridParam',{
             url:"/output/list",
             postData:{transport:transport,accepter:accepter,weighter:weighter,start:start,end:end}
@@ -108,6 +113,7 @@
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
                         {name : 'code',label:'出库单号',index :'code',width :10,sorttype : "int",editable : false},
                         {name : 'merchant_name',label:'收货单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'accept_person',label:'收货人',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
                         {name : 'output_time',index :'reserve_time',label:'出库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
@@ -118,6 +124,7 @@
                         {name : 'count',index : 'count',label:'数量',width : 10,editable : false},
                         {name : 'money',index : 'money',label:'总额',width : 10,editable : false},
                         {name : 'warehouse',index : 'warehouse',label:'所出仓库',width : 10,editable : false},
+                        {name : 'accept_person',index : 'accept_person',label:'发货人',width : 10,editable : false},
                         {name : 'weigh_person',index : 'weigh_person',label:'过磅人',width : 10,editable : false},
                         {name : 'transport_person',index : 'transport_person',label:'运输人',width : 10,editable : false},
                         {name : 'car_num',index : 'car_num',label:'司机车号',width : 10,editable : false},
