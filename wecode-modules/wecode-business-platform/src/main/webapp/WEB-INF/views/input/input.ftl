@@ -128,7 +128,10 @@
                         {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
                         {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
-                            var html = '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            var html = '';
+                            if (rData.type == 'ADD') {
+                                html += '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            }
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';
                             return html;
                         }}
@@ -259,8 +262,10 @@
                         dataType:'text',
                         secureuri:false,
                         success:function(json) {
+                            alert(json);
                             $.fancybox.close();
-                            showToast("上传成功！");
+                            showToast("导入成功！");
+                            $("#grid-table").trigger("reloadGrid");
                         }
                     });
                 });

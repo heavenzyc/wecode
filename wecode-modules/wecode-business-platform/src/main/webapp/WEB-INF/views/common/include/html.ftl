@@ -176,7 +176,7 @@
 
     <li>
         <li>
-            <a href="/index" class="dropdown-toggle">
+            <a href="/input" class="dropdown-toggle">
                 <i class="icon-list"></i>
                 入库管理
             </a>

@@ -36,18 +36,16 @@ public class OutputController extends BaseController{
         String accepter = getPara("accepter");
         String weighter = getPara("weighter");
         String startStr = getPara("start");
-        Date start = null;
         if (StringUtils.isNotBlank(startStr)) {
+            startStr = startStr.trim();
             startStr += " 00:00:00";
-            start = DateUtils.parse(startStr, "yyyy/MM/dd 00:00:00");
         }
-        Date end = null;
         String endStr = getPara("end");
         if (StringUtils.isNotBlank(endStr)){
+            endStr = endStr.trim();
             endStr += " 23:59:59";
-            end = DateUtils.parse(endStr,"yyyy/MM/dd 23:59:59");
         }
-        Page<OutputInfo> page = OutputInfo.getPage(getParaToInt("page", 1),getParaToInt("rows", 10),transport,accepter,weighter,start,end);
+        Page<OutputInfo> page = OutputInfo.getPage(getParaToInt("page", 1),getParaToInt("rows", 10),transport,accepter,weighter,startStr,endStr);
         setAttr("infoList",page.getList());
         setAttr("page",page);
         Map root = new HashMap();
@@ -81,6 +79,7 @@ public class OutputController extends BaseController{
         String material_id = getPara("material_id");
         Material material = Material.dao.findById(material_id);
         String material_name = material.get("name");
+        String material_code = material.get("code");
         String purchase_type_id = material.get("type_id");
         String purchase_type_name = material.get("type_name");
         String standard_id = material.get("standard_id");
@@ -108,6 +107,7 @@ public class OutputController extends BaseController{
         info.set("contract_num",contract_num);
         info.set("merchant_id",merchant_id);
         info.set("merchant_name",merchant_name);
+        info.set("material_code",material_code);
         info.set("warehouse",warehouse);
         info.set("material_id",material_id);
         info.set("material_name",material_name);
@@ -116,7 +116,23 @@ public class OutputController extends BaseController{
         info.set("standard_name",standard_name);
         info.set("standard_id",standard_id);
         info.set("count",count);
-        info.set("money",count.multiply(material.getBigDecimal("price")));
+        BigDecimal percent = new BigDecimal(1);
+        if (material.getBigDecimal("discount") != null) {
+            percent = (new BigDecimal(100).subtract(material.getBigDecimal("discount"))).divide(new BigDecimal(100));
+            info.set("discount",material.getBigDecimal("discount"));
+        }else{
+            info.set("discount",BigDecimal.ZERO);
+        }
+        if (material.getBigDecimal("price")!= null) {
+            info.set("money",(count.multiply(material.getBigDecimal("price"))).multiply(percent));
+        }else {
+            info.set("money",BigDecimal.ZERO);
+        }
+        if (material.getBigDecimal("price") != null) {
+            info.set("price",material.getBigDecimal("price"));
+        }else {
+            info.set("price",BigDecimal.ZERO);
+        }
         info.set("price",material.getBigDecimal("price"));
         info.set("unit",material.getStr("unit"));
         info.set("transport_person",transport_person);
@@ -162,6 +178,7 @@ public class OutputController extends BaseController{
         String material_id = getPara("material_id");
         Material material = Material.dao.findById(material_id);
         String material_name = material.get("name");
+        String material_code = material.get("code");
         String purchase_type_id = material.get("type_id");
         String purchase_type_name = material.get("type_name");
         String standard_id = material.get("standard_id");
@@ -190,13 +207,29 @@ public class OutputController extends BaseController{
         info.set("warehouse",warehouse);
         info.set("material_id",material_id);
         info.set("material_name",material_name);
+        info.set("material_code",material_code);
         info.set("purchase_type_id",purchase_type_id);
         info.set("purchase_type_name",purchase_type_name);
         info.set("standard_name",standard_name);
         info.set("standard_id",standard_id);
         info.set("count",count);
-        info.set("money",count.multiply(material.getBigDecimal("price")));
-        info.set("price",material.getBigDecimal("price"));
+        BigDecimal percent = new BigDecimal(1);
+        if (material.getBigDecimal("discount") != null) {
+            percent = (new BigDecimal(100).subtract(material.getBigDecimal("discount"))).divide(new BigDecimal(100));
+            info.set("discount",material.getBigDecimal("discount"));
+        }else{
+            info.set("discount",BigDecimal.ZERO);
+        }
+        if (material.getBigDecimal("price")!= null) {
+            info.set("money",(count.multiply(material.getBigDecimal("price"))).multiply(percent));
+        }else {
+            info.set("money",BigDecimal.ZERO);
+        }
+        if (material.getBigDecimal("price") != null) {
+            info.set("price",material.getBigDecimal("price"));
+        }else {
+            info.set("price",BigDecimal.ZERO);
+        }
         info.set("unit",material.getStr("unit"));
         info.set("transport_person",transport_person);
         info.set("car_num",car_num);
@@ -285,58 +318,130 @@ public class OutputController extends BaseController{
     }
 
     public void exportExcel() {
-// 第一步，创建一个webbook，对应一个Excel文件
         XSSFWorkbook wb = new XSSFWorkbook();
-        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
-        XSSFSheet sheet = wb.createSheet("订单");
+        XSSFSheet sheet = wb.createSheet("入库单");
         sheet.setColumnWidth(0, 5000);
         sheet.setColumnWidth(1, 5000);
         sheet.setColumnWidth(2, 5000);
         sheet.setColumnWidth(3, 5000);
         sheet.setColumnWidth(4, 5000);
-        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short
-        XSSFRow row = sheet.createRow((int) 0);
-        // 第四步，创建单元格，并设置值表头 设置表头居中
+        sheet.setColumnWidth(5, 5000);
+        sheet.setColumnWidth(6, 5000);
+        sheet.setColumnWidth(7, 5000);
+        sheet.setColumnWidth(8, 5000);
+        sheet.setColumnWidth(9, 5000);
+        sheet.setColumnWidth(10, 5000);
+        sheet.setColumnWidth(11, 5000);
+        sheet.setColumnWidth(12, 5000);
+        sheet.setColumnWidth(13, 5000);
+        sheet.setColumnWidth(14, 5000);
+        sheet.setColumnWidth(15, 5000);
+        sheet.setColumnWidth(16, 10000);
+        XSSFRow row = sheet.createRow(0);
         XSSFCellStyle style = wb.createCellStyle();
         style.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
-
         XSSFCell cell = row.createCell(0);
-        cell.setCellValue("预定人");
+        cell.setCellValue("出库日期");
         cell.setCellStyle(style);
-        cell = row.createCell(1);
-        cell.setCellValue("电话");
-        cell.setCellStyle(style);
-        cell = row.createCell(2);
-        cell.setCellValue("入住时间");
-        cell.setCellStyle(style);
-        cell = row.createCell(3);
-        cell.setCellValue("离店时间");
-        cell.setCellStyle(style);
-        cell = row.createCell(4);
-        cell.setCellValue("订单状态");
-        cell.setCellStyle(style);
-        // 第五步，写入实体数据 实际应用中这些数据从数据库得到，
-        for (int i = 0; i < 2; i++) {
-            row = sheet.createRow((int) i + 1);
-            // 第四步，创建单元格，并设置值
-            row.createCell(0).setCellValue(1);
-            row.createCell(1).setCellValue(2);
-            row.createCell(2).setCellValue(3);
-            row.createCell(3).setCellValue(4);
-            row.createCell(4).setCellValue(5);
 
-            try {
-                getResponse().reset(); // 非常重要
-                getResponse().setContentType("application/vnd.ms-excel");
-                String fileName = "预约订单-" + new SimpleDateFormat("MMddHHmmSSS").format(new Date()) + ".xls";
-                getResponse().setHeader("Content-Disposition", "attachment; filename=" + new String(fileName.getBytes(), "iso-8859-1"));
-                //创建输出流对象
-                OutputStream outStream = getResponse().getOutputStream();
-                wb.write(outStream);
-                outStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+        cell = row.createCell(1);
+        cell.setCellValue("出库单号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(2);
+        cell.setCellValue("物品编号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(3);
+        cell.setCellValue("物品名称");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(4);
+        cell.setCellValue("物品类别");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(5);
+        cell.setCellValue("物品计量单位");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(6);
+        cell.setCellValue("物品计量单价");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(7);
+        cell.setCellValue("规格");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(8);
+        cell.setCellValue("折扣");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(9);
+        cell.setCellValue("物品数量");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(10);
+        cell.setCellValue("物品总额");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(11);
+        cell.setCellValue("所出仓库");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(12);
+        cell.setCellValue("收货人");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(13);
+        cell.setCellValue("发货人");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(14);
+        cell.setCellValue("司机车号");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(15);
+        cell.setCellValue("过磅人");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(16);
+        cell.setCellValue("备注");
+        cell.setCellStyle(style);
+        List<OutputInfo> infos = OutputInfo.getList();
+        for (int i = 0; i < infos.size(); i++) {
+            OutputInfo info = infos.get(i);
+            row = sheet.createRow(i + 1);
+            if (info.getDate("input_time") != null) {
+                row.createCell(0).setCellValue(DateUtils.format(info.getDate("output_time"), "yyyy/MM/dd"));
             }
+            row.createCell(1).setCellValue(info.getStr("code"));
+            row.createCell(2).setCellValue(info.getStr("material_code"));
+            row.createCell(3).setCellValue(info.getStr("material_name"));
+            row.createCell(4).setCellValue(info.getStr("purchase_type_name"));
+            row.createCell(5).setCellValue(info.getStr("unit"));
+            row.createCell(6).setCellValue(info.getBigDecimal("price")+"/"+info.get("unit"));
+            row.createCell(7).setCellValue(info.getStr("standard_name"));
+            row.createCell(8).setCellValue(info.getBigDecimal("discount")+"");
+            row.createCell(9).setCellValue(info.getBigDecimal("count")+"");
+            row.createCell(10).setCellValue(info.getBigDecimal("money")+"");
+            row.createCell(11).setCellValue(info.getStr("warehouse"));
+            row.createCell(12).setCellValue(info.getStr("accept_person"));
+            row.createCell(13).setCellValue(info.getStr("send_person"));
+            row.createCell(14).setCellValue(info.getStr("car_num"));
+            row.createCell(15).setCellValue(info.getStr("weigh_person"));
+            row.createCell(16).setCellValue(info.getStr("remark"));
+        }
+        try {
+            getResponse().reset();
+            getResponse().setContentType("application/vnd.ms-excel");
+            String fileName = "出库单-" + new SimpleDateFormat("MMddHHmmSSS").format(new Date()) + ".xls";
+            getResponse().setHeader("Content-Disposition", "attachment; filename=" + new String(fileName.getBytes(), "iso-8859-1"));
+            OutputStream outStream = getResponse().getOutputStream();
+            wb.write(outStream);
+            outStream.close();
+            renderNull();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
