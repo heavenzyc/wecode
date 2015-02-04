@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author yangfan 2014年6月1日 下午4:07:46
+ * @author heaven.zyc 2014年6月1日 下午4:07:46
  */
 @ControllerBind(controllerKey = "/admin/project/consultant", viewPath = "/project/consultant")
 public class ConsultantController extends BaseController {

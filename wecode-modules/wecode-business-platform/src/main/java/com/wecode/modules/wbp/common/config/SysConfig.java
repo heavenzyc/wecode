@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * @author yangfan 2014年5月28日 下午4:28:45
+ * @author heaven.zyc 2014年5月28日 下午4:28:45
  */
 public class SysConfig extends BaseConfig {
 	

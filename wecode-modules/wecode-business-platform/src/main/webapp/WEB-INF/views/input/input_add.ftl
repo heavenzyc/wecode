@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-sm-12 col-md-8" >
             <!-- PAGE CONTENT BEGINS -->
-
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
+                    入  库  单
+                </div>
+            </div>
             <form id="add_input_info" class="form-horizontal" houseType="form" action="/input/save" method="post">
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目工程名</label>

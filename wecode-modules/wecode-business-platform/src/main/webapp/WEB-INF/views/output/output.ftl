@@ -11,6 +11,37 @@
     <div class="row">
 
         <div class="col-xs-12" >
+            <div class="space-6"></div>
+            <div class="clearfix">
+                <div class="pull-left text-left clearfix" style="margin-left:20px;">
+                    <label class="pull-left" style="margin-top:5px">入库时间：</label>
+                    <div class="pull-left" style="margin-right:30px;">
+                        <div class="input-group" style="width:250px; margin-left:0px;">
+                            <span class="input-group-addon">
+                                <i class="icon-calendar bigger-110"></i>
+                            </span>
+                            <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" value="" start="" end="">
+                        </div>
+                    </div>
+
+                    <div class="pull-left" style="margin-right:30px;">
+                        <input id="transport" name="transport" type="text" class="" placeholder="运输人">
+                    </div>
+                    <div class="pull-left" style="margin-right:30px;">
+                        <input id="accepter" name="accepter" type="text" class="" placeholder="收货人">
+                    </div>
+                    <div class="pull-left">
+                        <input id="weighter" name="weighter" type="text" class="" placeholder="过磅人">
+                    </div>
+                    <span class="pull-left" style="margin:3px 0 0 10px;">
+                        <button id="find_btn" type="button" class="btn btn-purple btn-sm" style="position: relative; padding:2px 8px; top:-2px">
+                            查询
+                            <i class="icon-search icon-on-right bigger-110" placeholder=""></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="space-6"></div>
             <div class="table-responsive">
                 <table id="grid-table"></table>
                 <div id="grid-pager"></div>
@@ -26,6 +57,41 @@
 </@we.html>
 
 <script>
+    $(function () {
+        var myDate = new Date();
+        var yesterday = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay());
+        var today = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay()+1);
+//        $("#id-date-range-picker-1").val(yesterday+' - '+today);
+//        $("#id-date-range-picker-1").attr("start",yesterday);
+//        $("#id-date-range-picker-1").attr("end",today);
+        $('input[name=date-range-picker]').daterangepicker({
+            format: 'YYYY/MM/DD',
+            startDate: yesterday,
+            endDate: today
+        },function(start, end, label) {
+            start = start.format('YYYY/MM/DD');
+            end = end.format('YYYY/MM/DD');
+            $("#id-date-range-picker-1").attr("start",start);
+            $("#id-date-range-picker-1").attr("end",end);
+        });
+        $("#find_btn").click(function(){
+            searchSub();
+        });
+    });
+
+    function searchSub(){
+        var transport = $("#transport").val();
+        var accepter = $("#accepter").val();
+        var weighter = $("#weighter").val();
+        var start = $("#id-date-range-picker-1").attr("start");
+        var end = $("#id-date-range-picker-1").attr("end");
+        $("#grid-table").jqGrid('setGridParam',{
+            url:"/output/list",
+            postData:{transport:transport,accepter:accepter,weighter:weighter,start:start,end:end}
+        }).trigger("reloadGrid");
+    }
+
+
     jQuery(function($){
         var pager_selector = "#grid-pager";
         var table = $("#grid-table");
@@ -34,27 +100,27 @@
             datatype : "json",
             mtype : 'get',
             height : 380,
-            caption:'入  库  单（带过磅单）',
+            caption:'出   库   单 （发货单）',
             rownumbers: true,
             scrollOffset:1,
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'code',label:'入库单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'provide_merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'code',label:'出库单号',index :'code',width :10,sorttype : "int",editable : false},
+                        {name : 'merchant_name',label:'收货单位',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'output_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
+                        {name : 'output_time',index :'reserve_time',label:'出库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
                         {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
                         {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
-                            return rDate.price+"/"+rDate.unit;
+                            return rDate.price+"元/"+rDate.unit;
                         }},
-                        {name : 'count',index : 'consultant_name',label:'数量',width : 10,editable : false},
-                        {name : 'money',index : 'consultant_name',label:'总额',width : 10,editable : false},
-                        {name : 'warehouse',index : 'consultant_name',label:'所入仓库',width : 10,editable : false},
-                        {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 10,editable : false},
-                        {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
-                        {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},
+                        {name : 'count',index : 'count',label:'数量',width : 10,editable : false},
+                        {name : 'money',index : 'money',label:'总额',width : 10,editable : false},
+                        {name : 'warehouse',index : 'warehouse',label:'所出仓库',width : 10,editable : false},
+                        {name : 'weigh_person',index : 'weigh_person',label:'过磅人',width : 10,editable : false},
+                        {name : 'transport_person',index : 'transport_person',label:'运输人',width : 10,editable : false},
+                        {name : 'car_num',index : 'car_num',label:'司机车号',width : 10,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '<a class="btn no-border btn-minier btn-primary process" href="/output/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';

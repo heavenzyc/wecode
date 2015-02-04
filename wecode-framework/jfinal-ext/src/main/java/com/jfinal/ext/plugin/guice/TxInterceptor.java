@@ -12,7 +12,7 @@ import com.jfinal.plugin.activerecord.DbPro;
 import com.jfinal.plugin.activerecord.IAtom;
 
 /**
- * @author yangfan 2014年6月15日 上午11:56:35
+ * @author heaven.zyc 2014年6月15日 上午11:56:35
  */
 public class TxInterceptor implements MethodInterceptor{
 	

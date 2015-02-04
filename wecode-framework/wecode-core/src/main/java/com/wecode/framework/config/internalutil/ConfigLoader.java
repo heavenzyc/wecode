@@ -34,7 +34,7 @@ import com.wecode.framework.exception.SystemException;
  * ...
  * </pre>
  *
- * @author yangfan 2011-5-5 下午04:25:26
+ * @author heaven.zyc 2011-5-5 下午04:25:26
  */
 public class ConfigLoader {
 

@@ -7,7 +7,7 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
 /**
- * @author yangfan 2014年5月29日 下午5:31:05
+ * @author heaven.zyc 2014年5月29日 下午5:31:05
  */
 public class Db2 extends Db{
 

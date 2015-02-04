@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 事务注解
- * @author yangfan 2014年6月15日 下午12:19:59
+ * @author heaven.zyc 2014年6月15日 下午12:19:59
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

@@ -3,7 +3,7 @@ package com.wecode.framework.config;
 import java.util.Iterator;
 
 /**
- * @author yangfan 2014年5月29日 下午2:06:29
+ * @author heaven.zyc 2014年5月29日 下午2:06:29
  */
 public interface ConfigApi {
 	

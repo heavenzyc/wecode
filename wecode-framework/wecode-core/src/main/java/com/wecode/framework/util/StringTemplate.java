@@ -28,7 +28,7 @@ import freemarker.template.TemplateException;
  * StringTemplate.replace("Hello, ${name}!","name","world"); ==> Hello, world!
  * </pre>
  *
- * @author yangfan 2014-1-21 上午10:34:19
+ * @author heaven.zyc 2014-1-21 上午10:34:19
  */
 public class StringTemplate {
 
@@ -70,7 +70,7 @@ public class StringTemplate {
 	 * @param str 要替换的模板
 	 * @param data 数据，可以是javabean、map等
 	 * @return
-	 * @author yangfan
+	 * @author heaven.zyc
 	 * @since 2011-11-12
 	 */
 	public static String replace(String str, Object data) {

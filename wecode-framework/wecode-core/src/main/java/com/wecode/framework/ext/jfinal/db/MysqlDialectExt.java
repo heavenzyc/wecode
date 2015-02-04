@@ -14,7 +14,7 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 
 /**
  * 自定义的mysql方言，实现乐观锁功能
- * @author yangfan 2014年6月19日 下午2:36:36
+ * @author heaven.zyc 2014年6月19日 下午2:36:36
  */
 public class MysqlDialectExt extends MysqlDialect {
 	

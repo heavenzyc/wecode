@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : localhost-mysql
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-03 23:35:43
+Date: 2015-02-04 18:23:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,8 +57,8 @@ CREATE TABLE `input_info` (
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
   `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `material_name` varchar(50) DEFAULT NULL COMMENT '材料名称',
-  `count` int(11) DEFAULT NULL COMMENT '入库数量',
-  `money` decimal(10,0) DEFAULT NULL COMMENT '总金额',
+  `count` decimal(10,2) DEFAULT NULL COMMENT '入库数量',
+  `money` decimal(10,2) DEFAULT NULL COMMENT '总金额',
   `transport_person` varchar(20) DEFAULT NULL COMMENT '运输人',
   `car_num` varchar(20) DEFAULT NULL COMMENT '运输车号',
   `weigh_person` varchar(20) DEFAULT NULL COMMENT '过磅人',
@@ -74,19 +74,21 @@ CREATE TABLE `input_info` (
   `unit` varchar(10) DEFAULT NULL COMMENT '单位',
   `accept_merchant_id` varchar(50) DEFAULT NULL COMMENT '收货单位编码',
   `accept_merchant_name` varchar(50) DEFAULT NULL COMMENT '收货单位名称',
+  `discount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
 
 -- ----------------------------
 -- Records of input_info
 -- ----------------------------
-INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1', '1000', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null, '2000.00', '吨', null, null);
-INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2', '2000', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null);
-INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224', '224000', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null);
-INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21', '21000', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null);
-INSERT INTO `input_info` VALUES ('6', '1422975545526', 'cc', '001', '类型2', null, '2', '国美电器2', 'cc', '2015-02-03 22:59:05', 'VALID', '2', '金矿', '2', '100000', 'cc', 'cc', 'cc', '敖厂长', '敖厂长', '2015-02-03 22:59:05', 'cc', '6', '6', '001', 'B级', '50000.00', '克', null, null);
-INSERT INTO `input_info` VALUES ('7', '1422977404108', 'ss', '001', '类型2', null, '1', '国美电器1', 'vv', '2015-02-03 23:30:04', 'VALID', '2', '金矿', '2', '100000', 'vv', 'vv', 'vv', '王尼玛', '王尼玛', '2015-02-03 23:30:04', 'vv', '4', '4', '001', 'B级', '50000.00', '克', null, null);
-INSERT INTO `input_info` VALUES ('8', '1422977492529', '', '001', '类型2', null, '2', '国美电器2', '', '2015-02-03 23:32:32', 'VALID', '2', '金矿', '1', '50000', '', '', '', '敖厂长', '敖厂长', '2015-02-03 23:32:32', '', '6', '6', '001', 'B级', '50000.00', '克', null, null);
+INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1.00', '1000.00', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null, '2000.00', '吨', null, null, null);
+INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2.00', '2000.00', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null, null);
+INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224.00', '224000.00', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null, null);
+INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21.00', '21000.00', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null, null);
+INSERT INTO `input_info` VALUES ('6', '1422975545526', 'cc', '001', '类型2', null, '2', '国美电器2', 'cc', '2015-02-03 22:59:05', 'VALID', '2', '金矿', '2.00', '100000.00', 'cc', 'cc', 'cc', '敖厂长', '敖厂长', '2015-02-03 22:59:05', 'cc', '6', '6', '001', 'B级', '50000.00', '克', null, null, null);
+INSERT INTO `input_info` VALUES ('7', '1422977404108', 'ss', '001', '类型2', null, '1', '国美电器1', 'vv', '2015-02-03 23:30:04', 'VALID', '2', '金矿', '2.00', '100000.00', 'vv', 'vv', 'vv', '王尼玛', '王尼玛', '2015-02-03 23:30:04', 'vv', '4', '4', '001', 'B级', '50000.00', '克', null, null, null);
+INSERT INTO `input_info` VALUES ('8', '1422977492529', '', '001', '类型2', null, '2', '国美电器2', '', '2015-02-03 23:32:32', 'VALID', '2', '金矿', '1.00', '50000.00', '', '', '', '敖厂长', '敖厂长', '2015-02-03 23:32:32', '', '6', '6', '001', 'B级', '50000.00', '克', null, null, null);
+INSERT INTO `input_info` VALUES ('9', '1423034761121', 'vvvv', '001', '类型2', null, '2', '国美电器2', 'v', '2015-02-04 15:26:01', 'VALID', '2', '金矿', '3.00', '150000.00', 'v', 'v', 'v', '完尼玛', '金三胖', '2015-02-04 15:26:01', 'v', '5', '1', '001', 'B级', '50000.00', '克', null, null, null);
 
 -- ----------------------------
 -- Table structure for loan
@@ -135,8 +137,8 @@ CREATE TABLE `material` (
   `standard_name` varchar(50) DEFAULT NULL COMMENT '材料规格名称',
   `unit` varchar(50) DEFAULT NULL COMMENT '材料单位',
   `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
-  `count` int(11) DEFAULT NULL COMMENT '材料数量',
-  `discount` int(11) DEFAULT NULL COMMENT '材料折扣',
+  `count` decimal(11,2) DEFAULT NULL COMMENT '材料数量',
+  `discount` decimal(11,2) DEFAULT NULL COMMENT '材料折扣',
   `type_id` varchar(50) DEFAULT NULL COMMENT '材料类别编码',
   `type_name` varchar(50) DEFAULT NULL COMMENT '材料类别名称',
   `create_time` datetime DEFAULT NULL,
@@ -147,8 +149,8 @@ CREATE TABLE `material` (
 -- ----------------------------
 -- Records of material
 -- ----------------------------
-INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100', '800', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
-INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100', '4000', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
+INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100.00', '800.00', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
+INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100.00', '4000.00', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
 
 -- ----------------------------
 -- Table structure for material_standard
@@ -204,16 +206,16 @@ CREATE TABLE `output_info` (
   `purchase_type_id` varchar(50) DEFAULT NULL COMMENT '采购类别编码',
   `purchase_type_name` varchar(20) DEFAULT NULL COMMENT '供应商名称',
   `contract_num` varchar(50) DEFAULT NULL COMMENT '合同编号',
-  `provide_merchant_id` varchar(50) DEFAULT NULL COMMENT '供应商编码',
-  `provide_merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
+  `merchant_id` varchar(50) DEFAULT NULL COMMENT '供应商编码',
+  `merchant_name` varchar(50) DEFAULT NULL COMMENT '供应商编码名称',
   `warehouse` varchar(50) DEFAULT NULL COMMENT '出库仓库',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `status` varchar(20) DEFAULT NULL COMMENT '状态(VALID-有效， INVALID-无效）',
   `material_id` varchar(50) DEFAULT NULL COMMENT '材料编码',
   `material_name` varchar(50) DEFAULT NULL COMMENT '材料名称',
-  `count` int(11) DEFAULT NULL COMMENT '出库数量',
-  `money` decimal(10,0) DEFAULT NULL COMMENT '总金额',
-  `transport_peson` varchar(20) DEFAULT NULL COMMENT '运输人',
+  `count` decimal(10,2) DEFAULT NULL COMMENT '出库数量',
+  `money` decimal(10,2) DEFAULT NULL COMMENT '总金额',
+  `transport_person` varchar(20) DEFAULT NULL COMMENT '运输人',
   `car_num` varchar(20) DEFAULT NULL COMMENT '运输车号',
   `weigh_person` varchar(20) DEFAULT NULL COMMENT '过磅人',
   `send_person` varchar(20) DEFAULT NULL COMMENT '发货人',
@@ -229,12 +231,17 @@ CREATE TABLE `output_info` (
   `unit` varchar(10) DEFAULT NULL,
   `accept_merchant_id` varchar(50) DEFAULT NULL,
   `accept_merchant_name` varchar(50) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='出库信息表';
 
 -- ----------------------------
 -- Records of output_info
 -- ----------------------------
+INSERT INTO `output_info` VALUES ('1', '1423036401740', '11', '001', '煤矿类型1', null, '1', '国美电器1', '111', '2015-02-04 15:53:21', 'INVALID', '1', '煤矿', '1.00', '1000.00', '111', '111', '111', '金三胖', '金三胖', '2015-02-04 15:53:21', '0', '1111', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
+INSERT INTO `output_info` VALUES ('2', '1423036639336', '222', '001', '煤矿类型1', null, '1', '国美电器1', '2', '2015-02-04 15:57:19', 'VALID', '1', '煤矿', '3.00', '3100.00', '2', '2', '2', '金三胖', '金三胖', '2015-02-04 15:57:19', '0', '2', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
+INSERT INTO `output_info` VALUES ('3', '1423036980216', '3331', '001', '类型2', null, '1', '国美电器1', '31', '2015-02-04 16:03:00', 'VALID', '2', '金矿', '1.20', '60000.00', '31', '31', '31', '奥巴马', '奥巴马', '2015-02-04 16:03:00', '0', '31', '2', '2', '001', 'B级', '50000.00', '克', null, null, null);
+INSERT INTO `output_info` VALUES ('4', '1423038196323', '123123', '001', '煤矿类型1', null, '1', '国美电器1', '12', '2015-02-04 16:23:16', 'VALID', '1', '煤矿', '1.36', '1360.00', '12', '123', '123', '金三胖', '金三胖', '2015-02-04 16:23:16', '0', '123', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
 
 -- ----------------------------
 -- Table structure for person

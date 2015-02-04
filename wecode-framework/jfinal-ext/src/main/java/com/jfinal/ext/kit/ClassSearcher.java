@@ -85,7 +85,7 @@ public class ClassSearcher {
                     if (ClassSearcher.wildcardMatch(targetFileName, tempName)) {
                         String classname;
                         String tem = readfile.getAbsoluteFile().toString().replaceAll("\\\\", "/");
-                        //避免maven中测试类以test-classes作为编译输出目录，进行单元测试报错的问题 20140604 by yangfan
+                        //避免maven中测试类以test-classes作为编译输出目录，进行单元测试报错的问题 20140604 by heaven.zyc
                         if(tem.indexOf("/classes") != -1) {
                         	classname = tem.substring(tem.indexOf("/classes") + "/classes".length() + 1,
                                     tem.indexOf(".class"));

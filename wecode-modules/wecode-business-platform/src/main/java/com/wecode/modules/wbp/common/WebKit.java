@@ -5,7 +5,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 /**
- * @author yangfan 2014年7月11日 下午1:05:17
+ * @author heaven.zyc 2014年7月11日 下午1:05:17
  */
 public class WebKit {
 

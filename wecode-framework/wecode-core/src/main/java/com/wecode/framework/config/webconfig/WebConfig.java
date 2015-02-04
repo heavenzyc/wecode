@@ -66,7 +66,7 @@ import com.wecode.framework.config.Config;
  * </pre>
  * 	</ul>
  * </ol>
- * @author yangfan 2011-5-5 下午04:17:11
+ * @author heaven.zyc 2011-5-5 下午04:17:11
  */
 public class WebConfig implements Filter {
 

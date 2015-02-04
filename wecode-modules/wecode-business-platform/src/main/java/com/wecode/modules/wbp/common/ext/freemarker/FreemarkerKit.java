@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * freemarker帮助类
- * @author yangfan 2014年6月10日 下午2:58:06
+ * @author heaven.zyc 2014年6月10日 下午2:58:06
  */
 public class FreemarkerKit {
 	

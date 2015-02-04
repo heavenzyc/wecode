@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-sm-12 col-md-8" >
             <!-- PAGE CONTENT BEGINS -->
-
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
+                    入  库  单
+                </div>
+            </div>
             <form id="add_input_info" class="form-horizontal" houseType="form" action="/input/modify" method="post">
                 <input type="hidden" name="id" value="${data.id}"/>
                 <input type="hidden" id="senderId" value="${data.send_person_id}"/>

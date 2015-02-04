@@ -9,7 +9,7 @@ import com.wecode.framework.ext.jfinal.model.BaseModel;
 /**
  * 楼盘表
  * 
- * @author yangfan 2014年6月2日 下午1:55:08
+ * @author heaven.zyc 2014年6月2日 下午1:55:08
  */
 @TableBind(tableName = "project")
 public class Project extends BaseModel<Project, Integer> {

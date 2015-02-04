@@ -9,7 +9,7 @@ import com.wecode.modules.wbp.common.model.Project;
 import java.util.List;
 
 /**
- * @author yangfan 2014年6月2日 下午1:01:28
+ * @author heaven.zyc 2014年6月2日 下午1:01:28
  */
 @TableBind(tableName = "project_consultant")
 public class ProjectConsultant extends BaseModel<ProjectConsultant, Integer> {

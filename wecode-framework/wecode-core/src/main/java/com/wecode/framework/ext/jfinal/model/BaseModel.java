@@ -17,7 +17,7 @@ import com.jfinal.plugin.activerecord.TableMapping;
 import com.jfinal.plugin.activerecord.cache.ICache;
 
 /**
- * @author yangfan 2014年5月28日 下午11:03:53
+ * @author heaven.zyc 2014年5月28日 下午11:03:53
  */
 public abstract class BaseModel<M extends Model<M>, PK extends Serializable> extends Model<M> {
 

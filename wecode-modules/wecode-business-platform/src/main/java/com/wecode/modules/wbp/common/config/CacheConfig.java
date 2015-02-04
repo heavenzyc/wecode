@@ -2,7 +2,7 @@ package com.wecode.modules.wbp.common.config;
 
 
 /**
- * @author yangfan 2014年6月9日 下午6:30:07
+ * @author heaven.zyc 2014年6月9日 下午6:30:07
  */
 public class CacheConfig {
 	

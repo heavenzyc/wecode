@@ -7,6 +7,8 @@
 
 	<div class="row">
 		<div class="col-xs-12">
+
+
 			<div class="table-responsive">
                     <table id="grid-table"></table>
                     <div id="grid-pager"></div>

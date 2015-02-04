@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @author yangfan 2014-4-22 下午5:49:33
+ * @author heaven.zyc 2014-4-22 下午5:49:33
  */
 public class WechatUtils {
 

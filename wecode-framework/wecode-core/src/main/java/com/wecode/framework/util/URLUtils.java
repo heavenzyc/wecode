@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author yangfan 2014年6月12日 下午10:26:55
+ * @author heaven.zyc 2014年6月12日 下午10:26:55
  */
 public class URLUtils {
 	

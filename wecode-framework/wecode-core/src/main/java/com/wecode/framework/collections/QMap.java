@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
  * </pre>
  * </p>
- * @author yangfan 2011-12-2
+ * @author heaven.zyc 2011-12-2
  * @param <K>
  * @param <V>
  */

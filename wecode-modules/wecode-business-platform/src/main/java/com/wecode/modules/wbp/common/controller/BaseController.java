@@ -6,7 +6,7 @@ import com.wecode.modules.wbp.common.config.SysConfig;
 import com.wecode.modules.wbp.common.model.Project;
 
 /**
- * @author yangfan 2014年5月29日 下午4:52:33
+ * @author heaven.zyc 2014年5月29日 下午4:52:33
  */
 public class BaseController extends ControllerSupport{
 

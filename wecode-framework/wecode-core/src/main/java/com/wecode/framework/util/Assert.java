@@ -3,7 +3,7 @@ package com.wecode.framework.util;
 import com.wecode.framework.exception.BusinessException;
 
 /**
- * @author yangfan 2014年6月27日 下午2:39:13
+ * @author heaven.zyc 2014年6月27日 下午2:39:13
  */
 public class Assert {
 	

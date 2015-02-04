@@ -14,7 +14,7 @@ import flexjson.transformer.DateTransformer;
 
 /**
  * json结果
- * @author yangfan 2014年6月3日 上午1:18:54
+ * @author heaven.zyc 2014年6月3日 上午1:18:54
  */
 public class JsonResult {
 	

@@ -9,7 +9,7 @@ import com.wecode.modules.wbp.common.controller.BaseController;
 import com.wecode.modules.wbp.common.model.Project;
 
 /**
- * @author yangfan 2014年6月13日 下午8:22:32
+ * @author heaven.zyc 2014年6月13日 下午8:22:32
  */
 @ControllerBind(controllerKey = "/admin/project/info", viewPath = "/project/info")
 public class ProjectInfoController extends BaseController {

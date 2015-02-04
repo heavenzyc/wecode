@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * // {usernmae=aaa, age=18, key3=222.5, createTime=2011-11-11T11:11:00.000+08:00}
  * </pre>
  *
- * @author yangfan 2011-12-2
+ * @author heaven.zyc 2011-12-2
  */
 public class KV extends QMap<String, Object> implements Map<String, Object> {
 

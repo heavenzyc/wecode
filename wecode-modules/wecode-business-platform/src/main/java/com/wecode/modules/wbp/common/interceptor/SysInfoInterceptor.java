@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 将菜单信息注入，待优化代码
- * @author yangfan 2014年5月30日 上午1:32:59
+ * @author heaven.zyc 2014年5月30日 上午1:32:59
  */
 public class SysInfoInterceptor implements Interceptor {
 	

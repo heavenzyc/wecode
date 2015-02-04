@@ -10,7 +10,7 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 
 /**
- * @author yangfan 2014年6月4日 下午2:23:36
+ * @author heaven.zyc 2014年6月4日 下午2:23:36
  */
 public abstract class BaseTest {
 	

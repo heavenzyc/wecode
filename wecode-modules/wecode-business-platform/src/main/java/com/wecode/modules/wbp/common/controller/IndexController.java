@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.security.interfaces.RSAPublicKey;
 
 /**
- * @author yangfan 2014年5月28日 下午5:58:44
+ * @author heaven.zyc 2014年5月28日 下午5:58:44
  */
 @ControllerBind(controllerKey = "/", viewPath = "/")
 public class IndexController extends BaseController{

@@ -16,7 +16,7 @@ import com.jfinal.core.Controller;
 import com.wecode.framework.exception.BusinessException;
 
 /**
- * @author yangfan 2014年6月3日 上午12:43:49
+ * @author heaven.zyc 2014年6月3日 上午12:43:49
  */
 public class ExceptionInterceptor implements Interceptor {
     private Logger log = LoggerFactory.getLogger(ExceptionInterceptor.class);

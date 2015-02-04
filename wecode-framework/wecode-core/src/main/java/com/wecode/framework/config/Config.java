@@ -8,7 +8,7 @@ import com.wecode.framework.config.internalutil.ConfigLoader;
 import com.wecode.framework.exception.SystemException;
 
 /**
- * @author yangfan 2014年5月29日 下午4:07:30
+ * @author heaven.zyc 2014年5月29日 下午4:07:30
  */
 public class Config implements ConfigApi{
 	

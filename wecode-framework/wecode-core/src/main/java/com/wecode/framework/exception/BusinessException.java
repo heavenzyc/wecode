@@ -3,7 +3,7 @@ package com.wecode.framework.exception;
 /**
  * 业务异常
  *
- * @author yangfan 2014-2-17 下午2:53:27
+ * @author heaven.zyc 2014-2-17 下午2:53:27
  */
 public class BusinessException extends RuntimeException {
 

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author yangfan 2014年6月19日 下午2:47:21
+ * @author heaven.zyc 2014年6月19日 下午2:47:21
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
