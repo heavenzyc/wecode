@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost-mysql
+Source Server         : localhost
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-04 18:23:46
+Date: 2015-02-05 00:49:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,20 +75,40 @@ CREATE TABLE `input_info` (
   `accept_merchant_id` varchar(50) DEFAULT NULL COMMENT '收货单位编码',
   `accept_merchant_name` varchar(50) DEFAULT NULL COMMENT '收货单位名称',
   `discount` decimal(10,2) DEFAULT NULL,
+  `material_code` varchar(50) DEFAULT NULL COMMENT '材料编号',
+  `type` varchar(20) DEFAULT NULL COMMENT '类型（ADD-手动添加  EXCEL-excel导入）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8 COMMENT='入库信息表';
 
 -- ----------------------------
 -- Records of input_info
 -- ----------------------------
-INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1.00', '1000.00', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null, '2000.00', '吨', null, null, null);
-INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2.00', '2000.00', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null, null);
-INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224.00', '224000.00', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null, null);
-INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21.00', '21000.00', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null, null);
-INSERT INTO `input_info` VALUES ('6', '1422975545526', 'cc', '001', '类型2', null, '2', '国美电器2', 'cc', '2015-02-03 22:59:05', 'VALID', '2', '金矿', '2.00', '100000.00', 'cc', 'cc', 'cc', '敖厂长', '敖厂长', '2015-02-03 22:59:05', 'cc', '6', '6', '001', 'B级', '50000.00', '克', null, null, null);
-INSERT INTO `input_info` VALUES ('7', '1422977404108', 'ss', '001', '类型2', null, '1', '国美电器1', 'vv', '2015-02-03 23:30:04', 'VALID', '2', '金矿', '2.00', '100000.00', 'vv', 'vv', 'vv', '王尼玛', '王尼玛', '2015-02-03 23:30:04', 'vv', '4', '4', '001', 'B级', '50000.00', '克', null, null, null);
-INSERT INTO `input_info` VALUES ('8', '1422977492529', '', '001', '类型2', null, '2', '国美电器2', '', '2015-02-03 23:32:32', 'VALID', '2', '金矿', '1.00', '50000.00', '', '', '', '敖厂长', '敖厂长', '2015-02-03 23:32:32', '', '6', '6', '001', 'B级', '50000.00', '克', null, null, null);
-INSERT INTO `input_info` VALUES ('9', '1423034761121', 'vvvv', '001', '类型2', null, '2', '国美电器2', 'v', '2015-02-04 15:26:01', 'VALID', '2', '金矿', '3.00', '150000.00', 'v', 'v', 'v', '完尼玛', '金三胖', '2015-02-04 15:26:01', 'v', '5', '1', '001', 'B级', '50000.00', '克', null, null, null);
+INSERT INTO `input_info` VALUES ('1', '1422892976596', 'werwer', null, null, null, '001', '国美电器1', 'ewre', '2015-02-03 00:02:56', 'VALID', '001', '煤矿', '1.00', '1000.00', 'werwrwsdf', 'sdfsdf', 'sdf', '金三胖', '王尼玛', '2015-02-03 00:02:56', '23er2', '001', '004', null, null, '2000.00', '吨', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('2', '1422893311314', '222', '001', '煤矿类型1', null, '001', '国美电器1', '222', '2015-02-03 00:08:31', 'VALID', '001', '煤矿', '2.00', '2000.00', '222', '222', '222', '金三胖', '王尼玛', '2015-02-03 00:08:31', '222', '001', '004', '001', 'A级', '1000.00', '克', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('4', '1422937617701', '', '001', '煤矿类型1', null, '001', '国美电器1', '', '2015-02-03 12:26:57', 'INVALID', '001', '煤矿', '224.00', '224000.00', '', '', '', '金三胖', '王尼玛', '2015-02-03 12:26:57', '', '001', '004', '001', 'A级', '1000.00', '吨', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('5', '1422943888875', 'aXX', '001', '煤矿类型1', null, '001', '国美电器1', 'X', '2015-02-03 14:11:28', 'VALID', '001', '煤矿', '21.00', '21000.00', 'X', 'X', 'X', '奥巴马', '长全蛋', '2015-02-03 14:11:28', 'X', '002', '003', '001', 'A级', '1000.00', '吨', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('6', '1422975545526', 'cc', '001', '类型2', null, '2', '国美电器2', 'cc', '2015-02-03 22:59:05', 'VALID', '2', '金矿', '2.00', '100000.00', 'cc', 'cc', 'cc', '敖厂长', '敖厂长', '2015-02-03 22:59:05', 'cc', '6', '6', '001', 'B级', '50000.00', '克', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('7', '1422977404108', 'ss', '001', '类型2', null, '1', '国美电器1', 'vv', '2015-02-03 23:30:04', 'VALID', '2', '金矿', '2.00', '100000.00', 'vv', 'vv', 'vv', '王尼玛', '王尼玛', '2015-02-03 23:30:04', 'vv', '4', '4', '001', 'B级', '50000.00', '克', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('8', '1422977492529', '', '001', '类型2', null, '2', '国美电器2', '', '2015-02-03 23:32:32', 'VALID', '2', '金矿', '1.00', '50000.00', '', '', '', '敖厂长', '敖厂长', '2015-02-03 23:32:32', '', '6', '6', '001', 'B级', '50000.00', '克', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('9', '1423034761121', 'vvvv', '001', '类型2', null, '2', '国美电器2', 'v', '2015-02-04 15:26:01', 'VALID', '2', '金矿', '3.00', '150000.00', 'v', 'v', 'v', '完尼玛', '金三胖', '2015-02-04 15:26:01', 'v', '5', '1', '001', 'B级', '50000.00', '克', null, null, null, null, 'ADD');
+INSERT INTO `input_info` VALUES ('10', '1423056028876', 'aaa', '001', '煤矿类型1', null, '1', '国美电器1', 'aa', '2015-02-04 21:20:28', 'VALID', '1', '煤矿', '2.00', '1600.00', 'aa', 'aa', 'aa', '金三胖', '金三胖', '2015-02-04 21:20:28', 'aaa', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '20.00', null, 'ADD');
+INSERT INTO `input_info` VALUES ('11', '1423056646470', 'bb', '001', '煤矿类型1', null, '1', '国美电器1', 'bb', '2015-02-04 21:30:46', 'VALID', '1', '煤矿', '3.00', '2400.00', 'bb', 'bb', 'bb', '金三胖', '金三胖', '2015-02-04 21:30:46', 'bb', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '20.00', null, 'ADD');
+INSERT INTO `input_info` VALUES ('149', '0000000001', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:45:25', 'VALID', null, '萤石矿', '1000.00', '500000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级95%-97%', '500.00', '吨', null, null, '10.00', 'CaF2 45', 'EXCEL');
+INSERT INTO `input_info` VALUES ('150', '0000000001', null, null, '粉', null, null, null, 'A', '2015-02-05 00:45:25', 'VALID', null, '石粉', '1000.00', '50000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级92%-95%', '50.00', '吨', null, null, '10.00', 'Cb', 'EXCEL');
+INSERT INTO `input_info` VALUES ('151', '0000000001', null, null, '原矿', null, null, null, 'B', '2015-02-05 00:45:25', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '二级90%', '500.00', '吨', null, null, '10.00', 'CaF2 47', 'EXCEL');
+INSERT INTO `input_info` VALUES ('152', '0000000002', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:45:25', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级95%', '500.00', '吨', null, null, '10.00', 'CaF2 48', 'EXCEL');
+INSERT INTO `input_info` VALUES ('153', '0000000003', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:45:25', 'VALID', null, '萤石矿', '1000.00', '500000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AADDD', '2015-01-02 00:00:00', '', null, null, null, '一级95%-97%', '500.00', '吨', null, null, '10.00', 'CaF2 45', 'EXCEL');
+INSERT INTO `input_info` VALUES ('154', '0000000003', null, null, '粉', null, null, null, 'A', '2015-02-05 00:45:25', 'VALID', null, '石粉', '1000.00', '50000.00', null, '甘F·5468867', '张健君', 'VVVVVV', '李强', '2015-01-02 00:00:00', '', null, null, null, '一级92%-95%', '50.00', '吨', null, null, '10.00', 'Cb', 'EXCEL');
+INSERT INTO `input_info` VALUES ('155', '0000000003', null, null, '原矿', null, null, null, 'B', '2015-02-05 00:45:26', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468868', '张健君', 'VVVVVV', '汪铭锐', '2015-01-02 00:00:00', '', null, null, null, '二级90%', '500.00', '吨', null, null, '10.00', 'CaF2 47', 'EXCEL');
+INSERT INTO `input_info` VALUES ('156', '0000000003', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:45:26', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468869', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-02 00:00:00', '', null, null, null, '一级95%', '500.00', '吨', null, null, '10.00', 'CaF2 48', 'EXCEL');
+INSERT INTO `input_info` VALUES ('157', '0000000001', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '1000.00', '500000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级95%-97%', '500.00', '吨', null, null, '10.00', 'CaF2 45', 'EXCEL');
+INSERT INTO `input_info` VALUES ('158', '0000000001', null, null, '粉', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '石粉', '1000.00', '50000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级92%-95%', '50.00', '吨', null, null, '10.00', 'Cb', 'EXCEL');
+INSERT INTO `input_info` VALUES ('159', '0000000001', null, null, '原矿', null, null, null, 'B', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '二级90%', '500.00', '吨', null, null, '10.00', 'CaF2 47', 'EXCEL');
+INSERT INTO `input_info` VALUES ('160', '0000000002', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-01 00:00:00', '', null, null, null, '一级95%', '500.00', '吨', null, null, '10.00', 'CaF2 48', 'EXCEL');
+INSERT INTO `input_info` VALUES ('161', '0000000003', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '1000.00', '500000.00', null, '甘F·5468866', '张健君', 'VVVVVV', 'AADDD', '2015-01-02 00:00:00', '', null, null, null, '一级95%-97%', '500.00', '吨', null, null, '10.00', 'CaF2 45', 'EXCEL');
+INSERT INTO `input_info` VALUES ('162', '0000000003', null, null, '粉', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '石粉', '1000.00', '50000.00', null, '甘F·5468867', '张健君', 'VVVVVV', '李强', '2015-01-02 00:00:00', '', null, null, null, '一级92%-95%', '50.00', '吨', null, null, '10.00', 'Cb', 'EXCEL');
+INSERT INTO `input_info` VALUES ('163', '0000000003', null, null, '原矿', null, null, null, 'B', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468868', '张健君', 'VVVVVV', '汪铭锐', '2015-01-02 00:00:00', '', null, null, null, '二级90%', '500.00', '吨', null, null, '10.00', 'CaF2 47', 'EXCEL');
+INSERT INTO `input_info` VALUES ('164', '0000000003', null, null, '原矿', null, null, null, 'A', '2015-02-05 00:46:09', 'VALID', null, '萤石矿', '2000.00', '1000000.00', null, '甘F·5468869', '张健君', 'VVVVVV', 'AAAAAA', '2015-01-02 00:00:00', '', null, null, null, '一级95%', '500.00', '吨', null, null, '10.00', 'CaF2 48', 'EXCEL');
 
 -- ----------------------------
 -- Table structure for loan
@@ -149,8 +169,8 @@ CREATE TABLE `material` (
 -- ----------------------------
 -- Records of material
 -- ----------------------------
-INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100.00', '800.00', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
-INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100.00', '4000.00', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
+INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100.00', '20.00', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
+INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100.00', '20.00', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
 
 -- ----------------------------
 -- Table structure for material_standard
@@ -232,16 +252,19 @@ CREATE TABLE `output_info` (
   `accept_merchant_id` varchar(50) DEFAULT NULL,
   `accept_merchant_name` varchar(50) DEFAULT NULL,
   `discount` decimal(10,2) DEFAULT NULL,
+  `material_code` varchar(50) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL COMMENT '类型（ADD-手动添加  EXCEL-excel导入）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='出库信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='出库信息表';
 
 -- ----------------------------
 -- Records of output_info
 -- ----------------------------
-INSERT INTO `output_info` VALUES ('1', '1423036401740', '11', '001', '煤矿类型1', null, '1', '国美电器1', '111', '2015-02-04 15:53:21', 'INVALID', '1', '煤矿', '1.00', '1000.00', '111', '111', '111', '金三胖', '金三胖', '2015-02-04 15:53:21', '0', '1111', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
-INSERT INTO `output_info` VALUES ('2', '1423036639336', '222', '001', '煤矿类型1', null, '1', '国美电器1', '2', '2015-02-04 15:57:19', 'VALID', '1', '煤矿', '3.00', '3100.00', '2', '2', '2', '金三胖', '金三胖', '2015-02-04 15:57:19', '0', '2', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
-INSERT INTO `output_info` VALUES ('3', '1423036980216', '3331', '001', '类型2', null, '1', '国美电器1', '31', '2015-02-04 16:03:00', 'VALID', '2', '金矿', '1.20', '60000.00', '31', '31', '31', '奥巴马', '奥巴马', '2015-02-04 16:03:00', '0', '31', '2', '2', '001', 'B级', '50000.00', '克', null, null, null);
-INSERT INTO `output_info` VALUES ('4', '1423038196323', '123123', '001', '煤矿类型1', null, '1', '国美电器1', '12', '2015-02-04 16:23:16', 'VALID', '1', '煤矿', '1.36', '1360.00', '12', '123', '123', '金三胖', '金三胖', '2015-02-04 16:23:16', '0', '123', '1', '1', '001', 'A级', '1000.00', '吨', null, null, null);
+INSERT INTO `output_info` VALUES ('1', '1423036401740', '11', '001', '煤矿类型1', null, '1', '国美电器1', '111', '2015-02-04 15:53:21', 'VALID', '1', '煤矿', '1.00', '1000.00', '111', '111', '111', '金三胖', '金三胖', '2015-02-05 15:53:21', '0', '1111', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '10.00', null, null);
+INSERT INTO `output_info` VALUES ('2', '1423036639336', '222', '001', '煤矿类型1', null, '1', '国美电器1', '2', '2015-02-04 15:57:19', 'VALID', '1', '煤矿', '3.00', '3100.00', '2', '2', '2', '金三胖', '金三胖', '2015-02-04 15:57:19', '0', '2', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '10.00', null, null);
+INSERT INTO `output_info` VALUES ('3', '1423036980216', '3331', '001', '类型2', null, '1', '国美电器1', '31', '2015-02-04 16:03:00', 'VALID', '2', '金矿', '1.20', '60000.00', '31', '31', '31', '奥巴马', '奥巴马', '2015-02-04 16:03:00', '0', '31', '2', '2', '001', 'B级', '50000.00', '克', null, null, '10.00', null, null);
+INSERT INTO `output_info` VALUES ('4', '1423038196323', '123123', '001', '煤矿类型1', null, '1', '国美电器1', '12', '2015-02-04 16:23:16', 'VALID', '1', '煤矿', '1.36', '1360.00', '12', '123', '123', '金三胖', '金三胖', '2015-02-04 16:23:16', '0', '123', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '10.00', null, null);
+INSERT INTO `output_info` VALUES ('5', '1423056671486', 'b', '001', '煤矿类型1', null, '1', '国美电器1', 'bb', '2015-02-04 21:31:11', 'VALID', '1', '煤矿', '4.00', '3200.00', 'b', 'b', 'b', '金三胖', '金三胖', '2015-02-04 21:31:11', '0', 'b', '1', '1', '001', 'A级', '1000.00', '吨', null, null, '20.00', null, null);
 
 -- ----------------------------
 -- Table structure for person
