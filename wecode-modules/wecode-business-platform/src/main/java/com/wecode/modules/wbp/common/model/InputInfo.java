@@ -2,9 +2,12 @@ package com.wecode.modules.wbp.common.model;
 
 import com.jfinal.ext.plugin.tablebind.TableBind;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import com.wecode.framework.ext.jfinal.db.Db2;
 import com.wecode.framework.ext.jfinal.model.BaseModel;
 import com.wecode.framework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,5 +50,15 @@ public class InputInfo extends BaseModel<InputInfo, Integer> {
         }
         sqlExceptSelect += " order by input_time desc ";
         return InputInfo.dao.paginate(curPage,pageSize,sql,sqlExceptSelect,params.toArray());
+    }
+
+    public static BigDecimal getTotalCount(){
+        String hql = " select sum(count) from input_info where  status='VALID' ";
+        return Db2.queryBigDecimal(hql);
+    }
+
+    public static BigDecimal getTotalMoney(){
+        String hql = " select sum(money) from input_info where  status='VALID' ";
+        return Db2.queryBigDecimal(hql);
     }
 }

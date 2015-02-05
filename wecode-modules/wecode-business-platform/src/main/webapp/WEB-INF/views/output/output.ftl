@@ -41,6 +41,12 @@
                             <i class="icon-search icon-on-right bigger-110" placeholder=""></i>
                         </button>
                     </span>
+                    <label class="pull-right" style="margin-top:0px; font-size: 20px;color:#ff0000 ">数量合计：${totalCount}（吨）  &nbsp;&nbsp;&nbsp;
+                        金额合计：${totalMoney} （元）  </label>
+                    <div class="pull-right" style="margin-right:30px;">
+                        <div class="input-group" style="width:200px; margin-left:0px;">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="space-6"></div>

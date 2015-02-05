@@ -40,7 +40,14 @@
                             <i class="icon-search icon-on-right bigger-110" placeholder=""></i>
                         </button>
                     </span>
+                    <label class="pull-right" style="margin-top:0px; font-size: 20px;color:#ff0000 ">数量合计：${totalCount}（吨）  &nbsp;&nbsp;&nbsp;
+                        金额合计：${totalMoney} （元）  </label>
+                    <div class="pull-right" style="margin-right:30px;">
+                        <div class="input-group" style="width:200px; margin-left:0px;">
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <div class="space-6"></div>
             <div class="table-responsive">
@@ -103,7 +110,7 @@
             url : "/input/list",
             datatype : "json",
             mtype : 'get',
-            height : 400,
+            height : 380,
             caption:'入  库  单（带过磅单）',
             rownumbers: true,
             scrollOffset:1,
@@ -153,7 +160,7 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
-                var ids = jQuery("#grid-table").jqGrid('getDataIDs');
+                /*var ids = jQuery("#grid-table").jqGrid('getDataIDs');
                 var rowid = Math.max.apply(Math,ids);
                 var newrowid = rowid+1;
                 var dataRow = {
@@ -170,14 +177,7 @@
                     money:''
 
                 };
-                $("#grid-table").jqGrid("addRowData", newrowid, dataRow, "last");
-//                $("#grid-table").jqGrid("setRowData", newrowid, { price:"5", count:"0" });
-//                $("#grid-table").jqGrid("setCell", newrowid, 9,"5");
-            },
-            gridComplete:function(){
-//                $("#grid-table").setRowData(11,{ price:"5", count:"0" });
-                $("#grid-table").jqGrid("setCell", 11, 'price',"");
-
+                $("#grid-table").jqGrid("addRowData", newrowid, dataRow, "last");*/
             }
         });
 

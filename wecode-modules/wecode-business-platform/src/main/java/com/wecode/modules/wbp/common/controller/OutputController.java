@@ -33,6 +33,8 @@ import java.util.Map;
 public class OutputController extends BaseController{
 
     public void index(){
+        setAttr("totalCount",OutputInfo.getTotalCount());
+        setAttr("totalMoney",OutputInfo.getTotalMoney());
         renderFreeMarker("output.ftl");
     }
 
