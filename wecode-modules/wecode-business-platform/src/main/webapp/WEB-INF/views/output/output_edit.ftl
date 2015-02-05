@@ -17,7 +17,7 @@
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目工程名</label>
                     <div class="col-sm-10">
-                        <input type="text" id="project_name" class="col-xs-10 col-sm-5" name="project_name" value="${data.project_name}" maxlength="20"/>
+                        <input type="text" id="project_name" class="col-xs-10 col-sm-5" name="project_name" value="${data.project_name}" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">数量</label>
                     <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="count" value="${data.count}" maxlength="20" datatype="s2-20" nullmsg="请输入数量"/>
+                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="count" value="${data.count}" maxlength="10"/>
                         <label id="unit">${data.unit}</label>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">所出仓库</label>
                     <div class="col-sm-10">
-                        <input type="text" id="structure" class="col-xs-10 col-sm-5" name="warehouse" value="${data.warehouse}" maxlength="20" nullmsg="请输入户型结构" datatype="s"/>
+                        <input type="text" id="structure" class="col-xs-10 col-sm-5" name="warehouse" value="${data.warehouse}" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group"  >

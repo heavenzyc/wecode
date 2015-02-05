@@ -3,18 +3,15 @@
 
 <div class="page-content">
     <div class="page-header">
-        <button class="btn btn-primary JS_improt">导入数据</button>
-        <a class="btn btn-danger" href="/output/exportExcel">导出数据</a>
-        <a class="btn btn-success" href="/output/add">添加数据</a>
+        <a class="btn btn-success" href="/transport/add">添加数据</a>
     </div>
 
     <div class="row">
-
         <div class="col-xs-12" >
             <div class="space-6"></div>
             <div class="clearfix">
                 <div class="pull-left text-left clearfix" style="margin-left:20px;">
-                    <label class="pull-left" style="margin-top:5px">入库时间：</label>
+                    <label class="pull-left" style="margin-top:5px">发货日期：</label>
                     <div class="pull-left" style="margin-right:30px;">
                         <div class="input-group" style="width:250px; margin-left:0px;">
                             <span class="input-group-addon">
@@ -23,17 +20,22 @@
                             <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" value="" start="" end="">
                         </div>
                     </div>
-                    <label class="pull-left" style="margin-top:5px">运输人：</label>
+                    <label class="pull-left" style="margin-top:5px">卸货时间：</label>
                     <div class="pull-left" style="margin-right:30px;">
-                        <input id="transport" name="transport" type="text" class="" placeholder="">
+                        <div class="input-group" style="width:250px; margin-left:0px;">
+                            <span class="input-group-addon">
+                                <i class="icon-calendar bigger-110"></i>
+                            </span>
+                            <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-2" value="" start="" end="">
+                        </div>
                     </div>
                     <label class="pull-left" style="margin-top:5px">收货人：</label>
                     <div class="pull-left" style="margin-right:30px;">
                         <input id="accepter" name="accepter" type="text" class="" placeholder="">
                     </div>
-                    <label class="pull-left" style="margin-top:5px">过磅人：</label>
+                    <label class="pull-left" style="margin-top:5px">发货人：</label>
                     <div class="pull-left">
-                        <input id="weighter" name="weighter" type="text" class="" placeholder="">
+                        <input id="sender" name="sender" type="text" class="" placeholder="">
                     </div>
                     <span class="pull-left" style="margin:3px 0 0 10px;">
                         <button id="find_btn" type="button" class="btn btn-purple btn-sm" style="position: relative; padding:2px 8px; top:-2px">
@@ -59,6 +61,7 @@
 </@we.html>
 
 <script>
+
     $(function () {
         var myDate = new Date();
         var yesterday = myDate.getFullYear()+'/'+(myDate.getMonth() + 1)+'/'+(myDate.getDay());
@@ -79,62 +82,72 @@
     });
 
     function searchSub(){
-        var transport = $("#transport").val();
         var accepter = $("#accepter").val();
-        var weighter = $("#weighter").val();
-        var range = $("#id-date-range-picker-1").val();
-        var start = ""  ;
-        var end = ""  ;
-        if(range.length>0){
-            range = range.split("-");
-            start = range[0];
-            end = range[1];
+        var sender = $("#sender").val();
+        var range1 = $("#id-date-range-picker-1").val();
+        var range2 = $("#id-date-range-picker-2").val();
+        var transportTimeStart = "" ;
+        var transportTimeEnd = "" ;
+        if(range1.length>0){
+            range1 = range1.split("-");
+            transportTimeStart = range1[0];
+            transportTimeEnd = range1[1];
+        }
+        var offTimeStart = "" ;
+        var offTimeEnd = "" ;
+        if(range2.length>0) {
+            range2 = range2.split("-");
+            offTimeStart = range2[0];
+            offTimeEnd = range2[1];
         }
         $("#grid-table").jqGrid('setGridParam',{
-            url:"/output/list",
-            postData:{transport:transport,accepter:accepter,weighter:weighter,start:start,end:end}
+            url:"/transport/list",
+            postData:{sender:sender,
+                accepter:accepter,
+                transportTimeStart:transportTimeStart,
+                transportTimeEnd:transportTimeEnd,
+                offTimeStart:offTimeStart,
+                offTimeEnd:offTimeEnd
+            }
         }).trigger("reloadGrid");
     }
-
 
     jQuery(function($){
         var pager_selector = "#grid-pager";
         var table = $("#grid-table");
         table.jqGrid({
-            url : "/output/list",
+            url : "/transport/list",
             datatype : "json",
             mtype : 'get',
-            height : 380,
-            caption:'出   库   单 （发货单）',
+            height : 400,
+            caption:'货  物  承  运  单  （代收，发料单）',
             rownumbers: true,
             scrollOffset:1,
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'code',label:'出库单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'merchant_name',label:'收货单位',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'accept_person',label:'收货人',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'output_time',index :'reserve_time',label:'出库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
-                        {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
-                        {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
-                        {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
-                            return rDate.price+"元/"+rDate.unit;
-                        }},
-                        {name : 'count',index : 'count',label:'数量',width : 10,editable : false},
-                        {name : 'money',index : 'money',label:'总额',width : 10,editable : false},
-                        {name : 'warehouse',index : 'warehouse',label:'所出仓库',width : 10,editable : false},
-                        {name : 'accept_person',index : 'accept_person',label:'发货人',width : 10,editable : false},
-                        {name : 'weigh_person',index : 'weigh_person',label:'过磅人',width : 10,editable : false},
-                        {name : 'transport_person',index : 'transport_person',label:'运输人',width : 10,editable : false},
-                        {name : 'car_num',index : 'car_num',label:'司机车号',width : 10,editable : false},
+                        {name : 'code',label:'运输单号',index :'code',width :10,sorttype : "int",editable : false},
+                        {name : 'transport_merchant_name',label:'运输单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'input_output_code',label:'出入库单号',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'send_address',index : 'id',label:'发货地址',width :10,editable : false},
+                        {name : 'send_person',index : 'consultant_name',label:'发货人',width : 10,editable : false},
+                        {name : 'send_person_phone',index : 'send_person_phone',label:'发货人电话',width : 10,editable : false},
+                        {name : 'accept_merchant',index : 'consultant_name',label:'收货单位',width : 10,editable : false},
+                        {name : 'accept_address',index : 'consultant_name',label:'收货地址',width : 10,editable : false},
+                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 10,editable : false},
+                        {name : 'accept_person_phone',index : 'consultant_name',label:'收货人电话',width : 10,editable : false},
+                        {name : 'material_name',index : 'consultant_name',label:'货物名称',width : 10,editable : false},
+                        {name : 'unit',index : 'consultant_name',label:'数量单位',width : 10,editable : false},
+                        {name : 'shipping_address',index : 'consultant_name',label:'装货地点',width : 10,editable : false},
+                        {name : 'shipping_person_phone',index : 'consultant_name',label:'装货人电话',width : 10,editable : false},
+                        {name : 'send_time',index :'reserve_time',label:'发货日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'off_time',index :'reserve_time',label:'卸货日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'car_num',index : 'consultant_name',label:'运输车号',width : 10,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
-                            if (rData.type == 'ADD') {
-                                html += '<a class="btn no-border btn-minier btn-primary process" href="/output/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-                            }
+                            html += '<a class="btn no-border btn-minier btn-primary process" href="/transport/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;';
-                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/output/print/'+value+'">打印</a>';
+                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/transport/print/'+value+'">打印</a>';
                             return html;
                         }}
                     ],
@@ -154,6 +167,7 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
+
             }
         });
 
@@ -201,90 +215,6 @@
         });
     }
 
-
-
-    $(".JS_improt").on("click",function(){
-        var $this = $(this);
-        var _html = [
-            '<div class="widget-box no-border">',
-            '	<div class="widget-header no-border">',
-            '		<h4>导入数据</h4>',
-            '	</div>',
-            '	<div class="widget-body no-border">',
-            '		<div class="widget-main no-padding">',
-            '			<div class="material-list-wrap" style="height:auto">',
-            '				<form id="outputExcel" enctype="multipart/form-data">',
-            '					<div class="space-10"></div>',
-            '					<div class="form-group clearfix">',
-            '						<div class="col-sm-12">',
-                    '                     <input type="file" name="excel" id="id-input-file-2" />',
-            '						</div>',
-            '					</div>',
-            '				</form>',
-            '			</div>',
-            '			<div class="form-actions center no-margin">',
-            '				<button type="button" class="btn btn-sm btn-success Js_confirm">',
-            '					<b>确定</b>',
-            '				</button>',
-            '				<button class="btn btn-sm btn-grey Js_fancybox_close">',
-            '					取消',
-            '				</button>',
-            '			</div>',
-            '		</div>',
-            '	</div>',
-            '</div>'].join("");
-
-        $.fancybox({
-            type : "html",
-            width : '600',
-            autoHeight : true,
-            autoSize : false,
-            padding : 0,
-            scrolling : 'auto',
-            content: _html,
-            afterShow : function(){
-                $('#id-input-file-2').ace_file_input({
-                    no_file:'选择文件 ...',
-                    btn_choose:'选 择',
-                    btn_change:'选 择',
-                    droppable:false,
-                    onchange:null,
-                    thumbnail:false, //| true | large
-                    whitelist:'xsl|xlsx'
-                    //blacklist:'exe|php'
-                    //onchange:''
-                    //
-                });
-                $(".Js_confirm").on("click", function(){
-                    //showSelectWordpic($this)
-                    $.ajaxFileUpload({
-                        url:'/output/importExcel',
-                        type:'post',
-                        fileElementId:'id-input-file-2',
-                        dataType:'text',
-                        secureuri:false,
-                        success:function(json) {
-                            if(json.indexOf('true')!=-1){
-                                showToast("导入成功！");
-                                $.fancybox.close();
-                                $("#grid-table").trigger("reloadGrid");
-                            }else{
-                                showToast("导入失败！");
-                            }
-                        }
-                    });
-                });
-            },
-            afterClose: function(){
-                $(".Js_confirm").off("click");
-            }
-        })
-    });
-
-    $(document).on("click",".Js_fancybox_close",function(){
-        $.fancybox.close()
-    })
-
     function showToast(text,title,time){
         $.gritter.add({
             title : title || '信息提示',
@@ -298,7 +228,7 @@
         bootbox.confirm("确定删除该数据吗?", function(result) {
             if(result) {
                 $.ajax({
-                    url:"/output/delete",
+                    url:"/transport/delete",
                     async: false,
                     type:'GET',
                     data:{id:id},

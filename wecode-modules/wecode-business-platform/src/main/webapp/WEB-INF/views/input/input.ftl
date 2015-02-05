@@ -83,8 +83,8 @@
         var accepter = $("#accepter").val();
         var weighter = $("#weighter").val();
         var range = $("#id-date-range-picker-1").val();
-        var start ;
-        var end ;
+        var start = ""  ;
+        var end = ""  ;
         if(range.length>0){
             range = range.split("-");
             start = range[0];
@@ -103,7 +103,7 @@
             url : "/input/list",
             datatype : "json",
             mtype : 'get',
-            height : 380,
+            height : 400,
             caption:'入  库  单（带过磅单）',
             rownumbers: true,
             scrollOffset:1,
@@ -117,22 +117,23 @@
                         {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
                         {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
-                        {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
+                        {name : 'price',index : 'price',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
                             return rDate.price+"元/"+rDate.unit;
                         }},
                         {name : 'count',index : 'consultant_name',label:'数量',width : 10,editable : false},
                         {name : 'money',index : 'consultant_name',label:'总额',width : 10,editable : false},
                         {name : 'warehouse',index : 'consultant_name',label:'所入仓库',width : 10,editable : false},
-                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 10,editable : false},
-                        {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 10,editable : false},
-                        {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 10,editable : false},
-                        {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 10,editable : false},
-                        {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 6,editable : false},
+                        {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 6,editable : false},
+                        {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 6,editable : false},
+                        {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 6,editable : false},
+                        {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             if (rData.type == 'ADD') {
                                 html += '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             }
-                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';
+                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp';
+                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/input/print/'+value+'">打印</a>';
                             return html;
                         }}
                     ],
@@ -152,6 +153,31 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
+                var ids = jQuery("#grid-table").jqGrid('getDataIDs');
+                var rowid = Math.max.apply(Math,ids);
+                var newrowid = rowid+1;
+                var dataRow = {
+                    id: "",
+                    code:"合计",
+                    merchant_name:'',
+                    send_person:'',
+                    material_name:'',
+                    input_time:'',
+                    purchase_type_name:'',
+                    standard_name:'',
+                    price:'',
+                    count:'',
+                    money:''
+
+                };
+                $("#grid-table").jqGrid("addRowData", newrowid, dataRow, "last");
+//                $("#grid-table").jqGrid("setRowData", newrowid, { price:"5", count:"0" });
+//                $("#grid-table").jqGrid("setCell", newrowid, 9,"5");
+            },
+            gridComplete:function(){
+//                $("#grid-table").setRowData(11,{ price:"5", count:"0" });
+                $("#grid-table").jqGrid("setCell", 11, 'price',"");
+
             }
         });
 
@@ -262,10 +288,13 @@
                         dataType:'text',
                         secureuri:false,
                         success:function(json) {
-                            alert(json);
-                            $.fancybox.close();
-                            showToast("导入成功！");
-                            $("#grid-table").trigger("reloadGrid");
+                            if(json.indexOf('true')!=-1){
+                                showToast("导入成功！");
+                                $.fancybox.close();
+                                $("#grid-table").trigger("reloadGrid");
+                            }else{
+                                showToast("导入失败！");
+                            }
                         }
                     });
                 });

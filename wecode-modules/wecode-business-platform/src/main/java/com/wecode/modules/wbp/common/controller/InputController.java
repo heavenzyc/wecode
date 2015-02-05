@@ -594,7 +594,8 @@ public class InputController extends BaseController{
         sheet.setColumnWidth(13, 5000);
         sheet.setColumnWidth(14, 5000);
         sheet.setColumnWidth(15, 5000);
-        sheet.setColumnWidth(16, 10000);
+        sheet.setColumnWidth(16, 5000);
+        sheet.setColumnWidth(17, 10000);
         XSSFRow row = sheet.createRow(0);
         XSSFCellStyle style = wb.createCellStyle();
         style.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
@@ -663,6 +664,10 @@ public class InputController extends BaseController{
         cell.setCellStyle(style);
 
         cell = row.createCell(16);
+        cell.setCellValue("供货单位");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(17);
         cell.setCellValue("备注");
         cell.setCellStyle(style);
         List<InputInfo> infos = InputInfo.getList();
@@ -679,7 +684,7 @@ public class InputController extends BaseController{
             row.createCell(5).setCellValue(info.getStr("unit"));
             row.createCell(6).setCellValue(info.getBigDecimal("price")+"/"+info.get("unit"));
             row.createCell(7).setCellValue(info.getStr("standard_name"));
-            row.createCell(8).setCellValue(info.getBigDecimal("discount")+"");
+            row.createCell(8).setCellValue(info.getBigDecimal("discount")+"%");
             row.createCell(9).setCellValue(info.getBigDecimal("count")+"");
             row.createCell(10).setCellValue(info.getBigDecimal("money")+"");
             row.createCell(11).setCellValue(info.getStr("warehouse"));
@@ -687,7 +692,8 @@ public class InputController extends BaseController{
             row.createCell(13).setCellValue(info.getStr("send_person"));
             row.createCell(14).setCellValue(info.getStr("car_num"));
             row.createCell(15).setCellValue(info.getStr("weigh_person"));
-            row.createCell(16).setCellValue(info.getStr("remark"));
+            row.createCell(16).setCellValue(info.getStr("merchant_name"));
+            row.createCell(17).setCellValue(info.getStr("remark"));
         }
         try {
             getResponse().reset();
@@ -701,5 +707,12 @@ public class InputController extends BaseController{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void print(){
+        Integer id = getParaToInt();
+        InputInfo info = InputInfo.dao.findById(id);
+        setAttr("data",info);
+        renderFreeMarker("input_print.ftl");
     }
 }

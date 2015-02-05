@@ -9,8 +9,13 @@ import com.wecode.framework.json.JsonResult;
 import com.wecode.framework.util.DateUtils;
 import com.wecode.framework.util.StringUtils;
 import com.wecode.modules.wbp.common.model.*;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -147,6 +152,7 @@ public class OutputController extends BaseController{
         info.set("create_time",new Date());
         info.set("status",Status.VALID.name());
         info.set("is_clear",0);
+        info.set("type","ADD");
         info.save();
         redirect("/output/index");
     }
@@ -272,39 +278,137 @@ public class OutputController extends BaseController{
     }
 
     public void importExcel(){
+        File file = getFile("excel").getFile();
+        String name = file.getName();
+        if (name.endsWith("xls")) {
+            excel2003(file);
+        }
+        if (name.endsWith("xlsx")){
+            excel2007(file);
+        }
+    }
+
+    private void excel2003(File file){
         try {
-            InputStream in = new FileInputStream(getFile("excel").getFile());
-//            HSSFWorkbook hssfWorkbook = new HSSFWorkbook(in);
-            XSSFWorkbook xssfSheets = new XSSFWorkbook(in);
+            InputStream in = new FileInputStream(file);
+            HSSFWorkbook xssfSheets = new HSSFWorkbook(in);
             // 循环工作表Sheet
-            for (int numSheet = 0; numSheet < xssfSheets.getNumberOfSheets(); numSheet++) {
-                XSSFSheet xssfSheet = xssfSheets.getSheetAt(numSheet);
-                if (xssfSheet == null) {
+            HSSFSheet xssfSheet = xssfSheets.getSheetAt(0);
+            if (xssfSheet == null) return;
+            // 循环行Row
+            for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+                OutputInfo inputInfo = new OutputInfo();
+                HSSFRow xssfRow = xssfSheet.getRow(rowNum);
+                if (xssfRow == null) {
                     continue;
                 }
-                // 循环行Row
-                for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
-                    XSSFRow xssfRow = xssfSheet.getRow(rowNum);
-                    if (xssfRow == null) {
-                        continue;
-                    }
-                    XSSFCell xh = xssfRow.getCell(0);
-                    if (xh == null) {
-                        continue;
-                    }
-                    XSSFCell xm = xssfRow.getCell(1);
-                    if (xm == null) {
-                        continue;
-                    }
-                    XSSFCell yxsmc = xssfRow.getCell(2);
-                    if (yxsmc == null) {
-                        continue;
-                    }
-                    XSSFCell kcm = xssfRow.getCell(3);
-                    if (kcm == null) {
-                        continue;
+                //入库日期
+                HSSFCell input_time = xssfRow.getCell(0);
+                if (input_time != null) {
+                    String timeStr = getValue(input_time);
+                    Date date = DateUtils.parse(timeStr,"yyyyMMdd");
+                    inputInfo.set("output_time", date);
+                }
+                //入库单号
+                HSSFCell code = xssfRow.getCell(1);
+                if (code != null) {
+                    inputInfo.set("code",getValue(code));
+                }
+                //物品编号
+                HSSFCell material_code = xssfRow.getCell(2);
+                if (material_code != null) {
+                    inputInfo.set("material_code",getValue(material_code));
+                }
+                //物品名称
+                HSSFCell material_name = xssfRow.getCell(3);
+                if (material_name != null) {
+                    inputInfo.set("material_name",getValue(material_name));
+                }
+                //物品类别
+                HSSFCell purchase_type_name = xssfRow.getCell(4);
+                if (purchase_type_name != null) {
+                    inputInfo.set("purchase_type_name",getValue(purchase_type_name));
+                }
+                //物品计量单位
+                HSSFCell unit = xssfRow.getCell(5);
+                if (unit != null) {
+                    inputInfo.set("unit",getValue(unit));
+                }
+                //单价
+                HSSFCell price_unit = xssfRow.getCell(6);
+                if (price_unit != null) {
+                    String priceUnitStr = getValue(price_unit);
+                    String[] ps = priceUnitStr.split("/");
+                    if (ps.length >1) {
+                        inputInfo.set("price",new BigDecimal(ps[0]));
+                    }else {
+                        inputInfo.set("price",new BigDecimal(0));
                     }
                 }
+                //规格
+                HSSFCell standard_name = xssfRow.getCell(7);
+                if (standard_name != null) {
+                    inputInfo.set("standard_name",getValue(standard_name));
+                }
+                //折扣
+                HSSFCell discount = xssfRow.getCell(8);
+                if (discount != null) {
+                    String discountStr = getValue(discount);
+                    if (discountStr.contains("%")){
+                        discountStr = discountStr.replace("%","");
+                    }
+                    if (StringUtils.isBlank(discountStr)) discountStr = "0";
+                    inputInfo.set("discount",new BigDecimal(discountStr.trim()).multiply(new BigDecimal(100)));
+                }
+                //物品数量
+                HSSFCell count = xssfRow.getCell(9);
+                if (count != null) {
+                    String countStr = getValue(count);
+                    if (StringUtils.isBlank(countStr)) countStr = "0";
+                    inputInfo.set("count",new BigDecimal(countStr));
+                }
+                //物品总额
+                HSSFCell money = xssfRow.getCell(10);
+                if (money != null) {
+                    String moneyStr = getValue(money);
+                    if (StringUtils.isBlank(moneyStr)) moneyStr = "0";
+                    inputInfo.set("money",new BigDecimal(moneyStr));
+                }
+                //所入仓库
+                HSSFCell warehouse = xssfRow.getCell(11);
+                if (warehouse != null) {
+                    inputInfo.set("warehouse",getValue(warehouse));
+                }
+                //收货人
+                HSSFCell accept_person = xssfRow.getCell(12);
+                if (accept_person != null) {
+                    inputInfo.set("accept_person",getValue(accept_person));
+                }
+                //发货人
+                HSSFCell send_person = xssfRow.getCell(13);
+                if (send_person != null) {
+                    inputInfo.set("send_person",getValue(send_person));
+                }
+                //司机车号
+                HSSFCell car_num = xssfRow.getCell(14);
+                if (car_num != null) {
+                    inputInfo.set("car_num",getValue(car_num));
+                }
+                //过磅人
+                HSSFCell weigh_person = xssfRow.getCell(15);
+                if (weigh_person != null) {
+                    inputInfo.set("weigh_person",getValue(weigh_person));
+                }
+                //备注
+                HSSFCell remark = xssfRow.getCell(16);
+                if (remark != null) {
+                    inputInfo.set("remark",getValue(remark));
+                }
+                //保存
+                inputInfo.set("status",Status.VALID.name());
+                inputInfo.set("create_time",new Date());
+                inputInfo.set("type","EXCEL");
+                inputInfo.save();
             }
             JsonResult json = JsonResult.success();
             json.msg("导入成功!");
@@ -317,9 +421,168 @@ public class OutputController extends BaseController{
         }
     }
 
+    private void excel2007(File file){
+        try {
+            InputStream in = new FileInputStream(file);
+            XSSFWorkbook xssfSheets = new XSSFWorkbook(in);
+            // 循环工作表Sheet
+            XSSFSheet xssfSheet = xssfSheets.getSheetAt(0);
+            if (xssfSheet == null) return;
+            // 循环行Row
+            for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+                InputInfo inputInfo = new InputInfo();
+                XSSFRow xssfRow = xssfSheet.getRow(rowNum);
+                if (xssfRow == null) {
+                    continue;
+                }
+                //入库日期
+                XSSFCell input_time = xssfRow.getCell(0);
+                if (input_time != null) {
+                    String timeStr = getValue(input_time);
+                    Date date = DateUtils.parse(timeStr,"yyyyMMdd");
+                    inputInfo.set("input_time", date);
+                }
+                //入库单号
+                XSSFCell code = xssfRow.getCell(1);
+                if (code != null) {
+                    inputInfo.set("code",getValue(code));
+                }
+                //物品编号
+                XSSFCell material_code = xssfRow.getCell(2);
+                if (material_code != null) {
+                    inputInfo.set("material_code",getValue(material_code));
+                }
+                //物品名称
+                XSSFCell material_name = xssfRow.getCell(3);
+                if (material_name != null) {
+                    inputInfo.set("material_name",getValue(material_name));
+                }
+                //物品类别
+                XSSFCell purchase_type_name = xssfRow.getCell(4);
+                if (purchase_type_name != null) {
+                    inputInfo.set("purchase_type_name",getValue(purchase_type_name));
+                }
+                //物品计量单位
+                XSSFCell unit = xssfRow.getCell(5);
+                if (unit != null) {
+                    inputInfo.set("unit",getValue(unit));
+                }
+                //单价
+                XSSFCell price_unit = xssfRow.getCell(6);
+                if (price_unit != null) {
+                    String priceUnitStr = getValue(price_unit);
+                    String[] ps = priceUnitStr.split("/");
+                    if (ps.length >1) {
+                        inputInfo.set("price",new BigDecimal(ps[0]));
+                    }else {
+                        inputInfo.set("price",new BigDecimal(0));
+                    }
+                }
+                //规格
+                XSSFCell standard_name = xssfRow.getCell(7);
+                if (standard_name != null) {
+                    inputInfo.set("standard_name",getValue(standard_name));
+                }
+                //折扣
+                XSSFCell discount = xssfRow.getCell(8);
+                if (discount != null) {
+                    String discountStr = getValue(discount);
+                    if (discountStr.contains("%")){
+                        discountStr = discountStr.replace("%","");
+                    }
+                    if (StringUtils.isBlank(discountStr)) discountStr = "0";
+                    inputInfo.set("discount",new BigDecimal(discountStr).multiply(new BigDecimal(100)));
+                }
+                //物品数量
+                XSSFCell count = xssfRow.getCell(9);
+                if (count != null) {
+                    String countStr = getValue(count);
+                    if (StringUtils.isBlank(countStr)) countStr = "0";
+                    inputInfo.set("count",new BigDecimal(getValue(count)));
+                }
+                //物品总额
+                XSSFCell money = xssfRow.getCell(10);
+                if (money != null) {
+                    String moneyStr = getValue(money);
+                    if (StringUtils.isBlank(moneyStr)) moneyStr = "0";
+                    inputInfo.set("money",new BigDecimal(moneyStr));
+                }
+                //所入仓库
+                XSSFCell warehouse = xssfRow.getCell(11);
+                if (warehouse != null) {
+                    inputInfo.set("warehouse",getValue(warehouse));
+                }
+                //收货人
+                XSSFCell accept_person = xssfRow.getCell(12);
+                if (accept_person != null) {
+                    inputInfo.set("accept_person",getValue(accept_person));
+                }
+                //发货人
+                XSSFCell send_person = xssfRow.getCell(13);
+                if (send_person != null) {
+                    inputInfo.set("send_person",getValue(send_person));
+                }
+                //司机车号
+                XSSFCell car_num = xssfRow.getCell(14);
+                if (car_num != null) {
+                    inputInfo.set("car_num",getValue(car_num));
+                }
+                //过磅人
+                XSSFCell weigh_person = xssfRow.getCell(15);
+                if (weigh_person != null) {
+                    inputInfo.set("weigh_person",getValue(weigh_person));
+                }
+                //备注
+                XSSFCell remark = xssfRow.getCell(16);
+                if (remark != null) {
+                    inputInfo.set("remark",getValue(remark));
+                }
+                //保存
+                inputInfo.set("status",Status.VALID.name());
+                inputInfo.set("create_time",new Date());
+                inputInfo.set("type","EXCEL");
+                inputInfo.save();
+            }
+            JsonResult json = JsonResult.success();
+            json.msg("导入成功!");
+            renderJson(json.toJson());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JsonResult json = JsonResult.fail();
+            json.msg("导入失败!");
+            renderJson(json.toJson());
+        }
+    }
+
+    private String getValue(XSSFCell xssfCell) {
+        if (xssfCell.getCellType() == xssfCell.CELL_TYPE_BOOLEAN) {
+            // 返回布尔类型的值
+            return String.valueOf(xssfCell.getBooleanCellValue());
+        } else if (xssfCell.getCellType() == xssfCell.CELL_TYPE_NUMERIC) {
+            // 返回数值类型的值
+            return String.valueOf(xssfCell.getNumericCellValue());
+        } else {
+            // 返回字符串类型的值
+            return String.valueOf(xssfCell.getStringCellValue());
+        }
+    }
+
+    private String getValue(HSSFCell xssfCell) {
+        if (xssfCell.getCellType() == xssfCell.CELL_TYPE_BOOLEAN) {
+            // 返回布尔类型的值
+            return String.valueOf(xssfCell.getBooleanCellValue());
+        } else if (xssfCell.getCellType() == xssfCell.CELL_TYPE_NUMERIC) {
+            // 返回数值类型的值
+            return String.valueOf(xssfCell.getNumericCellValue());
+        } else {
+            // 返回字符串类型的值
+            return String.valueOf(xssfCell.getStringCellValue());
+        }
+    }
+
     public void exportExcel() {
         XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("入库单");
+        XSSFSheet sheet = wb.createSheet("出库单");
         sheet.setColumnWidth(0, 5000);
         sheet.setColumnWidth(1, 5000);
         sheet.setColumnWidth(2, 5000);
@@ -336,7 +599,8 @@ public class OutputController extends BaseController{
         sheet.setColumnWidth(13, 5000);
         sheet.setColumnWidth(14, 5000);
         sheet.setColumnWidth(15, 5000);
-        sheet.setColumnWidth(16, 10000);
+        sheet.setColumnWidth(16, 5000);
+        sheet.setColumnWidth(17, 10000);
         XSSFRow row = sheet.createRow(0);
         XSSFCellStyle style = wb.createCellStyle();
         style.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
@@ -405,13 +669,17 @@ public class OutputController extends BaseController{
         cell.setCellStyle(style);
 
         cell = row.createCell(16);
+        cell.setCellValue("收货单位");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(17);
         cell.setCellValue("备注");
         cell.setCellStyle(style);
         List<OutputInfo> infos = OutputInfo.getList();
         for (int i = 0; i < infos.size(); i++) {
             OutputInfo info = infos.get(i);
             row = sheet.createRow(i + 1);
-            if (info.getDate("input_time") != null) {
+            if (info.getDate("output_time") != null) {
                 row.createCell(0).setCellValue(DateUtils.format(info.getDate("output_time"), "yyyy/MM/dd"));
             }
             row.createCell(1).setCellValue(info.getStr("code"));
@@ -421,7 +689,7 @@ public class OutputController extends BaseController{
             row.createCell(5).setCellValue(info.getStr("unit"));
             row.createCell(6).setCellValue(info.getBigDecimal("price")+"/"+info.get("unit"));
             row.createCell(7).setCellValue(info.getStr("standard_name"));
-            row.createCell(8).setCellValue(info.getBigDecimal("discount")+"");
+            row.createCell(8).setCellValue(info.getBigDecimal("discount")+"%");
             row.createCell(9).setCellValue(info.getBigDecimal("count")+"");
             row.createCell(10).setCellValue(info.getBigDecimal("money")+"");
             row.createCell(11).setCellValue(info.getStr("warehouse"));
@@ -429,7 +697,8 @@ public class OutputController extends BaseController{
             row.createCell(13).setCellValue(info.getStr("send_person"));
             row.createCell(14).setCellValue(info.getStr("car_num"));
             row.createCell(15).setCellValue(info.getStr("weigh_person"));
-            row.createCell(16).setCellValue(info.getStr("remark"));
+            row.createCell(16).setCellValue(info.getStr("merchant_name"));
+            row.createCell(17).setCellValue(info.getStr("remark"));
         }
         try {
             getResponse().reset();
@@ -443,5 +712,12 @@ public class OutputController extends BaseController{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void print(){
+        Integer id = getParaToInt();
+        OutputInfo info = OutputInfo.dao.findById(id);
+        setAttr("data",info);
+        renderFreeMarker("output_print.ftl");
     }
 }
