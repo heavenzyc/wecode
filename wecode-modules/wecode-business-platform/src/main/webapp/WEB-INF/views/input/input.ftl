@@ -121,7 +121,7 @@
                         {name : 'merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'send_person',label:'发货人',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d H:i',newformat:'Y-m-d H:i'}},
+                        {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
                         {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
                         {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
                         {name : 'price',index : 'price',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){

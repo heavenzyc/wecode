@@ -173,44 +173,126 @@
             <span class="menu-text"> 套账管理系统 </span>
         </a>
     </li>
-
     <li>
-        <li>
-            <a href="/input" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                入库管理
-            </a>
-        </li>
-        <li>
-            <a href="/output" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                出库管理
-            </a>
-        </li>
-        <li>
-            <a href="/transport" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                运输管理
-            </a>
-        </li>
-        <li>
-            <a href="/fee" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                费用管理
-            </a>
-        </li>
-        <li>
-            <a href="/calculate" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                结算管理
-            </a>
-        </li>
-        <li>
-            <a href="/statistics" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                统计查询
-            </a>
-        </li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 入库管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu">
+            <li>
+                <a href="/input">
+                    <i class="icon-double-angle-right"></i>
+                    入库单
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 出库管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <li>
+                <a href="/output">
+                    <i class="icon-double-angle-right"></i>
+                    出库单
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 运输管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    承运单
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 费用管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <li>
+                <a href="/loan">
+                    <i class="icon-double-angle-right"></i>
+                    借款单
+                </a>
+            </li>
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    收款单
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 结算管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    材料结算清单
+                </a>
+            </li>
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    运费结算清单
+                </a>
+            </li>
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    矿石加工及运费结算清单
+                </a>
+            </li>
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    利润结算清单
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-list"></i>
+            <span class="menu-text"> 统计查询 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+        <ul class="submenu">
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    统计1
+                </a>
+            </li>
+            <li>
+                <a href="/transport">
+                    <i class="icon-double-angle-right"></i>
+                    统计2
+                </a>
+            </li>
+        </ul>
     </li>
 </ul><!-- /.nav-list -->
 

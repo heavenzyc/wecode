@@ -2,6 +2,7 @@ package com.wecode.modules.wbp.common.controller;
 
 import com.jfinal.aop.ClearInterceptor;
 import com.jfinal.aop.ClearLayer;
+import com.jfinal.core.ActionKey;
 import com.jfinal.ext.route.ControllerBind;
 import com.wecode.framework.util.RSAUtils;
 import com.wecode.framework.util.StringUtils;
@@ -22,7 +23,6 @@ public class IndexController extends BaseController{
 
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    @ClearInterceptor(ClearLayer.ALL)
     public void index() {
         renderFreeMarker("login.ftl");
     }

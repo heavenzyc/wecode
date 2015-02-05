@@ -22,6 +22,10 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String requestUrl = request.getRequestURI();
+        if (requestUrl.equals("/login") || requestUrl.equals("/") || requestUrl.equals("/index")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         if (requestUrl.endsWith("/logout")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -31,7 +35,7 @@ public class LoginFilter implements Filter {
             return;
         }
         if (null == request.getSession().getAttribute("operator")){
-            response.sendRedirect("/");
+            response.sendRedirect("/index");
             return;
         }else {
             filterChain.doFilter(servletRequest,servletResponse);
