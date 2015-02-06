@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : localhost-mysql
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-06 00:39:24
+Date: 2015-02-06 18:42:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -139,13 +139,20 @@ CREATE TABLE `loan` (
   `annex` varchar(2000) DEFAULT NULL COMMENT '附件',
   `create_time` datetime DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
+  `annex_url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
 
 -- ----------------------------
 -- Records of loan
 -- ----------------------------
-INSERT INTO `loan` VALUES ('1', '0001', '金三票', '2015-02-05 23:46:03', '100', '壹佰', '任性', '1', '设备部', '1', '设备部', 'CASH', null, '就不还钱', '里斯', '王五', '王尼玛', '草泥马', '你没', 'xxx.jpg', '2015-02-05 23:48:10', 'VALID');
+INSERT INTO `loan` VALUES ('1', '0001', '金三票', '2015-02-05 23:46:03', '100', '壹佰', '任性', '1', '设备部', '1', '设备部', 'CASH', null, '就不还钱', '里斯', '王五', '王尼玛', '草泥马', '你没', 'xxx.jpg', '2015-02-05 23:48:10', 'VALID', null);
+INSERT INTO `loan` VALUES ('3', null, '4444', '2015-02-06 11:22:28', '0', null, null, null, '', null, '', null, null, null, null, null, null, null, null, null, '2015-02-06 11:23:45', 'INVALID', null);
+INSERT INTO `loan` VALUES ('4', null, '3', '2015-02-06 11:24:12', '3', '3', '', '1', '技术部', '1', '技术部', 'CASH', '', '', '', '', '', '', '', null, '2015-02-06 11:24:12', 'INVALID', null);
+INSERT INTO `loan` VALUES ('5', null, '3', '2015-02-14 00:00:00', '33', '3', '3', '1', '技术部', '1', '技术部', 'CASH', '', '3', '3', '3', '33', '3', '3', null, '2015-02-06 11:27:00', 'VALID', null);
+INSERT INTO `loan` VALUES ('6', '1423214642654', null, '2015-02-06 17:24:02', '0', null, null, null, '', null, '', null, null, null, null, null, null, null, null, null, '2015-02-06 17:24:02', 'VALID', null);
+INSERT INTO `loan` VALUES ('7', '1423217491007', '1', '2015-02-06 18:11:31', '1', '11', '1', '1', '技术部', '1', '技术部', 'CASH', '', '1', '1', '1', '1', '1', '1', null, '2015-02-06 18:11:31', 'VALID', null);
+INSERT INTO `loan` VALUES ('8', '1423219078776', '34eesrfw', '2015-02-06 18:37:58', '1', '1', '1', '1', '技术部', '1', '技术部', 'CASH', '', '', '', '', '', '', '1', '套帐.xls', '2015-02-06 18:37:58', 'VALID', '/upload/20150206\\\\套帐.xls');
 
 -- ----------------------------
 -- Table structure for material
@@ -404,6 +411,44 @@ CREATE TABLE `purchase_type` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for receive
+-- ----------------------------
+DROP TABLE IF EXISTS `receive`;
+CREATE TABLE `receive` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) DEFAULT NULL COMMENT '借款单号',
+  `receive_person` varchar(20) DEFAULT NULL COMMENT '负责人',
+  `receive_time` datetime DEFAULT NULL COMMENT '借款时间',
+  `money_lower` decimal(10,0) DEFAULT NULL COMMENT '借款金额小写',
+  `money_capital` varchar(50) DEFAULT NULL COMMENT '借款金额大写',
+  `reason` varchar(2000) DEFAULT NULL COMMENT '借款用途及理由',
+  `receive_type` varchar(20) DEFAULT NULL,
+  `receie_type` varchar(20) DEFAULT NULL COMMENT '借款类别',
+  `check_num` varchar(50) DEFAULT NULL COMMENT '支票编号',
+  `approve` varchar(20) DEFAULT NULL COMMENT '经办人',
+  `verify` varchar(20) DEFAULT NULL COMMENT '财务准核人',
+  `finance_verify` varchar(20) DEFAULT NULL COMMENT '财务审核人',
+  `dept_verify` varchar(20) DEFAULT NULL COMMENT '部门审核人',
+  `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
+  `annex` varchar(2000) DEFAULT NULL COMMENT '附件',
+  `create_time` datetime DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `annex_url` varchar(200) DEFAULT NULL,
+  `merchant` varchar(200) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL COMMENT '收到金额',
+  `arrears` decimal(10,2) DEFAULT NULL COMMENT '欠款',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
+
+-- ----------------------------
+-- Records of receive
+-- ----------------------------
+INSERT INTO `receive` VALUES ('6', '1423202722781', '11', '2015-02-13 00:00:00', '11', '11', '11', 'CHECK', null, '1111111', '11', '11', '11', '11', '11', null, '2015-02-06 14:05:22', 'VALID', null, '11', '11.00', '11.00');
+INSERT INTO `receive` VALUES ('7', '1423202903283', '22', '2015-02-07 00:00:00', '111', 'qq', 'qq', 'CASH', null, '', 'qq', 'qq', 'qq', 'qq', 'qq', null, '2015-02-06 14:08:23', 'INVALID', null, '22', '1.00', '1.00');
+INSERT INTO `receive` VALUES ('8', '1423203024864', '1', '2015-02-06 14:10:24', '22', '2', '2', 'CASH', null, '', '2', '2', '2', '2', '2', null, '2015-02-06 14:10:24', 'VALID', null, '1', '2.00', '2.00');
+INSERT INTO `receive` VALUES ('9', '1423203575718', '22', '2015-02-12 00:00:00', '22', '22', '22', 'CASH', null, '', '22', '22', '22', '22', '222', null, '2015-02-06 14:19:35', 'VALID', null, '22', '22.00', '22.00');
+
+-- ----------------------------
 -- Table structure for staff
 -- ----------------------------
 DROP TABLE IF EXISTS `staff`;
@@ -467,9 +512,9 @@ CREATE TABLE `transport` (
 -- ----------------------------
 -- Records of transport
 -- ----------------------------
-INSERT INTO `transport` VALUES ('1', '1', null, '1', '蚂蚁搬家', null, '1', '1', null, '1', '1', '1', '1', null, '001', '煤矿', '吨', null, null, null, '2015-02-06 00:00:00', null, null, '1', null, null, null, '2015-02-05 14:47:56', 'INVALID');
-INSERT INTO `transport` VALUES ('2', '2', null, '1', '蚂蚁搬家', null, '2', '2', null, '2', '2', '2', '2', null, '001', '煤矿', '吨', null, null, null, '2015-02-06 00:00:00', null, null, '222222', null, null, null, '2015-02-05 14:52:18', 'VALID');
-INSERT INTO `transport` VALUES ('3', '3', null, '1', '蚂蚁搬家', null, '3', '3', null, '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', '2015-02-05 00:00:00', '2015-02-06 00:00:00', null, null, '3333', null, null, null, '2015-02-05 14:52:45', 'VALID');
+INSERT INTO `transport` VALUES ('1', '1', null, '1', '蚂蚁搬家', null, '1', '1', null, '1', '1', '1', '1', null, '001', '煤矿', '吨', null, null, '2015-02-06 10:01:00', '2015-02-06 00:00:00', null, null, '1', null, null, null, '2015-02-05 14:47:56', 'INVALID');
+INSERT INTO `transport` VALUES ('2', '2', null, '1', '蚂蚁搬家', null, '2', '2', '1111111', '2', '2', '2', '2', '1', '001', '煤矿', '吨', '1', '1', '2015-02-06 00:00:00', '2015-02-06 00:00:00', null, null, '222222', null, null, null, '2015-02-05 14:52:18', 'VALID');
+INSERT INTO `transport` VALUES ('3', '3', null, '1', '蚂蚁搬家', null, '3', '3', null, '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', '2015-02-05 00:00:00', '2015-02-06 00:00:00', null, null, '3333', null, null, null, '2015-02-05 14:52:45', 'INVALID');
 INSERT INTO `transport` VALUES ('4', '5', null, '2', '灰狗运输', '1423119410405', '5', '5', '5', '5', '5', '5', '5', '2', '002', '金矿', '克', '5', '5', '2015-02-03 00:00:00', '2015-02-04 00:00:00', null, null, '555', null, null, null, '2015-02-05 14:56:50', 'VALID');
 
 -- ----------------------------

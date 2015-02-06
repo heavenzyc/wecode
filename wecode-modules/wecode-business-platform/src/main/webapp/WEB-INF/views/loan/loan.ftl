@@ -11,7 +11,7 @@
             <div class="space-6"></div>
             <div class="clearfix">
                 <div class="pull-left text-left clearfix" style="margin-left:20px;">
-                    <label class="pull-left" style="margin-top:5px">借款时间：</label>
+                    <label class="pull-left" style="margin-top:5px">借款日期：</label>
                     <div class="pull-left" style="margin-right:30px;">
                         <div class="input-group" style="width:250px; margin-left:0px;">
                             <span class="input-group-addon">
@@ -23,6 +23,10 @@
                     <label class="pull-left" style="margin-top:5px">借款人：</label>
                     <div class="pull-left" style="margin-right:30px;">
                         <input id="loaner" name="loaner" type="text" class="" placeholder="">
+                    </div>
+                    <label class="pull-left" style="margin-top:5px">批准人：</label>
+                    <div class="pull-left" style="margin-right:30px;">
+                        <input id="approve" name="approve" type="text" class="" placeholder="">
                     </div>
                     <span class="pull-left" style="margin:3px 0 0 10px;">
                         <button id="find_btn" type="button" class="btn btn-purple btn-sm" style="position: relative; padding:2px 8px; top:-2px">
@@ -71,6 +75,7 @@
 
     function searchSub(){
         var loaner = $("#loaner").val();
+        var approve = $("#approve").val();
         var range = $("#id-date-range-picker-1").val();
         var start = ""  ;
         var end = ""  ;
@@ -81,7 +86,7 @@
         }
         $("#grid-table").jqGrid('setGridParam',{
             url:"/loan/list",
-            postData:{loaner:loaner,start:start,end:end}
+            postData:{loaner:loaner,start:start,end:end,approve:approve}
         }).trigger("reloadGrid");
     }
 
@@ -93,7 +98,7 @@
             datatype : "json",
             mtype : 'get',
             height : 380,
-            caption:'入  库  单（带过磅单）',
+            caption:'借    款    单',
             rownumbers: true,
             scrollOffset:1,
             colModel :
@@ -103,7 +108,15 @@
                         {name : 'loan_dept_name',label:'借款部门',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'loan_person',label:'借款人',index :'id',width :10,sorttype : "int",editable : false},
                         {name : 'use_dept_name',index : 'id',label:'使用部门',width :10,editable : false},
-                        {name : 'loan_type',index :'reserve_time',label:'款项类别', width : 10,editable : false},
+                        {name : 'loan_type',index :'reserve_time',label:'款项类别', width : 10,editable : false,formatter:function(value,opt,rDate){
+                            if(value=='CASH'){
+                                return '现金'
+                            }else if(value=='CHECK'){
+                                return '支票：' + rDate.check_num;
+                            }else {
+                                return "";
+                            }
+                        }},
                         {name : 'money_capital',index : 'consultant_name',label:'借款金额(大写)',width : 10,editable : false},
                         {name : 'money_lower',index : 'consultant_name',label:'借款金额(小写)',width : 10,editable : false},
                         {name : 'repay_method',index : 'consultant_name',label:'还款方式',width : 10,editable : false},
@@ -113,11 +126,18 @@
                         {name : 'dept_verify',index : 'consultant_name',label:'部门审核',width : 6,editable : false},
                         {name : 'reason',index : 'consultant_name',label:'借款用途及理由',width : 6,editable : false},
                         {name : 'remark',index : 'consultant_name',label:'备注',width : 6,editable : false},
-                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false},
-                        {name : 'id',index : 'id',label:'操作',width : 100,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false,formatter:function(value,opt,rDate){
+                            if(value!= null && value != '') {
+                                return '<a href="'+rDate.annex_url+'">'+value+'</a>'
+                            }else{
+                                return "";
+                            }
+                        }},
+                        {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             html += '<a class="btn no-border btn-minier btn-primary process" href="/loan/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>';
+                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/loan/print/'+value+'">打印</a>';
                             return html;
                         }}
                     ],

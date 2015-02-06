@@ -233,7 +233,7 @@
                 </a>
             </li>
             <li>
-                <a href="/transport">
+                <a href="/receive">
                     <i class="icon-double-angle-right"></i>
                     收款单
                 </a>

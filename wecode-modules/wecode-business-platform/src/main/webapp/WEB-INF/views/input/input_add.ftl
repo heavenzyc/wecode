@@ -157,26 +157,6 @@
         });
     }
 
-    /*function getAccepter(){
-        var code = $("#acceptMerchant").val();
-        $.ajax({
-            url:'/input/getAcceptPersons',
-            type:'get',
-            data:{merchantCode:code},
-            success:function(json){
-                var data = json.data;
-                $("#accepterDiv").empty();
-                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="accept_person_code">'
-                for(var i=0; i<data.length; i++) {
-                    html += "<option value="+data[i].code+">"+data[i].name+"</option>";
-                }
-                html += "</select>"
-                $("#accepterDiv").append(html);
-                $(".chosen-select").chosen();
-            }
-        });
-    }*/
-
     function getUnit(){
         var id = $("#material").val();
         $.ajax({

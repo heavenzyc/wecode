@@ -25,7 +25,7 @@ public class Loan extends BaseModel<Loan, Integer> {
         return dao.find(sql);
     }
 
-    public static Page<Loan> getPage(Integer curPage,Integer pageSize,String start, String end, String loaner) {
+    public static Page<Loan> getPage(Integer curPage,Integer pageSize,String start, String end, String loaner, String approve) {
         String sql = "select * ";
         String sqlExceptSelect = " from loan where status='VALID' ";
         List<String> params = new ArrayList<String>();
@@ -34,9 +34,13 @@ public class Loan extends BaseModel<Loan, Integer> {
             params.add(loaner);
         }
         if (StringUtils.isNotBlank(start) && StringUtils.isNotBlank(end)) {
-            sqlExceptSelect += " and input_time>=? and input_time<=?";
+            sqlExceptSelect += " and loan_time>=? and loan_time<=?";
             params.add(start);
             params.add(end);
+        }
+        if (StringUtils.isNotBlank(approve)) {
+            sqlExceptSelect += " and approve=?";
+            params.add(approve);
         }
         sqlExceptSelect += " order by loan_time desc ";
         return Loan.dao.paginate(curPage,pageSize,sql,sqlExceptSelect,params.toArray());

@@ -7,48 +7,31 @@
             <!-- PAGE CONTENT BEGINS -->
             <div class="clearfix form-actions">
                 <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
-                    借    款    单
+                    收    款    单
                 </div>
             </div>
-            <form id="add_loan_info" class="form-horizontal" houseType="form" action="/loan/save" method="post">
-                <input type="hidden" name="annex_name" id="annex" />
-                <input type="hidden" name="annex_url" id="annex_url"/>
+            <form id="add_receive_info" class="form-horizontal" houseType="form" action="/receive/save" method="post">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款部门</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款单位及项目</label>
                     <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="loan_dept_id" >
-                            <#list depts as dept>
-                                <option value="${dept.id}">${dept.name}</option>
-                            </#list>
-                        </select>
+                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="merchant" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款人</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收款负责人</label>
                     <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="loan_person" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
-                        <label id="unit"></label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">使用部门</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="use_dept_id" data-placeholder="请选择..." name="use_dept_id" >
-                            <#list depts as dept>
-                                <option value="${dept.id}">${dept.name}</option>
-                            </#list>
-                        </select>
+                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="receive_person" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">款项类别</label>
                     <div class="col-sm-10">
                         <label>
-                            <input id="cash" name="loan_type" value="CASH" type="radio" class="ace" checked onclick="changeCash()"/>
+                            <input id="cash" name="receive_type" value="CASH" type="radio" class="ace" checked onclick="changeCash()"/>
                             <span class="lbl">现金</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <label>
-                            <input id="checks" name="loan_type" value="CHECK" type="radio" class="ace" onclick="changeCheck()"/>
+                            <input id="checks" name="receive_type" value="CHECK" type="radio" class="ace" onclick="changeCheck()"/>
                             <span class="lbl">支票</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <label class="hidden Js_check">
@@ -58,24 +41,38 @@
                 </div>
 
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款金额(大写)</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款总额(大写)</label>
 
                     <div class="col-sm-10">
                         <input type="text" id="structure" class="col-xs-10 col-sm-5" name="money_capital" maxlength="50"/>
                     </div>
                 </div>
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款金额(小写)</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款总额(小写)</label>
 
                     <div class="col-sm-10">
                         <input type="text" id="money_lower" class="col-xs-10 col-sm-5" name="money_lower" maxlength="10"/>
                     </div>
                 </div>
                 <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收到金额</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" id="money" class="col-xs-10 col-sm-5" name="money" maxlength="10"/>
+                    </div>
+                </div>
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">欠款余额</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" id="arrears" class="col-xs-10 col-sm-5" name="arrears" maxlength="10"/>
+                    </div>
+                </div>
+                <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款日期</label>
                     <div class="col-sm-10">
                         <div class="input-group" style="width:235px;">
-                            <input id="end_join_time" class="form-control date-picker" placeholder="默认为当天" name="loan_time" type="text" data-date-format="yyyy-mm-dd">
+                            <input id="end_join_time" class="form-control date-picker" placeholder="默认为当天" name="receive_time" type="text" data-date-format="yyyy-mm-dd">
                                 <span class="input-group-addon">
                                     <i class="icon-calendar bigger-110"></i>
                                 </span>
@@ -83,14 +80,7 @@
                     </div>
                 </div>
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">还款方式</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="repay_method"  class="col-xs-10 col-sm-5" name="repay_method" maxlength="50"/>
-                    </div>
-                </div>
-                <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">批准人</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">经办人</label>
 
                     <div class="col-sm-10">
                         <input type="text" id="approve"  class="col-xs-10 col-sm-5" name="approve" maxlength="20"/>
@@ -118,7 +108,7 @@
                     </div>
                 </div>
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款用途</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收款项目及理由</label>
                     <div class="col-sm-10">
                         <textarea cols="45" rows="5" name="reason" maxlength="200" placeholder="200字以内"></textarea>
                     </div>
@@ -129,13 +119,13 @@
                         <textarea cols="45" rows="5" maxlength="200" name="remark" placeholder="200字以内"></textarea>
                     </div>
                 </div>
-                <div class="form-group"  >
+                <#--<div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">附件</label>
                     <div class="col-sm-3">
-                        <input class="col-xs-4" type="file" name="annex" id="id-input-file" />
+                        <input class="col-xs-4" type="file" name="annex" id="id-input-file-2" />
+                        <button class="btn btn-minier btn-purple">上传</button>
                     </div>
-                    <button class="btn btn-sm btn-primary" onclick="uploadAnnex()">确认上传</button>
-                </div>
+                </div>-->
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-2 col-md-9">
                         <button class="btn btn-info" type="submit">
@@ -165,8 +155,10 @@
         });
 
         // 验证插件
-        $("#add_loan_info").validity(function(){
+        $("#add_receive_info").validity(function(){
             $("#money_lower").require("请输入金额").match("number");
+            $("#money").require("请输入金额").match("number");
+            $("#arrears").require("请输入金额").match("number");
         });
     })
 
@@ -178,7 +170,7 @@
     function changeCheck(){
         $(".Js_check").removeClass("hidden");
     }
-    $('#id-input-file').ace_file_input({
+    $('#id-input-file-2').ace_file_input({
         no_file:'选择文件 ...',
         btn_choose:'选 择',
         btn_change:'选 择',
@@ -190,37 +182,6 @@
         //onchange:''
         //
     });
-
-    function uploadAnnex(){
-        var str = "!host.txt!";
-        var res = str.split("!");
-        $.ajaxFileUpload({
-            url:'/loan/upload',
-            type:'post',
-            fileElementId:'id-input-file',
-            dataType:'text',
-            secureuri:false,
-            success:function(json) {
-                if(json.indexOf('true')!=-1){
-                    showToast("上传成功！");
-                    var annex = (json.split("!"))[1];
-                    var annex_url = (json.split("#"))[1];
-                    $("#annex").val(annex);
-                    $("#annex_url").val(annex_url);
-                }else{
-                    showToast("导入失败！");
-                }
-            }
-        });
-    }
-    function showToast(text,title,time){
-        $.gritter.add({
-            title : title || '信息提示',
-            time : time || 1000,
-            text : text,
-            class_name : 'gritter-info gritter-center'
-        });
-    }
 </script>
 
 </@we.html>

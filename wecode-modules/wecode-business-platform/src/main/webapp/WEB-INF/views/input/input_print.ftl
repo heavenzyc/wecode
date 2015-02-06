@@ -5,8 +5,8 @@
         {
             border-collapse: collapse;
             border: none;
-            width: 241mm;
-            height: 100mm;
+            width: 216mm;
+            height: 139mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}

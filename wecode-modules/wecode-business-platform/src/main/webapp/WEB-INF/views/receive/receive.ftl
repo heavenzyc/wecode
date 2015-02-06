@@ -3,9 +3,7 @@
 
 <div class="page-content">
     <div class="page-header">
-        <button class="btn btn-primary JS_improt">导入数据</button>
-        <a class="btn btn-danger" href="/input/exportExcel">导出数据</a>
-        <a class="btn btn-success" href="/input/add">添加数据</a>
+        <a class="btn btn-success" href="/receive/add">添加数据</a>
     </div>
 
     <div class="row">
@@ -13,7 +11,7 @@
             <div class="space-6"></div>
             <div class="clearfix">
                 <div class="pull-left text-left clearfix" style="margin-left:20px;">
-                    <label class="pull-left" style="margin-top:5px">入库时间：</label>
+                    <label class="pull-left" style="margin-top:5px">收款日期：</label>
                     <div class="pull-left" style="margin-right:30px;">
                         <div class="input-group" style="width:250px; margin-left:0px;">
                             <span class="input-group-addon">
@@ -22,17 +20,13 @@
                             <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" value="" start="" end="">
                         </div>
                     </div>
-                    <label class="pull-left" style="margin-top:5px">运输人：</label>
+                    <label class="pull-left" style="margin-top:5px">收款负责人：</label>
                     <div class="pull-left" style="margin-right:30px;">
-                        <input id="transport" name="transport" type="text" class="" placeholder="">
+                        <input id="receiver" name="receiver" type="text" class="" placeholder="">
                     </div>
-                    <label class="pull-left" style="margin-top:5px">收货人：</label>
+                    <label class="pull-left" style="margin-top:5px">经办人：</label>
                     <div class="pull-left" style="margin-right:30px;">
-                        <input id="accepter" name="accepter" type="text" class="" placeholder="">
-                    </div>
-                    <label class="pull-left" style="margin-top:5px">过磅人：</label>
-                    <div class="pull-left">
-                        <input id="weighter" name="weighter" type="text" class="" placeholder="">
+                        <input id="approve" name="approve" type="text" class="" placeholder="">
                     </div>
                     <span class="pull-left" style="margin:3px 0 0 10px;">
                         <button id="find_btn" type="button" class="btn btn-purple btn-sm" style="position: relative; padding:2px 8px; top:-2px">
@@ -40,12 +34,6 @@
                             <i class="icon-search icon-on-right bigger-110" placeholder=""></i>
                         </button>
                     </span>
-                    <label class="pull-right" style="margin-top:0px; font-size: 20px;color:#ff0000 ">数量合计：${totalCount}（吨）  &nbsp;&nbsp;&nbsp;
-                        金额合计：${totalMoney} （元）  </label>
-                    <div class="pull-right" style="margin-right:30px;">
-                        <div class="input-group" style="width:200px; margin-left:0px;">
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -86,9 +74,8 @@
     });
 
     function searchSub(){
-        var transport = $("#transport").val();
-        var accepter = $("#accepter").val();
-        var weighter = $("#weighter").val();
+        var receiver = $("#receiver").val();
+        var approve = $("#approve").val();
         var range = $("#id-date-range-picker-1").val();
         var start = ""  ;
         var end = ""  ;
@@ -98,8 +85,8 @@
             end = range[1];
         }
         $("#grid-table").jqGrid('setGridParam',{
-            url:"/input/list",
-            postData:{transport:transport,accepter:accepter,weighter:weighter,start:start,end:end}
+            url:"/receive/list",
+            postData:{receiver:receiver,start:start,end:end,approve:approve}
         }).trigger("reloadGrid");
     }
 
@@ -107,40 +94,44 @@
         var pager_selector = "#grid-pager";
         var table = $("#grid-table");
         table.jqGrid({
-            url : "/input/list",
+            url : "/receive/list",
             datatype : "json",
             mtype : 'get',
             height : 380,
-            caption:'入  库  单（带过磅单）',
+            caption:'收    款    单',
             rownumbers: true,
             scrollOffset:1,
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'code',label:'入库单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'merchant_name',label:'供货单位',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'send_person',label:'发货人',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'input_time',index :'reserve_time',label:'入库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
-                        {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
-                        {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
-                        {name : 'price',index : 'price',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
-                            return rDate.price+"元/"+rDate.unit;
+                        {name : 'receive_time',label:'收款日期',index :'code',width :10,sorttype : "int",editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'merchant',label:'收款单位',index :'id',width :10,sorttype : "int",editable : false},
+                        {name : 'receive_type',index :'reserve_time',label:'款项类别', width : 10,editable : false,formatter:function(value,opt,rDate){
+                            if(value=='CASH'){
+                                return '现金'
+                            }else if(value=='CHECK'){
+                                return '支票：' + rDate.check_num;
+                            }else {
+                                return "";
+                            }
                         }},
-                        {name : 'count',index : 'consultant_name',label:'数量',width : 10,editable : false},
-                        {name : 'money',index : 'consultant_name',label:'总额',width : 10,editable : false},
-                        {name : 'warehouse',index : 'consultant_name',label:'所入仓库',width : 10,editable : false},
-                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 6,editable : false},
-                        {name : 'weigh_person',index : 'consultant_name',label:'过磅人',width : 6,editable : false},
-                        {name : 'transport_person',index : 'consultant_name',label:'运输人',width : 6,editable : false},
-                        {name : 'car_num',index : 'consultant_name',label:'司机车号',width : 6,editable : false},
+                        {name : 'money_capital',index : 'consultant_name',label:'应收款(大写)',width : 10,editable : false},
+                        {name : 'money_lower',index : 'consultant_name',label:'应收款(小写)',width : 10,editable : false},
+                        {name : 'money',index : 'consultant_name',label:'收到金额',width : 10,editable : false},
+                        {name : 'arrears',index : 'consultant_name',label:'欠款余额',width : 10,editable : false},
+                        {name : 'receive_person',index : 'consultant_name',label:'收款负责人',width : 10,editable : false},
+                        {name : 'approve',index : 'consultant_name',label:'经办人',width : 10,editable : false},
+                        {name : 'verify',index : 'consultant_name',label:'财务核准',width : 10,editable : false},
+                        {name : 'finance_verify',index : 'accept_person',label:'财务审核',width : 6,editable : false},
+                        {name : 'dept_verify',index : 'consultant_name',label:'部门审核',width : 6,editable : false},
+                        {name : 'reason',index : 'consultant_name',label:'收款项目及理由',width : 6,editable : false},
+                        {name : 'remark',index : 'consultant_name',label:'备注',width : 6,editable : false},
+                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false},
                         {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
-                            if (rData.type == 'ADD') {
-                                html += '<a class="btn no-border btn-minier btn-primary process" href="/input/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-                            }
-                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp';
-                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/input/print/'+value+'">打印</a>';
+                            html += '<a class="btn no-border btn-minier btn-primary process" href="/receive/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<a class="btn no-border btn-minier btn-primary process" target="_blank" href="/receive/print/'+value+'">打印</a>';
                             return html;
                         }}
                     ],
@@ -304,7 +295,7 @@
         bootbox.confirm("确定删除该数据吗?", function(result) {
             if(result) {
                 $.ajax({
-                    url:"/input/delete",
+                    url:"/receive/delete",
                     async: false,
                     type:'GET',
                     data:{id:id},

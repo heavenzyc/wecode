@@ -5,8 +5,8 @@
         {
             border-collapse: collapse;
             border: none;
-            width: 241mm;
-            height: 100mm;
+            width: 216mm;
+            height: 139mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}
@@ -67,7 +67,7 @@
     </tr>
     <tr>
         <td>卸货日期</td>
-        <td>${data.off_time?string("yyyy年MM月dd日")}</td>
+        <td>${(data.off_time)?string("yyyy年MM月dd日")}</td>
     </tr>
     <tr>
         <td>过磅人签字</td>
