@@ -22,7 +22,8 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String requestUrl = request.getRequestURI();
-        if (requestUrl.equals("/login") || requestUrl.equals("/") || requestUrl.equals("/index")) {
+        System.out.println(requestUrl);
+        if (requestUrl.endsWith("/login") || requestUrl.endsWith("/") || requestUrl.endsWith("/index")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
