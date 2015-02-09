@@ -15,6 +15,7 @@ import com.wecode.framework.util.StringUtils;
 import com.wecode.modules.wbp.common.config.FileUpload;
 import com.wecode.modules.wbp.common.model.*;
 
+import javax.xml.ws.ResponseWrapper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -120,10 +121,13 @@ public class LoanController extends BaseController{
         loan.set("remark",remark);
         loan.set("create_time",new Date());
         loan.set("status",Status.VALID.name());
-        loan.set("annex",annex_name);
-        loan.set("annex_url",annex_url);
+        if (StringUtils.isNotBlank(annex_name) && StringUtils.isNotBlank(annex_url)) {
+            loan.set("annex",annex_name);
+            loan.set("annex_url",annex_url);
+        }
         loan.save();
-        redirect("/loan/index");
+        renderJson(JsonResult.success().toJson());
+//        redirect("/loan/index");
     }
 
     public void update(){
@@ -167,7 +171,8 @@ public class LoanController extends BaseController{
         String dept_verify = getPara("dept_verify");
         String reason = getPara("reason");
         String remark = getPara("remark");
-//        File file = getFile("annex").getFile();
+        String annex_name = getPara("annex_name");
+        String annex_url = getPara("annex_url");
         Loan loan = Loan.dao.findById(id);
         loan.set("loan_dept_id",loan_dept_id);
         loan.set("loan_dept_name",loan_dept_name);
@@ -186,8 +191,14 @@ public class LoanController extends BaseController{
         loan.set("finance_verify",finance_verify);
         loan.set("dept_verify",dept_verify);
         loan.set("remark",remark);
+        if (StringUtils.isNotBlank(annex_name) && StringUtils.isNotBlank(annex_url)) {
+            loan.set("annex",annex_name);
+            loan.set("annex_url",annex_url);
+        }
         loan.update();
-        redirect("/loan/index");
+        /*loan.update();
+        redirect("/loan/index");*/
+        renderJson(JsonResult.success().toJson());
     }
 
 
@@ -206,10 +217,6 @@ public class LoanController extends BaseController{
         Loan info = Loan.dao.findById(id);
         setAttr("data",info);
         renderFreeMarker("loan_print.ftl");
-    }
-
-    public void file(){
-        renderFreeMarker("file.ftl");
     }
 
     public void upload(){

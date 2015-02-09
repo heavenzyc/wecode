@@ -25,7 +25,7 @@ body { padding: 0; margin: 0; font-family: Microsoft Yahei!important}
 .navbar-menu a { display: inline-block; padding: 0 10px; line-height: 45px; color: #fff; text-decoration: none;font-weight: 700; font-size: 14px;}
 .navbar-menu a:hover,.navbar-menu a.current { text-decoration: none; background:#579EC8 }
 
-.phone-preview { position: relative; margin: 0 auto; width: 360px; height: 750px; background: url(../images/mobileBg.png) no-repeat;}
+.phone-preview { position: relative; margin: 0 auto; width: 360px; height: 750px; background: no-repeat;}
 .phone-preview .preview-wrap { margin: 0 10px }
 .phone-preview .preview-content { position: absolute; left: 30px; top: 89px; width: 301px; height:550px; background:#f0f0f0; overflow-x:hidden; overflow-y:auto; word-wrap: break-word; 
 word-break: break-word; }
@@ -53,8 +53,8 @@ word-break: break-word; }
 .material .module:hover .shade{display:block;}
 .material .module .shade .bj{background:#000;opacity:0.5;filter:alpha(opacity=50);width:480px;height:46px;}
 .material .module .shade .handle{position:absolute;top:50%;left:0px;right:0px;text-align:center;margin-top:-15px;z-index:200;}
-.material .module .shade .handle .modif{background:url(../images/new_house.png) -273px -46px no-repeat;width:27px;height:26px;display:inline-block;margin-right:45px; }
-.material .module .shade .handle .remov{background:url(../images/new_house.png) -247px -45px no-repeat;width:25px;height:27px;display:inline-block;margin-left:45px; }
+.material .module .shade .handle .modif{background: -273px -46px no-repeat;width:27px;height:26px;display:inline-block;margin-right:45px; }
+.material .module .shade .handle .remov{background: -247px -45px no-repeat;width:25px;height:27px;display:inline-block;margin-left:45px; }
 .material .addmet{display:block;border:3px dotted #ccc;height:60px;text-align:center;padding-top:15px; }
 .material .addmet:hover { text-decoration: none; border-color: #aaa;}
 .material .addmet .addicon{vertical-align:middle;}
@@ -70,7 +70,7 @@ word-break: break-word; }
 .material .manbox .saverow{border: 1px #e0dfdf solid;border-top:none;padding:0px 20px 12px;}
 .material .import .conte .upimg{display:block;position:relative;background:url(../images/add.png) center center no-repeat;width:160px;height:90px;     }
 .material .import .conte .isize{font-size:12px;color:#929597;}
-.material .import .conte .upimg .reimg{background: url(../images/icon/msgWrong.png) center center no-repeat;display:block;width: 20px;height: 20px;top: 5px;right: 5px;position: absolute;}
+.material .import .conte .upimg .reimg{background: center center no-repeat;display:block;width: 20px;height: 20px;top: 5px;right: 5px;position: absolute;}
 
 /*相册*/
 .album-title { line-height: 2; font-size: 14px; display: table-footer-group}

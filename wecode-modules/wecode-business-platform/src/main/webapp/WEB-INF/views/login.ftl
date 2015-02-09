@@ -34,10 +34,6 @@
           </div>
       </div>
   </div>
-  <div class="login-footer">
-      <p>汉诺威信息科技 版权所有</p>
-      <p>Copyright &copy; 2014-2016</p>
-  </div>
 
   <!--[if !IE]> -->
   <script type="text/javascript">

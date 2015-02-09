@@ -126,7 +126,13 @@
                         {name : 'dept_verify',index : 'consultant_name',label:'部门审核',width : 6,editable : false},
                         {name : 'reason',index : 'consultant_name',label:'收款项目及理由',width : 6,editable : false},
                         {name : 'remark',index : 'consultant_name',label:'备注',width : 6,editable : false},
-                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false},
+                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false,formatter:function(value,opt,rDate){
+                            if(value!= null && value != '') {
+                                return '<a href="'+rDate.annex_url+'">'+value+'</a>'
+                            }else{
+                                return "";
+                            }
+                        }},
                         {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             html += '<a class="btn no-border btn-minier btn-primary process" href="/receive/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';

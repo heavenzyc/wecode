@@ -10,8 +10,10 @@
                     借    款    单
                 </div>
             </div>
-            <form id="add_loan_edit" class="form-horizontal" houseType="form" action="/loan/modify" method="post">
+            <form id="add_loan_edit" class="form-horizontal">
                 <input type="hidden" name="id" value="${data.id}">
+                <input type="hidden" name="annex_name" id="edit_annex" />
+                <input type="hidden" name="annex_url" id="edit_annex_url"/>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款部门</label>
                     <div class="col-sm-10">
@@ -135,21 +137,31 @@
                         <button class="btn btn-minier btn-purple">上传</button>
                     </div>
                 </div>-->
-                <div class="clearfix form-actions">
-                    <div class="col-md-offset-2 col-md-9">
-                        <button class="btn btn-info" type="submit">
-                            <i class="icon-ok bigger-110"></i>
-                            保存
-                        </button>
 
-                        &nbsp; &nbsp; &nbsp;
-                        <a href="javascript:history.go(-1);" class="btn" type="reset">
-                            <i class="icon-undo bigger-110"></i>
-                            取消
-                        </a>
-                    </div>
-                </div>
             </form>
+            <div class="form-horizontal">
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">附件</label>
+                    <div class="col-sm-3">
+                        <input class="col-xs-4" type="file" name="annex" id="id-input-file-1" />
+                    </div>
+                    <button class="btn btn-sm btn-primary" onclick="uploadAnnex()">确认上传</button>
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-2 col-md-9">
+                    <button class="btn btn-info" type="submit" onclick="submitForm()">
+                        <i class="icon-ok bigger-110"></i>
+                        保存
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="javascript:history.go(-1);" class="btn" type="reset">
+                        <i class="icon-undo bigger-110"></i>
+                        取消
+                    </a>
+                </div>
+            </div>
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -177,7 +189,7 @@
     function changeCheck(){
         $(".Js_check").removeClass("hidden");
     }
-    $('#id-input-file-2').ace_file_input({
+    $('#id-input-file-1').ace_file_input({
         no_file:'选择文件 ...',
         btn_choose:'选 择',
         btn_change:'选 择',
@@ -189,6 +201,56 @@
         //onchange:''
         //
     });
+
+    function uploadAnnex(){
+        $.ajaxFileUpload({
+            url:'/loan/upload',
+            type:'post',
+            fileElementId:'id-input-file-1',
+            dataType:'text',
+            secureuri:false,
+            success:function(json) {
+                if(json.indexOf('true')!=-1){
+                    showToast("上传成功！");
+                    var annex = (json.split("!"))[1];
+                    var annex_url = (json.split("#"))[1];
+                    $("#edit_annex").val(annex);
+                    $("#edit_annex_url").val(annex_url);
+                }else{
+                    showToast("上传失败！");
+                }
+            }
+        });
+    }
+
+    function submitForm(){
+        var data = $("#add_loan_edit").serialize();
+        $.validity.start();
+        $("#money_lower").require("请输入金额").match("number");
+        var result = $.validity.end().valid;
+        if(result == false) return;
+        $.ajax({
+            url:'/loan/modify',
+            type:'post',
+            data:data,
+            success:function(json) {
+                if(json.success){
+                    window.location.href='/loan/index';
+                }else {
+                    showToast("网络异常，请稍后重试！")
+                }
+            }
+        });
+    }
+
+    function showToast(text,title,time){
+        $.gritter.add({
+            title : title || '信息提示',
+            time : time || 1000,
+            text : text,
+            class_name : 'gritter-info gritter-center'
+        });
+    }
 </script>
 
 </@we.html>

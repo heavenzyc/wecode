@@ -10,7 +10,7 @@
                     借    款    单
                 </div>
             </div>
-            <form id="add_loan_info" class="form-horizontal" houseType="form" action="/loan/save" method="post">
+            <form id="add_loan_info" class="form-horizontal" >
                 <input type="hidden" name="annex_name" id="annex" />
                 <input type="hidden" name="annex_url" id="annex_url"/>
                 <div class="form-group">
@@ -129,6 +129,8 @@
                         <textarea cols="45" rows="5" maxlength="200" name="remark" placeholder="200字以内"></textarea>
                     </div>
                 </div>
+            </form>
+            <div class="form-horizontal" >
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">附件</label>
                     <div class="col-sm-3">
@@ -136,21 +138,21 @@
                     </div>
                     <button class="btn btn-sm btn-primary" onclick="uploadAnnex()">确认上传</button>
                 </div>
-                <div class="clearfix form-actions">
-                    <div class="col-md-offset-2 col-md-9">
-                        <button class="btn btn-info" type="submit">
-                            <i class="icon-ok bigger-110"></i>
-                            保存
-                        </button>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-2 col-md-9">
+                    <button class="btn btn-info" type="button" onclick="submitForm()">
+                        <i class="icon-ok bigger-110"></i>
+                        保存
+                    </button>
 
-                        &nbsp; &nbsp; &nbsp;
-                        <a href="javascript:history.go(-1);" class="btn" type="reset">
-                            <i class="icon-undo bigger-110"></i>
-                            取消
-                        </a>
-                    </div>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="javascript:history.go(-1);" class="btn" type="reset">
+                        <i class="icon-undo bigger-110"></i>
+                        取消
+                    </a>
                 </div>
-            </form>
+            </div>
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -192,8 +194,6 @@
     });
 
     function uploadAnnex(){
-        var str = "!host.txt!";
-        var res = str.split("!");
         $.ajaxFileUpload({
             url:'/loan/upload',
             type:'post',
@@ -208,11 +208,32 @@
                     $("#annex").val(annex);
                     $("#annex_url").val(annex_url);
                 }else{
-                    showToast("导入失败！");
+                    showToast("上传失败！");
                 }
             }
         });
     }
+
+    function submitForm(){
+        var data = $("#add_loan_info").serialize();
+        $.validity.start();
+        $("#money_lower").require("请输入金额").match("number");
+        var result = $.validity.end().valid;
+        if(result == false) return;
+        $.ajax({
+            url:'/loan/save',
+            type:'post',
+            data:data,
+            success:function(json) {
+                if(json.success){
+                    window.location.href='/loan/index';
+                }else {
+                    showToast("网络异常，请稍后重试！")
+                }
+            }
+        });
+    }
+
     function showToast(text,title,time){
         $.gritter.add({
             title : title || '信息提示',

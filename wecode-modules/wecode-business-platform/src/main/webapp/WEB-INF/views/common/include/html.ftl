@@ -114,7 +114,7 @@
 
 <div class="navbar-header pull-right" role="navigation">
 <ul class="nav ace-nav">
-<li class="light-blue">
+<#--<li class="light-blue">
     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
             <span class="user-info">
                 <small>欢迎光临,</small>
@@ -133,7 +133,7 @@
             </a>
         </li>
     </ul>
-</li>
+</li>-->
 </ul><!-- /.ace-nav -->
 </div><!-- /.navbar-header -->
 </div><!-- /.container -->
@@ -240,7 +240,7 @@
             </li>
         </ul>
     </li>
-    <li>
+    <#--<li>
         <a href="#" class="dropdown-toggle">
             <i class="icon-list"></i>
             <span class="menu-text"> 结算管理 </span>
@@ -248,25 +248,25 @@
         </a>
         <ul class="submenu">
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     材料结算清单
                 </a>
             </li>
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     运费结算清单
                 </a>
             </li>
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     矿石加工及运费结算清单
                 </a>
             </li>
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     利润结算清单
                 </a>
@@ -281,19 +281,19 @@
         </a>
         <ul class="submenu">
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     统计1
                 </a>
             </li>
             <li>
-                <a href="/transport">
+                <a href="#">
                     <i class="icon-double-angle-right"></i>
                     统计2
                 </a>
             </li>
         </ul>
-    </li>
+    </li>-->
 </ul><!-- /.nav-list -->
 
 <div class="sidebar-collapse" id="sidebar-collapse">
@@ -327,8 +327,6 @@
     <i class="icon-double-angle-up icon-only bigger-110"></i>
 </a>
 </div><!-- /.main-container -->
-
-<#--<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>-->
 </body>
 </html>
 </#macro>
