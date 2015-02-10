@@ -1,0 +1,6 @@
+打印页面修改：
+1、入库单打印: WEB-INF\views\input\input_print.ftl
+2、出库单打印：WEB-INF\views\output\output_print.ftl
+3、承运单：WEB-INF\views\transport\transport_print.ftl
+4、借款单：WEB-INF\views\loan\loan_print.ftl
+5、还款单：WEB-INF\views\receive\receive_print.ftl
