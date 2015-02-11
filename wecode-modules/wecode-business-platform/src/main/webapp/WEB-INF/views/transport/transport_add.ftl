@@ -109,24 +109,16 @@
                 </div>
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right"> 发货日期： </label>
-                    <div class="col-sm-10">
-                        <div class="input-group" style="width:235px;">
-                            <input id="end_join_time" class="form-control date-picker" name="send_time" type="text" data-date-format="yyyy-mm-dd">
-                                <span class="input-group-addon">
-                                    <i class="icon-calendar bigger-110"></i>
-                                </span>
+                        <div class="col-sm-10">
+                            <input type="text" style="width:250px;" id="endTime" name="send_time"
+                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                         </div>
                     </div>
-                </div>
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right"> 卸货日期： </label>
                     <div class="col-sm-10">
-                        <div class="input-group" style="width:235px;">
-                            <input id="end_join_time" class="form-control date-picker" name="off_time" type="text" data-date-format="yyyy-mm-dd">
-                                <span class="input-group-addon">
-                                    <i class="icon-calendar bigger-110"></i>
-                                </span>
-                        </div>
+                        <input type="text" style="width:250px;" id="endTime" name="off_time"
+                               onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
                 </div>
                 <div class="form-group"  >

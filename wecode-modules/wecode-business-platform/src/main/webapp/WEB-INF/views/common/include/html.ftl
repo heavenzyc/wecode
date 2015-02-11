@@ -92,8 +92,7 @@
     <script src="/assets/js/jquery.validity/jquery.validity.js"></script>
     <script src="/assets/js/qTip2/jquery.qtip.min.js"></script>
     <script src="/assets/js/jquery.validity/jquery.validity.extend.js"></script>
-
-
+    <script src="/assets/js/My97DatePicker/WdatePicker.js"></script>
 </head>
 
 <body>

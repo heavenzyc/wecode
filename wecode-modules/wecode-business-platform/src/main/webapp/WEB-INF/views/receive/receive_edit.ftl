@@ -74,12 +74,8 @@
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款日期</label>
                     <div class="col-sm-10">
-                        <div class="input-group" style="width:235px;">
-                            <input id="end_join_time" class="form-control date-picker" placeholder="默认为当天" name="receive_time" value="${(data.receive_time)?string('yyyy-MM-dd')}" type="text" data-date-format="yyyy-mm-dd">
-                                <span class="input-group-addon">
-                                    <i class="icon-calendar bigger-110"></i>
-                                </span>
-                        </div>
+                        <input type="text" style="width:250px;" placeholder="默认为当天" name="receive_time" value="${(data.receive_time)?string('yyyy-MM-dd')}"
+                               onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
                 </div>
                 <div class="form-group"  >
