@@ -72,12 +72,13 @@ public class OutputController extends BaseController{
         setAttr("materials",materials);
         setAttr("accepts",accepts);
         setAttr("staffs",staffs);
+        setAttr("code",getSerialNum("output_info","CK"));
         renderFreeMarker("output_add.ftl");
     }
 
     @Before(Tx.class)
     public void save(){
-        String code = currentTimeMillis();
+        String code = getPara("code");
         String project_name = getPara("project_name");
         String contract_num = getPara("contract_num");
         String merchant_id = getPara("merchant_id");
@@ -312,10 +313,11 @@ public class OutputController extends BaseController{
                     inputInfo.set("output_time", date);
                 }
                 //入库单号
-                HSSFCell code = xssfRow.getCell(1);
+                /*HSSFCell code = xssfRow.getCell(1);
                 if (code != null) {
                     inputInfo.set("code",getValue(code));
-                }
+                }*/
+                inputInfo.set("code",getSerialNum("output_info","CK"));
                 //物品编号
                 HSSFCell material_code = xssfRow.getCell(2);
                 if (material_code != null) {
@@ -432,7 +434,7 @@ public class OutputController extends BaseController{
             if (xssfSheet == null) return;
             // 循环行Row
             for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
-                InputInfo inputInfo = new InputInfo();
+                OutputInfo inputInfo = new OutputInfo();
                 XSSFRow xssfRow = xssfSheet.getRow(rowNum);
                 if (xssfRow == null) {
                     continue;
@@ -442,13 +444,14 @@ public class OutputController extends BaseController{
                 if (input_time != null) {
                     String timeStr = getValue(input_time);
                     Date date = DateUtils.parse(timeStr,"yyyyMMdd");
-                    inputInfo.set("input_time", date);
+                    inputInfo.set("output_time", date);
                 }
                 //入库单号
-                XSSFCell code = xssfRow.getCell(1);
+                /*XSSFCell code = xssfRow.getCell(1);
                 if (code != null) {
                     inputInfo.set("code",getValue(code));
-                }
+                }*/
+                inputInfo.set("code",getSerialNum("output_info","CK"));
                 //物品编号
                 XSSFCell material_code = xssfRow.getCell(2);
                 if (material_code != null) {

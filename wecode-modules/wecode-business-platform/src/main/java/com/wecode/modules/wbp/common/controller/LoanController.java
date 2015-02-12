@@ -101,7 +101,7 @@ public class LoanController extends BaseController{
         String annex_name = getPara("annex_name");
         String annex_url = getPara("annex_url");
         Loan loan = new Loan();
-        loan.set("code",currentTimeMillis());
+        loan.set("code",getSerialNum("loan","JK"));
         loan.set("loan_dept_id",loan_dept_id);
         loan.set("loan_dept_name",loan_dept_name);
         loan.set("loan_person",loan_person);

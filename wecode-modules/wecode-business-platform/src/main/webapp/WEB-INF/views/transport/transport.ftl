@@ -126,24 +126,24 @@
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'code',label:'运输单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'transport_merchant_name',label:'运输单位',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'input_output_code',label:'出入库单号',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'send_address',index : 'id',label:'发货地址',width :10,editable : false},
-                        {name : 'send_person',index : 'consultant_name',label:'发货人',width : 10,editable : false},
-                        {name : 'send_person_phone',index : 'send_person_phone',label:'发货人电话',width : 10,editable : false},
-                        {name : 'accept_merchant',index : 'consultant_name',label:'收货单位',width : 10,editable : false},
-                        {name : 'accept_address',index : 'consultant_name',label:'收货地址',width : 10,editable : false},
-                        {name : 'accept_person',index : 'accept_person',label:'收货人',width : 10,editable : false},
-                        {name : 'accept_person_phone',index : 'consultant_name',label:'收货人电话',width : 10,editable : false},
-                        {name : 'material_name',index : 'consultant_name',label:'货物名称',width : 10,editable : false},
-                        {name : 'unit',index : 'consultant_name',label:'数量单位',width : 10,editable : false},
-                        {name : 'shipping_address',index : 'consultant_name',label:'装货地点',width : 10,editable : false},
-                        {name : 'shipping_person_phone',index : 'consultant_name',label:'装货人电话',width : 10,editable : false},
-                        {name : 'send_time',index :'reserve_time',label:'发货日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
-                        {name : 'off_time',index :'reserve_time',label:'卸货日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
-                        {name : 'car_num',index : 'consultant_name',label:'运输车号',width : 10,editable : false},
-                        {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                        {name : 'code',label:'运输单号',index :'code',fixed:true,sorttype : "int",editable : false},
+                        {name : 'transport_merchant_name',label:'运输单位',index :'id',fixed:true,sorttype : "int",editable : false},
+                        {name : 'input_output_code',label:'出入库单号',index :'id',fixed:true,sorttype : "int",editable : false},
+                        {name : 'send_address',index : 'id',label:'发货地址',fixed:true,editable : false},
+                        {name : 'send_person',index : 'consultant_name',label:'发货人',fixed:true,width : 100,editable : false},
+                        {name : 'send_person_phone',index : 'send_person_phone',label:'发货人电话',fixed:true,width : 100,editable : false},
+                        {name : 'accept_merchant',index : 'consultant_name',label:'收货单位',fixed:true,editable : false},
+                        {name : 'accept_address',index : 'consultant_name',label:'收货地址',fixed:true,editable : false},
+                        {name : 'accept_person',index : 'accept_person',label:'收货人',fixed:true,width : 100,editable : false},
+                        {name : 'accept_person_phone',index : 'consultant_name',label:'收货人电话',fixed:true,width : 100,editable : false},
+                        {name : 'material_name',index : 'consultant_name',label:'货物名称',fixed:true,editable : false},
+                        {name : 'unit',index : 'consultant_name',label:'数量单位',fixed:true,editable : false},
+                        {name : 'shipping_address',index : 'consultant_name',label:'装货地点',fixed:true,editable : false},
+                        {name : 'shipping_person_phone',index : 'consultant_name',label:'装货人电话',fixed:true,width : 100,editable : false},
+                        {name : 'send_time',index :'reserve_time',label:'发货日期', fixed:true,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'off_time',index :'reserve_time',label:'卸货日期', fixed:true,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'car_num',index : 'consultant_name',label:'运输车号',fixed:true,width : 100,editable : false},
+                        {name : 'id',index : 'id',label:'操作',fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             html += '<a class="btn no-border btn-minier btn-primary process" href="/transport/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;';

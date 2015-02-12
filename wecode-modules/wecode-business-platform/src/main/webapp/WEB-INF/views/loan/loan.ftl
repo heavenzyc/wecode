@@ -104,36 +104,38 @@
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'loan_time',label:'借款时间',index :'code',width :10,sorttype : "int",editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
-                        {name : 'loan_dept_name',label:'借款部门',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'loan_person',label:'借款人',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'use_dept_name',index : 'id',label:'使用部门',width :10,editable : false},
-                        {name : 'loan_type',index :'reserve_time',label:'款项类别', width : 10,editable : false,formatter:function(value,opt,rDate){
+                        {name : 'loan_time',label:'借款时间',index :'code',fixed:true,sorttype : "int",editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'loan_dept_name',label:'借款部门',index :'id',fixed:true,sorttype : "int",editable : false},
+                        {name : 'loan_person',label:'借款人',index :'id',fixed:true,width:100,sorttype : "int",editable : false},
+                        {name : 'use_dept_name',index : 'id',label:'使用部门',fixed:true,editable : false},
+                        {name : 'loan_type',index :'reserve_time',label:'款项类别', fixed:true,editable : false,formatter:function(value,opt,rDate){
                             if(value=='CASH'){
                                 return '现金'
                             }else if(value=='CHECK'){
                                 return '支票：' + rDate.check_num;
-                            }else {
+                            }else if(value=='TRANS'){
+                                return "转账汇款";
+                            } else {
                                 return "";
                             }
                         }},
-                        {name : 'money_capital',index : 'consultant_name',label:'借款金额(大写)',width : 10,editable : false},
-                        {name : 'money_lower',index : 'consultant_name',label:'借款金额(小写)',width : 10,editable : false},
-                        {name : 'repay_method',index : 'consultant_name',label:'还款方式',width : 10,editable : false},
-                        {name : 'approve',index : 'consultant_name',label:'批准人',width : 10,editable : false},
-                        {name : 'verify',index : 'consultant_name',label:'财务核准',width : 10,editable : false},
-                        {name : 'finance_verify',index : 'accept_person',label:'财务审核',width : 6,editable : false},
-                        {name : 'dept_verify',index : 'consultant_name',label:'部门审核',width : 6,editable : false},
-                        {name : 'reason',index : 'consultant_name',label:'借款用途及理由',width : 6,editable : false},
-                        {name : 'remark',index : 'consultant_name',label:'备注',width : 6,editable : false},
-                        {name : 'annex',index : 'consultant_name',label:'附件',width : 6,editable : false,formatter:function(value,opt,rDate){
+                        {name : 'money_capital',index : 'consultant_name',label:'借款金额(大写)',fixed:true,width:100,editable : false},
+                        {name : 'money_lower',index : 'consultant_name',label:'借款金额(小写)',fixed:true,width:100,editable : false},
+                        {name : 'repay_method',index : 'consultant_name',label:'还款方式',fixed:true,editable : false},
+                        {name : 'approve',index : 'consultant_name',label:'批准人',fixed:true,width:100,editable : false},
+                        {name : 'verify',index : 'consultant_name',label:'财务核准',fixed:true,width:100,editable : false},
+                        {name : 'finance_verify',index : 'accept_person',label:'财务审核',fixed:true,width:100,editable : false},
+                        {name : 'dept_verify',index : 'consultant_name',label:'部门审核',fixed:true,width:100,editable : false},
+                        {name : 'reason',index : 'consultant_name',label:'借款用途及理由',fixed:true,editable : false},
+                        {name : 'remark',index : 'consultant_name',label:'备注',fixed:true,editable : false},
+                        {name : 'annex',index : 'consultant_name',label:'附件',fixed:true,editable : false,formatter:function(value,opt,rDate){
                             if(value!= null && value != '') {
                                 return '<a href="'+rDate.annex_url+'">'+value+'</a>'
                             }else{
                                 return "";
                             }
                         }},
-                        {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                        {name : 'id',index : 'id',label:'操作',fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             html += '<a class="btn no-border btn-minier btn-primary process" href="/loan/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                             html += '<button class="btn no-border btn-minier btn-warning process" onclick="deleteInfo('+value+')" >删除</button>&nbsp;&nbsp;&nbsp;&nbsp;';

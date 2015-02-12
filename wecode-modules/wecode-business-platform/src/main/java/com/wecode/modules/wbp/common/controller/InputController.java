@@ -70,12 +70,13 @@ public class InputController extends BaseController{
         setAttr("providers",merchants);
         setAttr("materials",materials);
         setAttr("staffs",staffs);
+        setAttr("code",getSerialNum("input_info","RK"));
         renderFreeMarker("input_add.ftl");
     }
 
     @Before(Tx.class)
     public void save(){
-        String code = currentTimeMillis();
+        String code = getPara("code");
         String project_name = getPara("project_name");
         String contract_num = getPara("contract_num");
         String merchant_id = getPara("merchant_id");
@@ -307,10 +308,11 @@ public class InputController extends BaseController{
                     inputInfo.set("input_time", date);
                 }
                 //入库单号
-                HSSFCell code = xssfRow.getCell(1);
+                /*HSSFCell code = xssfRow.getCell(1);
                 if (code != null) {
                     inputInfo.set("code",getValue(code));
-                }
+                }*/
+                inputInfo.set("code",getSerialNum("input_info","RK"));
                 //物品编号
                 HSSFCell material_code = xssfRow.getCell(2);
                 if (material_code != null) {
@@ -440,10 +442,11 @@ public class InputController extends BaseController{
                     inputInfo.set("input_time", date);
                 }
                 //入库单号
-                XSSFCell code = xssfRow.getCell(1);
+                /*XSSFCell code = xssfRow.getCell(1);
                 if (code != null) {
                     inputInfo.set("code",getValue(code));
-                }
+                }*/
+                inputInfo.set("code",getSerialNum("input_info","RK"));
                 //物品编号
                 XSSFCell material_code = xssfRow.getCell(2);
                 if (material_code != null) {

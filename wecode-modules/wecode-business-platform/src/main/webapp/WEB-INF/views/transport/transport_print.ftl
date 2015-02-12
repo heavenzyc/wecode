@@ -6,7 +6,7 @@
             border-collapse: collapse;
             border: none;
             width: 216mm;
-            height: 139mm;
+            height: 100mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}
@@ -86,16 +86,15 @@
         <td></td>
     </tr>
 </table>
-</center>
-</div>
-<center>
     <br>
     <button id="print" type="button" value="打印" style="width: 100px; height:30px;" onclick="JsPrint()">打印</button>
 </center>
+</div>
 
 <script>
     function JsPrint(){
-        document.body.innerHTML=document.getElementById('printdiv').innerHTML;
+        document.getElementById("print").style.visibility="hidden";
         window.print();
+        document.getElementById("print").style.visibility="visible";
     }
 </script>

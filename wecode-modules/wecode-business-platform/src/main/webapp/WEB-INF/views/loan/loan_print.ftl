@@ -6,7 +6,7 @@
             border-collapse: collapse;
             border: none;
             width: 216mm;
-            height: 139mm;
+            height: 100mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}
@@ -14,10 +14,11 @@
 </head>
 <div id="printdiv">
 <center>
-        <div style="text-align: center; padding: 5px">借    款    单</div>
+        <div style="text-align: center; padding: 5px; font-weight: bold; font-size: 24px">借&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单</div>
+
 <table border="1">
     <tr>
-        <td colspan="8" style="text-align: right">${(data.loan_time)?string("yyyy 年 MM 月 dd 日")}</td>
+        <td colspan="8" style="text-align: right; border-top: hidden; border-right:hidden;border-left:hidden  ">${(data.loan_time)?string("yyyy 年 MM 月 dd 日")}</td>
     </tr>
     <tr>
         <td colspan="2" width="100px">借款部门</td>
@@ -30,22 +31,24 @@
     <tr>
         <td colspan="2">款项类别</td>
         <td colspan="6">
-            现金<input type="checkbox" <#if data.loan_type=='CASH'>checked </#if> >&nbsp;&nbsp;&nbsp;&nbsp;
-            支票<input type="checkbox" <#if data.loan_type=='CHECK'>checked </#if>>&nbsp;&nbsp;&nbsp;&nbsp;
+            现金<input type="checkbox" <#if data.loan_type=='CASH'>checked </#if> >&nbsp;
+            转账汇款<input type="checkbox" <#if data.loan_type=='TRANS'>checked </#if> >&nbsp;
+            支票<input type="checkbox" <#if data.loan_type=='CHECK'>checked </#if>>&nbsp;
             支票号码：${data.check_num}
         </td>
     </tr>
     <tr>
-        <td colspan="2">借款用途</td>
+        <td colspan="2" rowspan="2">借款用途及理由</td>
         <td colspan="6" rowspan="2">${data.reason}</td>
     </tr>
     <tr>
-        <td colspan="2">及理由</td>
+        <#--<td colspan="2">及理由</td>-->
         <#--<td colspan="6"></td>-->
     </tr>
     <tr>
         <td colspan="2">借款金额</td>
-        <td colspan="6">(大写) ${data.money_capital} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ￥ ${data.money_lower}</td>
+        <td colspan="6">(大写) ${data.money_capital} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            ￥ ${data.money_lower}</td>
     </tr>
     <tr>
         <td colspan="2">还款方式</td>
@@ -66,16 +69,15 @@
         <td colspan="5">${data.remark}</td>
     </tr>
 </table>
-</center>
-</div>
-<center>
     <br>
     <button id="print" type="button" value="打印" style="width: 100px; height:30px;" onclick="JsPrint()">打印</button>
 </center>
+</div>
 
 <script>
     function JsPrint(){
-        document.body.innerHTML=document.getElementById('printdiv').innerHTML;
+        document.getElementById("print").style.visibility="hidden";
         window.print();
+        document.getElementById("print").style.visibility="visible";
     }
 </script>

@@ -3,25 +3,23 @@
 
 <div class="page-content">
     <div class="row">
-        <div class="col-sm-12 col-md-8" >
+        <div class="col-sm-12" >
             <!-- PAGE CONTENT BEGINS -->
             <div class="clearfix form-actions">
-                <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
-                    入  库  单
+                <div class="col-md-offset-5" style="font-size: 24px">
+                    入  库  单 (单号：${code})
                 </div>
             </div>
             <form id="add_input_info" class="form-horizontal" houseType="form" action="/input/save" method="post">
+                <input type="hidden" name="code" value="${code}">
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目工程名</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="project_name" class="col-xs-10 col-sm-5" name="project_name" maxlength="50"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="project_name" class="col-xs-12 col-sm-12" name="project_name" maxlength="50"/>
                     </div>
-                </div>
-                <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">供货单位</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="merchant_id" onchange="getSender()">
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="merchant_id" onchange="getSender()">
                             <#list providers as provide>
                                 <option value="${provide.id}">${provide.name}</option>
                             </#list>
@@ -30,39 +28,27 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">物品名称</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="material" data-placeholder="请选择..." name="material_id" onchange="getUnit()">
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="material" data-placeholder="请选择..." name="material_id" onchange="getUnit()">
                             <#list materials as mat>
                                 <option value="${mat.id}">${mat.name}</option>
                             </#list>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">数量</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="count" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="count" class="col-xs-11" name="count" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
                         <label id="unit"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">发货人</label>
-                    <div class="col-sm-10" id="senderDiv"></div>
-                </div>
-                <#--<div class="form-group">
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货单位</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="acceptMerchant" data-placeholder="请选择..." name="accept_merchant_code" onchange="getAccepter()">
-                            <#list accepts as ac>
-                                <option value="${ac.code}">${ac.name}</option>
-                            </#list>
-                        </select>
-                    </div>
-                </div>-->
-                <div class="form-group">
+                    <div class="col-sm-2" id="senderDiv"></div>
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收货人</label>
-                    <div class="col-sm-10" id="accepterDiv">
-                        <select class="width-40 chosen-select" data-placeholder="请选择..." name="accept_person_id">
+                    <div class="col-sm-2" id="accepterDiv">
+                        <select class="width-95 chosen-select" data-placeholder="请选择..." name="accept_person_id">
                             <#list staffs as ac>
                                 <option value="${ac.id}">${ac.name}</option>
                             </#list>
@@ -72,30 +58,24 @@
 
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">所入仓库</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="structure" class="col-xs-10 col-sm-5" name="warehouse" maxlength="50" nullmsg="请输入户型结构" datatype="s"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="structure" class="col-xs-12" name="warehouse" maxlength="50" nullmsg="请输入户型结构" datatype="s"/>
                     </div>
-                </div>
-                <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">运输人</label>
 
-                    <div class="col-sm-10">
-                        <input type="text" id="transport_person" class="col-xs-10 col-sm-5" name="transport_person" maxlength="20"/>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">运输人</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="transport_person" class="col-xs-12" name="transport_person" maxlength="20"/>
                     </div>
                 </div>
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">司机车号</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="car_num"  class="col-xs-10 col-sm-5" name="car_num" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="car_num"  class="col-xs-12" name="car_num" maxlength="20"/>
                     </div>
-                </div>
-                <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">过磅人</label>
 
-                    <div class="col-sm-10">
-                        <input type="text" id="weigh_person"  class="col-xs-10 col-sm-5" name="weigh_person" maxlength="20"/>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">过磅人</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="weigh_person" maxlength="20"/>
                     </div>
                 </div>
                 <div class="form-group"  >
@@ -105,7 +85,7 @@
                     </div>
                 </div>
                 <div class="clearfix form-actions">
-                    <div class="col-md-offset-2 col-md-9">
+                    <div class="col-md-offset-5 col-md-12">
                         <button class="btn btn-info" type="submit">
                             <i class="icon-ok bigger-110"></i>
                             保存
@@ -146,7 +126,7 @@
             success:function(json){
                 var data = json.data;
                 $("#senderDiv").empty();
-                var html = '<select class="width-40 chosen-select" data-placeholder="请选择..." name="send_person_id">'
+                var html = '<select class="width-95 chosen-select" data-placeholder="请选择..." name="send_person_id">'
                 for(var i=0; i<data.length; i++) {
                     html += "<option value="+data[i].id+">"+data[i].name+"</option>";
                 }

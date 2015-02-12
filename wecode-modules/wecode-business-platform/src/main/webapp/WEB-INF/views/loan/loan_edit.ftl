@@ -3,10 +3,10 @@
 
 <div class="page-content">
     <div class="row">
-        <div class="col-sm-12 col-md-8" >
+        <div class="col-sm-12" >
             <!-- PAGE CONTENT BEGINS -->
             <div class="clearfix form-actions">
-                <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
+                <div class="col-md-offset-5" style="font-size: 24px">
                     借    款    单
                 </div>
             </div>
@@ -16,123 +16,112 @@
                 <input type="hidden" name="annex_url" id="edit_annex_url"/>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款部门</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="loan_dept_id" >
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="provideMerchant" data-placeholder="请选择..." name="loan_dept_id" >
                             <#list depts as dept>
                                 <option value="${dept.id}" <#if data.loan_dept_id==dept.id>selected</#if> >${dept.name}</option>
                             </#list>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款人</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="loan_person" value="${data.loan_person}" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="count" class="col-xs-12" name="loan_person" value="${data.loan_person}" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
                         <label id="unit"></label>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">使用部门</label>
-                    <div class="col-sm-10">
-                        <select class="width-40 chosen-select" id="use_dept_id" data-placeholder="请选择..." name="use_dept_id" >
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="use_dept_id" data-placeholder="请选择..." name="use_dept_id" >
                             <#list depts as dept>
                                 <option value="${dept.id}" <#if data.loan_dept_id==dept.id>selected</#if>>${dept.name}</option>
                             </#list>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">款项类别</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                         <label>
                             <input id="cash" name="loan_type" value="CASH" type="radio" class="ace" <#if data.loan_type=='CASH'>checked</#if> onclick="changeCash()"/>
                             <span class="lbl">现金</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <label>
+                            <input id="cash" name="loan_type" value="TRANS" type="radio" class="ace" <#if data.loan_type=='TRANS'>checked</#if> onclick="changeCash()"/>
+                            <span class="lbl">转账汇款</span>
+                        </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>
                             <input id="checks" name="loan_type" value="CHECK" type="radio" class="ace" <#if data.loan_type=='CHECK'>checked</#if> onclick="changeCheck()"/>
                             <span class="lbl">支票</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label <#if data.loan_type=='CASH'>class="hidden Js_check"</#if>>
-                        支票号码：<input class="input-sm" type="text" name="check_num" value="${data.check_num}" id="check_num">
+                        <label <#if data.loan_type!='CHECK'>class="hidden Js_check"</#if>>
+                            支票号码：<input class="input-sm" type="text" name="check_num" value="${data.check_num}" id="check_num">
                         </label>
                     </div>
                 </div>
 
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款金额(大写)</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="structure" class="col-xs-10 col-sm-5" name="money_capital" value="${data.money_capital}" maxlength="50"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="structure" class="col-xs-12" name="money_capital" value="${data.money_capital}" maxlength="50"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款金额(小写)</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="money_lower" class="col-xs-10 col-sm-5" name="money_lower" value="${data.money_lower}" maxlength="10"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="money_lower" class="col-xs-12" name="money_lower" value="${data.money_lower}" maxlength="10"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款日期</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <input type="text" style="width:250px;" placeholder="默认为当天" name="loan_time" value="${(data.loan_time)?string('yyyy-MM-dd')}"
                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
-                </div>
-                <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">还款方式</label>
 
-                    <div class="col-sm-10">
-                        <input type="text" id="repay_method"  class="col-xs-10 col-sm-5" name="repay_method" value="${data.repay_method}" maxlength="50"/>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">还款方式</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="repay_method"  class="col-xs-12" name="repay_method" value="${data.repay_method}" maxlength="50"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">批准人</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="approve"  class="col-xs-10 col-sm-5" name="approve" value="${data.approve}" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="approve"  class="col-xs-12" name="approve" value="${data.approve}" maxlength="20"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">财务核准</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="verify"  class="col-xs-10 col-sm-5" name="verify" value="${data.verify}" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="verify"  class="col-xs-12" name="verify" value="${data.verify}" maxlength="20"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">财务审核</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="finance_verify"  class="col-xs-10 col-sm-5" name="finance_verify" value="${data.finance_verify}" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="finance_verify"  class="col-xs-12" name="finance_verify" value="${data.finance_verify}" maxlength="20"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">部门审核</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="dept_verify"  class="col-xs-10 col-sm-5" name="dept_verify" value="${data.dept_verify}" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="dept_verify"  class="col-xs-12" name="dept_verify" value="${data.dept_verify}" maxlength="20"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款用途</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <textarea cols="45" rows="5" name="reason" maxlength="200" placeholder="200字以内">${data.reason}</textarea>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">备注</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <textarea cols="45" rows="5" maxlength="200" name="remark" placeholder="200字以内">${data.remark}</textarea>
                     </div>
                 </div>
-                <#--<div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">附件</label>
-                    <div class="col-sm-3">
-                        <input class="col-xs-4" type="file" name="annex" id="id-input-file-2" />
-                        <button class="btn btn-minier btn-purple">上传</button>
-                    </div>
-                </div>-->
 
             </form>
             <div class="form-horizontal">
@@ -145,7 +134,7 @@
                 </div>
             </div>
             <div class="clearfix form-actions">
-                <div class="col-md-offset-2 col-md-9">
+                <div class="col-md-offset-5">
                     <button class="btn btn-info" type="submit" onclick="submitForm()">
                         <i class="icon-ok bigger-110"></i>
                         保存

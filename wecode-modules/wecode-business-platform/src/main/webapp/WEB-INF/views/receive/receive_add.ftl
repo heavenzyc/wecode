@@ -3,10 +3,10 @@
 
 <div class="page-content">
     <div class="row">
-        <div class="col-sm-12 col-md-8" >
+        <div class="col-sm-12" >
             <!-- PAGE CONTENT BEGINS -->
             <div class="clearfix form-actions">
-                <div class="col-md-offset-2 col-md-9" style="font-size: 24px">
+                <div class="col-md-offset-5" style="font-size: 24px">
                     收    款    单
                 </div>
             </div>
@@ -15,22 +15,31 @@
                 <input type="hidden" name="annex_url" id="annex_url"/>
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款单位及项目</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="merchant" maxlength="50"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="count" class="col-xs-12" name="merchant" maxlength="50"/>
                     </div>
-                </div>
-                <div class="form-group">
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收款负责人</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="count" class="col-xs-10 col-sm-5" name="receive_person" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="count" class="col-xs-12" name="receive_person" maxlength="10" datatype="s2-20" nullmsg="请输入数量"/>
                     </div>
                 </div>
+
                 <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款总额(大写)</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="structure" class="col-xs-12" name="money_capital" maxlength="50"/>
+                    </div>
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">款项类别</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                         <label>
                             <input id="cash" name="receive_type" value="CASH" type="radio" class="ace" checked onclick="changeCash()"/>
                             <span class="lbl">现金</span>
+                        </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>
+                            <input id="cash" name="receive_type" value="TRANS" type="radio" class="ace" onclick="changeCash()"/>
+                            <span class="lbl">转账汇款</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <label>
                             <input id="checks" name="receive_type" value="CHECK" type="radio" class="ace" onclick="changeCheck()"/>
@@ -43,88 +52,67 @@
                 </div>
 
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款总额(大写)</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="structure" class="col-xs-10 col-sm-5" name="money_capital" maxlength="50"/>
-                    </div>
-                </div>
-                <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">应收款总额(小写)</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="money_lower" class="col-xs-10 col-sm-5" name="money_lower" maxlength="10"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="money_lower" class="col-xs-12" name="money_lower" maxlength="10"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收到金额</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="money" class="col-xs-10 col-sm-5" name="money" maxlength="10"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="money" class="col-xs-12" name="money" maxlength="10"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">欠款余额</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="arrears" class="col-xs-10 col-sm-5" name="arrears" maxlength="10"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="arrears" class="col-xs-12" name="arrears" maxlength="10"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">借款日期</label>
-                    <#--<div class="col-sm-10">
-                        <div class="input-group" style="width:235px;">
-                            <input id="end_join_time" class="form-control date-picker" placeholder="默认为当天" name="receive_time" type="text" data-date-format="yyyy-mm-dd">
-                                <span class="input-group-addon">
-                                    <i class="icon-calendar bigger-110"></i>
-                                </span>
-                        </div>
-                    </div>-->
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <input type="text" style="width:250px;" placeholder="默认为当天" name="receive_time"
                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
+
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">经办人</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="approve"  class="col-xs-10 col-sm-5" name="approve" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="approve"  class="col-xs-12" name="approve" maxlength="20"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">财务核准</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="verify"  class="col-xs-10 col-sm-5" name="verify" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="verify"  class="col-xs-12" name="verify" maxlength="20"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">财务审核</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="finance_verify"  class="col-xs-10 col-sm-5" name="finance_verify" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="finance_verify"  class="col-xs-12" name="finance_verify" maxlength="20"/>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">部门审核</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" id="dept_verify"  class="col-xs-10 col-sm-5" name="dept_verify" maxlength="20"/>
+                    <div class="col-sm-2">
+                        <input type="text" id="dept_verify"  class="col-xs-12" name="dept_verify" maxlength="20"/>
                     </div>
                 </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">收款项目及理由</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <textarea cols="45" rows="5" name="reason" maxlength="200" placeholder="200字以内"></textarea>
                     </div>
-                </div>
-                <div class="form-group"  >
+
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">备注</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <textarea cols="45" rows="5" maxlength="200" name="remark" placeholder="200字以内"></textarea>
                     </div>
                 </div>
+
             </form>
             <div class="form-horizontal" >
                 <div class="form-group"  >
@@ -136,7 +124,7 @@
                 </div>
             </div>
             <div class="clearfix form-actions">
-                <div class="col-md-offset-2 col-md-9">
+                <div class="col-md-offset-5">
                     <button class="btn btn-info" type="button" onclick="submitForm()">
                         <i class="icon-ok bigger-110"></i>
                         保存

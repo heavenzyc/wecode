@@ -76,6 +76,7 @@ public class TransportController extends BaseController{
         setAttr("transportMerchants",transportMerchants);
         List<Material> materials = Material.getList();
         setAttr("materials",materials);
+        setAttr("code",getSerialNum("transport","CY"));
         renderFreeMarker("transport_add.ftl");
     }
 
@@ -135,7 +136,7 @@ public class TransportController extends BaseController{
         }
         info.set("create_time",new Date());
         info.set("status",Status.VALID.name());
-        info.set("input_output_code",currentTimeMillis());
+        info.set("input_output_code",code.replace("CY","CRK"));
         info.save();
         redirect("/transport/index");
     }

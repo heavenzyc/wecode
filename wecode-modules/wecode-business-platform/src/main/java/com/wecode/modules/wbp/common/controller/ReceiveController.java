@@ -84,7 +84,7 @@ public class ReceiveController extends BaseController{
         String annex_name = getPara("annex_name");
         String annex_url = getPara("annex_url");
         Receive loan = new Receive();
-        loan.set("code",currentTimeMillis());
+        loan.set("code",getSerialNum("receive","SK"));
         loan.set("merchant",merchant);
         loan.set("receive_person",receive_person);
         loan.set("receive_time",receiveTime);
@@ -142,7 +142,6 @@ public class ReceiveController extends BaseController{
         String annex_name = getPara("annex_name");
         String annex_url = getPara("annex_url");
         Receive loan = Receive.dao.findById(id);
-        loan.set("code",currentTimeMillis());
         loan.set("merchant",merchant);
         loan.set("receive_person",receive_person);
         loan.set("receive_time",receiveTime);

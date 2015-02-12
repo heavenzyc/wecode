@@ -6,7 +6,7 @@
             border-collapse: collapse;
             border: none;
             width: 216mm;
-            height: 139mm;
+            height: 100mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}
@@ -14,33 +14,36 @@
 </head>
 <div id="printdiv">
 <center>
-        <div style="text-align: center; padding: 5px">收    款    单</div>
+    <div style="text-align: center; padding: 5px; font-weight: bold; font-size: 24px">
+        收&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单</div>
 <table border="1">
     <tr>
-        <td colspan="6" style="text-align: right">${(data.receive_time)?string("yyyy 年 MM 月 dd 日")}</td>
+        <td colspan="6" style="text-align: right; border-top: hidden; border-right:hidden;border-left:hidden ">${(data.receive_time)?string("yyyy 年 MM 月 dd 日")}</td>
     </tr>
     <tr>
         <td>应收款单位及项目</td>
         <td colspan="5">${data.merchant}</td>
     </tr>
     <tr>
-        <td>收款项目</td>
+        <td rowspan="2">收款项目及理由</td>
         <td colspan="5" rowspan="2">${data.reason}</td>
     </tr>
     <tr>
-        <td>及理由</td>
+        <#--<td>及理由</td>-->
     </tr>
     <tr>
         <td>款项类别</td>
         <td colspan="5">
-            现金<input type="checkbox" <#if data.receive_type=='CASH'>checked </#if> >&nbsp;&nbsp;&nbsp;&nbsp;
-            支票<input type="checkbox" <#if data.receive_type=='CHECK'>checked </#if>>&nbsp;&nbsp;&nbsp;&nbsp;
+            现金<input type="checkbox" <#if data.receive_type=='CASH'>checked </#if> >&nbsp;
+            现金<input type="checkbox" <#if data.receive_type=='TRANS'>checked </#if> >&nbsp;
+            支票<input type="checkbox" <#if data.receive_type=='CHECK'>checked </#if>>&nbsp;
             支票号码：${data.check_num}
         </td>
     </tr>
     <tr>
         <td>应收款总额</td>
-        <td colspan="5">(大写) ${data.money_capital} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ￥ ${data.money_lower}</td>
+        <td colspan="5">(大写) ${data.money_capital} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            ￥ ${data.money_lower}</td>
     </tr>
     <tr>
         <td>收到金额</td>
@@ -68,16 +71,15 @@
         <td colspan="3">${data.remark}</td>
     </tr>
 </table>
-</center>
-</div>
-<center>
     <br>
     <button id="print" type="button" value="打印" style="width: 100px; height:30px;" onclick="JsPrint()">打印</button>
 </center>
+</div>
 
 <script>
     function JsPrint(){
-        document.body.innerHTML=document.getElementById('printdiv').innerHTML;
+        document.getElementById("print").style.visibility="hidden";
         window.print();
+        document.getElementById("print").style.visibility="visible";
     }
 </script>

@@ -117,24 +117,24 @@
             colModel :
                     [
                         {name : 'id',index : 'id',hidden : true,width :0,sorttype : "int",editable : false},
-                        {name : 'code',label:'出库单号',index :'code',width :10,sorttype : "int",editable : false},
-                        {name : 'merchant_name',label:'收货单位',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'accept_person',label:'收货人',index :'id',width :10,sorttype : "int",editable : false},
-                        {name : 'material_name',index : 'id',label:'物品名称',width :10,editable : false},
-                        {name : 'output_time',index :'reserve_time',label:'出库日期', width : 10,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
-                        {name : 'purchase_type_name',index : 'consultant_name',label:'类别',width : 10,editable : false},
-                        {name : 'standard_name',index : 'consultant_name',label:'规格',width : 10,editable : false},
-                        {name : 'price',index : 'consultant_name',label:'单价/（单位）',width : 10,editable : false, formatter:function(value,opt,rDate){
+                        {name : 'code',label:'出库单号',index :'code',fixed:true,sorttype : "int",editable : false},
+                        {name : 'merchant_name',label:'收货单位',index :'id',fixed:true,sorttype : "int",editable : false},
+                        {name : 'accept_person',label:'收货人',index :'id',fixed:true,width :100,sorttype : "int",editable : false},
+                        {name : 'material_name',index : 'id',label:'物品名称',fixed:true,editable : false},
+                        {name : 'output_time',index :'reserve_time',label:'出库日期', fixed:true,editable : false,formatter:"date",formatoptions: {srcformat:'Y-m-d',newformat:'Y-m-d'}},
+                        {name : 'purchase_type_name',index : 'consultant_name',label:'类别',fixed:true,editable : false},
+                        {name : 'standard_name',index : 'consultant_name',label:'规格',fixed:true,editable : false},
+                        {name : 'price',index : 'consultant_name',label:'单价/（单位）',fixed:true,editable : false, formatter:function(value,opt,rDate){
                             return rDate.price+"元/"+rDate.unit;
                         }},
-                        {name : 'count',index : 'count',label:'数量',width : 10,editable : false},
-                        {name : 'money',index : 'money',label:'总额',width : 10,editable : false},
-                        {name : 'warehouse',index : 'warehouse',label:'所出仓库',width : 10,editable : false},
-                        {name : 'accept_person',index : 'accept_person',label:'发货人',width : 10,editable : false},
-                        {name : 'weigh_person',index : 'weigh_person',label:'过磅人',width : 10,editable : false},
-                        {name : 'transport_person',index : 'transport_person',label:'运输人',width : 10,editable : false},
-                        {name : 'car_num',index : 'car_num',label:'司机车号',width : 10,editable : false},
-                        {name : 'id',index : 'id',label:'操作',width : 150,fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
+                        {name : 'count',index : 'count',label:'数量',fixed:true,width : 100,editable : false},
+                        {name : 'money',index : 'money',label:'总额',fixed:true,width : 100,editable : false},
+                        {name : 'warehouse',index : 'warehouse',label:'所出仓库',fixed:true,editable : false},
+                        {name : 'accept_person',index : 'accept_person',label:'发货人',fixed:true,width : 100,editable : false},
+                        {name : 'weigh_person',index : 'weigh_person',label:'过磅人',fixed:true,width : 100,editable : false},
+                        {name : 'transport_person',index : 'transport_person',label:'运输人',fixed:true,width : 100,editable : false},
+                        {name : 'car_num',index : 'car_num',label:'司机车号',fixed:true,width : 100,editable : false},
+                        {name : 'id',index : 'id',label:'操作',fixed : true,sortable : false,resize : false,formatter : function(value, options, rData){
                             var html = '';
                             if (rData.type == 'ADD') {
                                 html += '<a class="btn no-border btn-minier btn-primary process" href="/output/update/'+value+'">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;';

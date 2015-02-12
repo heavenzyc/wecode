@@ -6,7 +6,7 @@
             border-collapse: collapse;
             border: none;
             width: 216mm;
-            height: 139mm;
+            height: 100mm;
         }
         td{border: solid #000 1px; padding: 5px}
         .noprint{visibility:hidden}
@@ -14,7 +14,7 @@
 </head>
 <div id="printdiv">
 <center>
-        <div style="text-align: center; padding: 5px">出   库   单  （发货单）</div>
+        <div style="text-align: center; padding: 5px; font-size: 24px; font-weight: bold">出&nbsp;&nbsp;&nbsp;库&nbsp;&nbsp;&nbsp;单  （发货单）</div>
 <table border="1">
     <tr>
         <td>出库日期</td>
@@ -54,17 +54,7 @@
         <td>${data.money}</td>
         <td>${data.warehouse}</td>
     </tr>
-<#--    <tr>
-        <td>合计</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>-->
+
     <tr>
         <td>备注</td>
         <td colspan="8">${data.remark}</td>
@@ -76,16 +66,15 @@
         <td colspan="4">${data.weigh_person}</td>
     </tr>
 </table>
-</center>
-</div>
-<center>
     <br>
     <button id="print" type="button" value="打印" style="width: 100px; height:30px;" onclick="JsPrint()">打印</button>
 </center>
+</div>
 
 <script>
     function JsPrint(){
-        document.body.innerHTML=document.getElementById('printdiv').innerHTML;
+        document.getElementById("print").style.visibility="hidden";
         window.print();
+        document.getElementById("print").style.visibility="visible";
     }
 </script>
