@@ -35,7 +35,7 @@
         <td>款项类别</td>
         <td colspan="5">
             现金<input type="checkbox" <#if data.receive_type=='CASH'>checked </#if> >&nbsp;
-            现金<input type="checkbox" <#if data.receive_type=='TRANS'>checked </#if> >&nbsp;
+            转账汇款<input type="checkbox" <#if data.receive_type=='TRANS'>checked </#if> >&nbsp;
             支票<input type="checkbox" <#if data.receive_type=='CHECK'>checked </#if>>&nbsp;
             支票号码：${data.check_num}
         </td>
