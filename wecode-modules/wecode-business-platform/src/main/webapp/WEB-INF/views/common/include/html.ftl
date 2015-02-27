@@ -239,7 +239,7 @@
             </li>
         </ul>
     </li>
-    <#--<li>
+    <li>
         <a href="#" class="dropdown-toggle">
             <i class="icon-list"></i>
             <span class="menu-text"> 结算管理 </span>
@@ -292,7 +292,7 @@
                 </a>
             </li>
         </ul>
-    </li>-->
+    </li>
 </ul><!-- /.nav-list -->
 
 <div class="sidebar-collapse" id="sidebar-collapse">
