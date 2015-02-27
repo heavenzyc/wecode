@@ -19,7 +19,7 @@
     <tr style="margin-top: 5px">
         <td>运输单号</td>
         <td colspan="4" style="border-right-color: #fff">${data.code}</td>
-        <td style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日</td>
+        <td style="text-align: right">&nbsp;&nbsp;&nbsp;${dates[0]}年&nbsp;&nbsp;&nbsp;${dates[1]}月&nbsp;&nbsp;&nbsp;${dates[2]}日</td>
     </tr>
     <tr>
         <td>运输单位</td>
@@ -71,19 +71,19 @@
     </tr>
     <tr>
         <td>过磅人签字</td>
-        <td></td>
+        <td>${data.weight_person_sign}</td>
         <td>联系电话</td>
-        <td></td>
+        <td>${data.phone}</td>
         <td>运输车号</td>
         <td>${data.car_num}</td>
     </tr>
     <tr>
         <td>发货人签字</td>
-        <td></td>
+        <td>${data.send_person_sign}</td>
         <td>承运人签字</td>
-        <td></td>
+        <td>${data.transport_person_sign}</td>
         <td>司机签字</td>
-        <td></td>
+        <td>${data.dirver_sign}</td>
     </tr>
 </table>
     <br>

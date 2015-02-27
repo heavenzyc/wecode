@@ -110,6 +110,11 @@ public class TransportController extends BaseController{
         String send_time = getPara("send_time");
         String off_time = getPara("off_time");
         String car_num = getPara("car_num");
+        String weight_person_sign = getPara("weight_person_sign");
+        String send_person_sign = getPara("send_person_sign");
+        String transport_person_sign = getPara("transport_person_sign");
+        String dirver_sign = getPara("dirver_sign");
+        String phone = getPara("phone");
         Transport info = new Transport();
         info.set("code",code);
         info.set("transport_merchant_id",transport_merchant_id);
@@ -128,6 +133,11 @@ public class TransportController extends BaseController{
         info.set("shipping_address",shipping_address);
         info.set("shipping_person_phone",shipping_person_phone);
         info.set("car_num",car_num);
+        info.set("weight_person_sign",weight_person_sign);
+        info.set("send_person_sign",send_person_sign);
+        info.set("transport_person_sign",transport_person_sign);
+        info.set("dirver_sign",dirver_sign);
+        info.set("phone",phone);
         if (StringUtils.isNotBlank(send_time)) {
             info.set("send_time",DateUtils.parse(send_time,"yyyy-MM-dd"));
         }
@@ -184,6 +194,11 @@ public class TransportController extends BaseController{
         String send_time = getPara("send_time");
         String off_time = getPara("off_time");
         String car_num = getPara("car_num");
+        String weight_person_sign = getPara("weight_person_sign");
+        String send_person_sign = getPara("send_person_sign");
+        String transport_person_sign = getPara("transport_person_sign");
+        String dirver_sign = getPara("dirver_sign");
+        String phone = getPara("phone");
         info.set("code",code);
         info.set("transport_merchant_id",transport_merchant_id);
         info.set("transport_merchant_name",transport_merchant_name);
@@ -201,6 +216,11 @@ public class TransportController extends BaseController{
         info.set("shipping_address",shipping_address);
         info.set("shipping_person_phone",shipping_person_phone);
         info.set("car_num",car_num);
+        info.set("weight_person_sign",weight_person_sign);
+        info.set("send_person_sign",send_person_sign);
+        info.set("transport_person_sign",transport_person_sign);
+        info.set("dirver_sign",dirver_sign);
+        info.set("phone",phone);
         if (StringUtils.isNotBlank(send_time)) {
             info.set("send_time",DateUtils.parse(send_time,"yyyy-MM-dd"));
         }
@@ -226,6 +246,9 @@ public class TransportController extends BaseController{
         Integer id = getParaToInt();
         Transport info = Transport.dao.findById(id);
         setAttr("data",info);
+        String dateStr = DateUtils.format(new Date(),"yyyy-MM-dd");
+        String[] dates = dateStr.split("-");
+        setAttr("dates",dates);
         renderFreeMarker("transport_print.ftl");
     }
 

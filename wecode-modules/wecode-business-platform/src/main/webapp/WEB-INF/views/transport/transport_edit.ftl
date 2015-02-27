@@ -102,6 +102,31 @@
                         <input type="text" id="weigh_person"  class="col-xs-12" name="car_num" value="${data.car_num}" maxlength="20"/>
                     </div>
                 </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">过磅人签字</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="weight_person_sign" value="${data.weight_person_sign}" maxlength="20"/>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">发货人签字</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="send_person_sign" value="${data.send_person_sign}" maxlength="20"/>
+                    </div>
+                </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">承运人签字</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="transport_person_sign" value="${data.transport_person_sign}" maxlength="20"/>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">司机签字</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="dirver_sign" value="${data.dirver_sign}" maxlength="20"/>
+                    </div>
+                </div>
+
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right"> 发货日期： </label>
                     <div class="col-sm-2">
@@ -115,7 +140,12 @@
                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
                 </div>
-
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">联系电话</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weigh_person"  class="col-xs-12" name="phone" value="${data.phone}" maxlength="20"/>
+                    </div>
+                </div>
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-5">
                         <button class="btn btn-info" type="submit">
