@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-02-12 16:17:07
+Date: 2015-03-02 15:45:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -211,11 +211,13 @@ CREATE TABLE `material_standard` (
   `create_time` datetime DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采购类别';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='采购类别';
 
 -- ----------------------------
 -- Records of material_standard
 -- ----------------------------
+INSERT INTO `material_standard` VALUES ('1', null, '材料类型1', null, null, null);
+INSERT INTO `material_standard` VALUES ('2', null, '材料类型2', null, null, null);
 
 -- ----------------------------
 -- Table structure for merchant
@@ -322,6 +324,23 @@ INSERT INTO `person` VALUES ('3', '长全蛋', '18622365986', '1', 'ACCEPT', '20
 INSERT INTO `person` VALUES ('4', '王尼玛', '15788662365', '1', 'ACCEPT', '2015-02-02 23:02:13', 'VALID', '004');
 INSERT INTO `person` VALUES ('5', '完尼玛', '18625654394', '2', 'SEND', '2015-02-03 14:19:56', 'VALID', '005');
 INSERT INTO `person` VALUES ('6', '敖厂长', '15852526363', '2', 'ACCEPT', '2015-02-03 14:20:34', 'VALID', '006');
+
+-- ----------------------------
+-- Table structure for process_merchant
+-- ----------------------------
+DROP TABLE IF EXISTS `process_merchant`;
+CREATE TABLE `process_merchant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='加工单位';
+
+-- ----------------------------
+-- Records of process_merchant
+-- ----------------------------
+INSERT INTO `process_merchant` VALUES ('1', '单位1');
+INSERT INTO `process_merchant` VALUES ('2', '单位2');
+INSERT INTO `process_merchant` VALUES ('3', '单位3');
 
 -- ----------------------------
 -- Table structure for provide_merchant
@@ -467,23 +486,37 @@ CREATE TABLE `transport` (
   `dirver_sign` varchar(20) DEFAULT NULL COMMENT '司机签字',
   `create_time` datetime DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
+  `fee` decimal(10,2) DEFAULT NULL COMMENT '运输费',
+  `process_fee` decimal(10,2) DEFAULT NULL COMMENT '加工费',
+  `material_standard_id` int(11) DEFAULT NULL COMMENT '货物类型id',
+  `material_standard_name` varchar(50) DEFAULT NULL COMMENT '货物类型名称',
+  `buy_money` decimal(10,2) DEFAULT NULL COMMENT '买入金额',
+  `sale_money` decimal(10,2) DEFAULT NULL COMMENT '卖出金额',
+  `weight_count` decimal(10,2) DEFAULT NULL COMMENT '加工厂过磅数量',
+  `process_count` decimal(10,2) DEFAULT NULL COMMENT '已加工数量',
+  `process_merchant_id` int(11) DEFAULT NULL COMMENT '加工单位id',
+  `count` decimal(10,2) DEFAULT NULL COMMENT '已加工出的成品数量',
+  `process_merchant_name` varchar(50) DEFAULT NULL COMMENT '加工单位名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='承运单';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='承运单';
 
 -- ----------------------------
 -- Records of transport
 -- ----------------------------
-INSERT INTO `transport` VALUES ('1', '1', null, '1', '蚂蚁搬家', null, '1', '1', null, '1', '1', '1', '1', null, '001', '煤矿', '吨', null, null, '2015-02-06 10:01:00', '2015-02-06 00:00:00', null, null, '1', null, null, null, '2015-02-05 14:47:56', 'INVALID');
-INSERT INTO `transport` VALUES ('2', '2', null, '1', '蚂蚁搬家', null, '2', '2', '1111111', '2', '2', '2', '2', '1', '001', '煤矿', '吨', '1', '1', '2015-02-06 00:00:00', '2015-02-06 00:00:00', null, null, '222222', null, null, null, '2015-02-05 14:52:18', 'VALID');
-INSERT INTO `transport` VALUES ('3', '3', null, '1', '蚂蚁搬家', null, '3', '3', null, '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', '2015-02-05 00:00:00', '2015-02-06 00:00:00', null, null, '3333', null, null, null, '2015-02-05 14:52:45', 'INVALID');
-INSERT INTO `transport` VALUES ('4', '5', null, '2', '灰狗运输', '1423119410405', '5', '5', '5', '5', '5', '5', '5', '2', '002', '金矿', '克', '5', '5', '2015-02-03 00:00:00', '2015-02-04 00:00:00', null, null, '555', null, null, null, '2015-02-05 14:56:50', 'VALID');
-INSERT INTO `transport` VALUES ('5', '3', null, '1', '蚂蚁搬家', '1423622084776', '3', '3', '3', '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', null, '2015-02-11 00:00:00', null, null, '3', null, null, null, '2015-02-11 10:34:44', 'VALID');
-INSERT INTO `transport` VALUES ('6', '4', null, '1', '蚂蚁搬家', '1423622128179', '4', '4', '4', '4', '4', '4', '4', '1', '001', '煤矿', '吨', '4', '4', '2015-02-14 00:00:00', '2015-02-12 00:00:00', null, null, '4', null, null, null, '2015-02-11 10:35:28', 'VALID');
-INSERT INTO `transport` VALUES ('7', '5', null, '1', '蚂蚁搬家', '1423622237964', '5', '5', '5', '5', '5', '5', '5', '1', '001', '煤矿', '吨', '5', '5', '2015-02-15 00:00:00', '2015-02-16 00:00:00', null, null, '5', null, null, null, '2015-02-11 10:37:17', 'VALID');
-INSERT INTO `transport` VALUES ('8', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:47:15', 'INVALID');
-INSERT INTO `transport` VALUES ('9', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:49:12', 'INVALID');
-INSERT INTO `transport` VALUES ('10', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:50:39', 'INVALID');
-INSERT INTO `transport` VALUES ('11', 'CY20150212001', null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:51:20', 'INVALID');
+INSERT INTO `transport` VALUES ('1', '1', null, '1', '蚂蚁搬家', null, '1', '1', null, '1', '1', '1', '1', null, '001', '煤矿', '吨', null, null, '2015-02-06 10:01:00', '2015-02-06 00:00:00', null, null, '1', null, null, null, '2015-02-05 14:47:56', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('2', '2', null, '1', '蚂蚁搬家', null, '2', '2', '1111111', '2', '2', '2', '2', '1', '001', '煤矿', '吨', '1', '1', '2015-02-06 00:00:00', '2015-02-06 00:00:00', null, null, '222222', null, null, null, '2015-02-05 14:52:18', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('3', '3', null, '1', '蚂蚁搬家', null, '3', '3', null, '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', '2015-02-05 00:00:00', '2015-02-06 00:00:00', null, null, '3333', null, null, null, '2015-02-05 14:52:45', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('4', '5', null, '2', '灰狗运输', '1423119410405', '5', '5', '5', '5', '5', '5', '5', '2', '002', '金矿', '克', '5', '5', '2015-02-03 00:00:00', '2015-02-04 00:00:00', null, null, '555', null, null, null, '2015-02-05 14:56:50', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('5', '3', null, '1', '蚂蚁搬家', '1423622084776', '3', '3', '3', '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', null, '2015-02-11 00:00:00', null, null, '3', null, null, null, '2015-02-11 10:34:44', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('6', '4', null, '1', '蚂蚁搬家', '1423622128179', '4', '4', '4', '4', '4', '4', '4', '1', '001', '煤矿', '吨', '4', '4', '2015-02-14 00:00:00', '2015-02-12 00:00:00', null, null, '4', null, null, null, '2015-02-11 10:35:28', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('7', '5', null, '1', '蚂蚁搬家', '1423622237964', '5', '5', '5', '5', '5', '5', '5', '1', '001', '煤矿', '吨', '5', '5', '2015-02-15 00:00:00', '2015-02-16 00:00:00', null, null, '5', null, null, null, '2015-02-11 10:37:17', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('8', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:47:15', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('9', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:49:12', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('10', null, null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:50:39', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('11', 'CY20150212001', null, '1', '蚂蚁搬家', 'CY20150212001', '', '', '', '', '', '', '', '1', '001', '煤矿', '吨', '', '', null, null, null, null, '', null, null, null, '2015-02-12 14:51:20', 'INVALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('12', 'CY20150227001', null, '1', '蚂蚁搬家', 'CRK20150227001', '2', '2', '2', '2', '2', '2', '2', '1', '001', '煤矿', '吨', '2', '2', '2015-02-27 00:00:00', '2015-02-27 00:00:00', '3', '333333', '2', '3', '3', '3', '2015-02-27 15:54:40', 'VALID', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `transport` VALUES ('13', 'CY20150302001', null, '1', '蚂蚁搬家', 'CRK20150302001', '1', '1', '1', '1', '1', '1', '1', '1', '001', '煤矿', '吨', '1', '1', null, null, '1', '1', '1', '1', '1', '1', '2015-03-02 14:19:03', 'VALID', '3.00', '12.00', null, '', '3.00', '3.00', '3.00', '3.00', null, '3.00', '');
+INSERT INTO `transport` VALUES ('14', 'CY20150302002', null, '1', '蚂蚁搬家', 'CRK20150302002', '3', '3', '3', '3', '3', '3', '3', '1', '001', '煤矿', '吨', '3', '3', '2015-03-12 00:00:00', '2015-03-11 00:00:00', '3', '3', '3', '3', '3', '3', '2015-03-02 14:21:33', 'VALID', '3.00', '4.00', '2', '材料类型2', '3.00', '3.00', '3.00', '3.00', '2', '3.00', '单位2');
 
 -- ----------------------------
 -- Table structure for transport_merchant
