@@ -181,6 +181,10 @@ public class TransportController extends BaseController{
         info.set("process_merchant_id",process_merchant_id);
         info.set("process_merchant_name",process_merchant_name);
         info.set("count",count);
+        info.set("cost",BigDecimal.ZERO);
+        if (process_fee != null && fee != null && buy_money != null) {
+            info.set("cost",process_fee.add(fee).add(buy_money));
+        }
         info.save();
         redirect("/transport/index");
     }
@@ -295,6 +299,10 @@ public class TransportController extends BaseController{
         info.set("process_merchant_id",process_merchant_id);
         info.set("process_merchant_name",process_merchant_name);
         info.set("count",count);
+        info.set("cost",BigDecimal.ZERO);
+        if (process_fee != null && fee != null && buy_money != null) {
+            info.set("cost",process_fee.add(fee).add(buy_money));
+        }
         info.update();
         redirect("/transport/index");
     }
