@@ -10,7 +10,7 @@
                     货  物  承  运  单  （代收，发料单）
                 </div>
             </div>
-            <form id="add_input_info" class="form-horizontal" houseType="form" action="/transport/save" method="post">
+            <form id="add_transport" class="form-horizontal" houseType="form" action="/transport/save" method="post">
                 <input type="hidden" name="code" value="${code}">
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1">运输单号</label>
@@ -145,6 +145,67 @@
                     <div class="col-sm-2">
                         <input type="text" id="weigh_person"  class="col-xs-12" name="phone" maxlength="20"/>
                     </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">运输费</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="fee"  class="col-xs-12" name="fee" maxlength="10"/>
+                    </div>
+                </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">加工费</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="process_fee"  class="col-xs-12" name="process_fee" maxlength="10"/>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">货物类型</label>
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="material" data-placeholder="请选择..." name="material_standard_id">
+                            <#list standards as mat>
+                                <option value="${mat.id}">${mat.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">买入金额</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="buy_money"  class="col-xs-12" name="buy_money" maxlength="10"/>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">卖出金额</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="sale_money"  class="col-xs-12" name="sale_money" maxlength="10"/>
+                    </div>
+                </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">加工厂过磅数量</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="weight_count"  class="col-xs-12" name="weight_count" maxlength="10"/>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">已加工数量</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="process_count"  class="col-xs-12" name="process_count" maxlength="10"/>
+                    </div>
+                </div>
+
+                <div class="form-group"  >
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">加工单位</label>
+                    <div class="col-sm-2">
+                        <select class="width-95 chosen-select" id="material" data-placeholder="请选择..." name="process_merchant_id">
+                            <#list processMerchants as mat>
+                                <option value="${mat.id}">${mat.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">已加工出成品数量</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="count1"  class="col-xs-12" name="count" maxlength="10"/>
+                    </div>
                 </div>
 
                 <div class="clearfix form-actions">
@@ -175,9 +236,15 @@
             $(this).prev().focus();
         });
         // 验证插件
-        /*$("#add_input_info").validity(function(){
-            $("#count").require("请输入价格").match("number");
-        });*/
+        $("#add_transport").validity(function(){
+            $("#fee").require("请输入运输费").match("number");
+            $("#process_fee").require("请输入加工费").match("number");
+            $("#buy_money").require("请输入购买金额").match("number");
+            $("#sale_money").require("请输入卖出金额").match("number");
+            $("#weight_count").require("请输入过磅数量").match("number");
+            $("#process_count").require("请输入已加工数量").match("number");
+            $("#count1").require("请输入已加工成品数量").match("number");
+        });
     })
 
 

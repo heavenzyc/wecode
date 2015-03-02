@@ -77,6 +77,10 @@ public class TransportController extends BaseController{
         List<Material> materials = Material.getList();
         setAttr("materials",materials);
         setAttr("code",getSerialNum("transport","CY"));
+        List<MaterialStandard> standards = MaterialStandard.getList();
+        setAttr("standards",standards);
+        List<ProcessMerchant> processMerchants = ProcessMerchant.getList();
+        setAttr("processMerchants",processMerchants);
         renderFreeMarker("transport_add.ftl");
     }
 
@@ -115,6 +119,25 @@ public class TransportController extends BaseController{
         String transport_person_sign = getPara("transport_person_sign");
         String dirver_sign = getPara("dirver_sign");
         String phone = getPara("phone");
+        BigDecimal fee = getBigDecimal("fee");
+        BigDecimal process_fee = getBigDecimal("process_fee");
+        Integer material_standard_id = getParaToInt("material_standard_id");
+        MaterialStandard standard = MaterialStandard.dao.findById(material_standard_id);
+        String material_standard_name = "";
+        if (standard != null) {
+            material_standard_name = standard.get("name");
+        }
+        BigDecimal buy_money = getBigDecimal("buy_money");
+        BigDecimal sale_money = getBigDecimal("sale_money");
+        BigDecimal weight_count = getBigDecimal("weight_count");
+        BigDecimal process_count = getBigDecimal("process_count");
+        Integer process_merchant_id = getParaToInt("process_merchant_id");
+        String process_merchant_name = "";
+        ProcessMerchant processMerchant = ProcessMerchant.dao.findById(process_merchant_id);
+        if (processMerchant != null) {
+            process_merchant_name = processMerchant.get("name");
+        }
+        BigDecimal count = getBigDecimal("count");
         Transport info = new Transport();
         info.set("code",code);
         info.set("transport_merchant_id",transport_merchant_id);
@@ -147,6 +170,17 @@ public class TransportController extends BaseController{
         info.set("create_time",new Date());
         info.set("status",Status.VALID.name());
         info.set("input_output_code",code.replace("CY","CRK"));
+        info.set("fee",fee);
+        info.set("process_fee",process_fee);
+        info.set("material_standard_id",material_standard_id);
+        info.set("material_standard_name",material_standard_name);
+        info.set("buy_money",buy_money);
+        info.set("sale_money",sale_money);
+        info.set("weight_count",weight_count);
+        info.set("process_count",process_count);
+        info.set("process_merchant_id",process_merchant_id);
+        info.set("process_merchant_name",process_merchant_name);
+        info.set("count",count);
         info.save();
         redirect("/transport/index");
     }
@@ -159,6 +193,10 @@ public class TransportController extends BaseController{
         setAttr("transportMerchants",transportMerchants);
         List<Material> materials = Material.getList();
         setAttr("materials",materials);
+        List<MaterialStandard> standards = MaterialStandard.getList();
+        setAttr("standards",standards);
+        List<ProcessMerchant> processMerchants = ProcessMerchant.getList();
+        setAttr("processMerchants",processMerchants);
         renderFreeMarker("transport_edit.ftl");
     }
 
@@ -199,6 +237,25 @@ public class TransportController extends BaseController{
         String transport_person_sign = getPara("transport_person_sign");
         String dirver_sign = getPara("dirver_sign");
         String phone = getPara("phone");
+        BigDecimal fee = getBigDecimal("fee");
+        BigDecimal process_fee = getBigDecimal("process_fee");
+        Integer material_standard_id = getParaToInt("material_standard_id");
+        MaterialStandard standard = MaterialStandard.dao.findById(material_standard_id);
+        String material_standard_name = "";
+        if (standard != null) {
+            material_standard_name = standard.get("name");
+        }
+        BigDecimal buy_money = getBigDecimal("buy_money");
+        BigDecimal sale_money = getBigDecimal("sale_money");
+        BigDecimal weight_count = getBigDecimal("weight_count");
+        BigDecimal process_count = getBigDecimal("process_count");
+        Integer process_merchant_id = getParaToInt("process_merchant_id");
+        String process_merchant_name = "";
+        ProcessMerchant processMerchant = ProcessMerchant.dao.findById(process_merchant_id);
+        if (processMerchant != null) {
+            process_merchant_name = processMerchant.get("name");
+        }
+        BigDecimal count = getBigDecimal("count");
         info.set("code",code);
         info.set("transport_merchant_id",transport_merchant_id);
         info.set("transport_merchant_name",transport_merchant_name);
@@ -227,6 +284,17 @@ public class TransportController extends BaseController{
         if (StringUtils.isNotBlank(off_time)) {
             info.set("off_time",DateUtils.parse(off_time,"yyyy-MM-dd"));
         }
+        info.set("fee",fee);
+        info.set("process_fee",process_fee);
+        info.set("material_standard_id",material_standard_id);
+        info.set("material_standard_name",material_standard_name);
+        info.set("buy_money",buy_money);
+        info.set("sale_money",sale_money);
+        info.set("weight_count",weight_count);
+        info.set("process_count",process_count);
+        info.set("process_merchant_id",process_merchant_id);
+        info.set("process_merchant_name",process_merchant_name);
+        info.set("count",count);
         info.update();
         redirect("/transport/index");
     }
