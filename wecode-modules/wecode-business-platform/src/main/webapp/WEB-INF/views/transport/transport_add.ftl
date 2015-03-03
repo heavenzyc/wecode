@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <div class="form-group"  >
-                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">联系电话</label>
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1">过磅人电话</label>
                     <div class="col-sm-2">
                         <input type="text" id="weigh_person"  class="col-xs-12" name="phone" maxlength="20"/>
                     </div>

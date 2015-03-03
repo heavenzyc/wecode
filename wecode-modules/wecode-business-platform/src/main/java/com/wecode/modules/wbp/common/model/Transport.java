@@ -46,4 +46,9 @@ public class Transport extends BaseModel<Transport,Integer> {
         sqlExceptSelect.append(" order by create_time desc");
         return dao.paginate(curPage,pageSize,sql,sqlExceptSelect.toString(),params.toArray());
     }
+
+    public static List<Transport> getList(String start, String end){
+        String sql = " select * from transport where status='VALID' where send_time=>? and send_time<=? ";
+        return dao.find(sql,start,end);
+    }
 }

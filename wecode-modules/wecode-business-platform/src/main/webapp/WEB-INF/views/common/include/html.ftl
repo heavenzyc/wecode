@@ -247,7 +247,7 @@
         </a>
         <ul class="submenu">
             <li>
-                <a href="#">
+                <a href="/material_settle/">
                     <i class="icon-double-angle-right"></i>
                     材料结算清单
                 </a>
