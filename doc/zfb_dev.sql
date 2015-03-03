@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : localhost-mysql
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : zfb_dev
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-03-02 22:53:27
+Date: 2015-03-03 16:10:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -198,6 +198,40 @@ CREATE TABLE `material` (
 -- ----------------------------
 INSERT INTO `material` VALUES ('1', '001', 'aaa', '煤矿', '001', 'A级', '吨', '1000.00', '100.00', '20.00', '001', '煤矿类型1', '2015-02-02 22:02:44', 'VALID');
 INSERT INTO `material` VALUES ('2', '002', 'bbb', '金矿', '001', 'B级', '克', '50000.00', '100.00', '20.00', '001', '类型2', '2015-02-02 22:53:14', 'VALID');
+
+-- ----------------------------
+-- Table structure for material_settle
+-- ----------------------------
+DROP TABLE IF EXISTS `material_settle`;
+CREATE TABLE `material_settle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `merchant_id` int(11) DEFAULT NULL COMMENT '工厂id',
+  `merchant_name` varchar(50) DEFAULT NULL COMMENT '工厂名称',
+  `settle_date` datetime DEFAULT NULL COMMENT '结算日期',
+  `project_name` varchar(50) DEFAULT NULL COMMENT '工程名称',
+  `sale_total_money` decimal(10,2) DEFAULT NULL COMMENT '卖出总价款',
+  `pre_pay_money` decimal(10,2) DEFAULT NULL COMMENT '已预付款',
+  `loan` decimal(10,2) DEFAULT NULL COMMENT '借款总金额',
+  `process_total_money` decimal(10,2) DEFAULT NULL COMMENT '加工费总额',
+  `trans_total_money` decimal(10,2) DEFAULT NULL COMMENT '运费总额',
+  `pay_money` decimal(10,2) DEFAULT NULL COMMENT '本次实付款',
+  `sale_merchant` varchar(50) DEFAULT NULL COMMENT '矿石销售方',
+  `provide_merchant` varchar(50) DEFAULT NULL COMMENT '矿石供应方',
+  `leader_sign` varchar(50) DEFAULT NULL COMMENT '加工成领导签字',
+  `provide_sign` varchar(50) DEFAULT NULL COMMENT '供货方签字',
+  `company_leader_sign` varchar(50) DEFAULT NULL COMMENT '公司领导签字',
+  `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
+  `mine_sign` varchar(50) DEFAULT NULL COMMENT '矿方签字',
+  `bank_account` varchar(50) DEFAULT NULL COMMENT '银行账号',
+  `leader_check` varchar(50) DEFAULT NULL COMMENT '领导审批',
+  `accounting_check` varchar(50) DEFAULT NULL COMMENT '会计复核',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='材料结算单';
+
+-- ----------------------------
+-- Records of material_settle
+-- ----------------------------
+INSERT INTO `material_settle` VALUES ('1', '1', '1', '2015-03-03 14:35:41', '1', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for material_standard
