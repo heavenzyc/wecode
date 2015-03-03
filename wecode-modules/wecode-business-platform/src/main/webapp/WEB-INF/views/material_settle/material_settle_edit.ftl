@@ -10,7 +10,39 @@
                     货  物  承  运  单  （代收，发料单）
                 </div>
             </div>
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>运输日期</th>
+                    <th>材料名称</th>
+                    <th>规格</th>
+                    <th>过磅数量（吨）</th>
+                    <th>加工出成品数量（吨）</th>
+                    <th>加工费（元）</th>
+                    <th>运输费（元）</th>
+                    <th>买入金额</th>
+                    <th>卖出金额</th>
+                    <th>成本</th>
+                    <th>
+                        <i class="icon-time bigger-110 hidden-480"></i>
+                        Update
+                    </th>
+                    <th class="hidden-480">Status</th>
 
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <#list data as item>
+                <tr>
+                    <td>${data.transport_time}</td>
+                    <td>4,250</td>
+                    <td>Jan 21</td>
+                </tr>
+                </#list>
+                </tbody>
+            </table>
             <form id="add_transport" class="form-horizontal" houseType="form" action="/transport/save" method="post">
                 <input type="hidden" name="code" value="${code}">
                 <div class="form-group"  >

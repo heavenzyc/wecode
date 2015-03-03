@@ -48,7 +48,7 @@ public class Transport extends BaseModel<Transport,Integer> {
     }
 
     public static List<Transport> getList(String start, String end){
-        String sql = " select * from transport where status='VALID' where send_time=>? and send_time<=? ";
+        String sql = " select * from transport where status='VALID' and transport_time>=? and transport_time<=? ";
         return dao.find(sql,start,end);
     }
 }

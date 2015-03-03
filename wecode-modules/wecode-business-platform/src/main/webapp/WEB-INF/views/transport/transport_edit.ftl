@@ -130,13 +130,13 @@
                 <div class="form-group"  >
                     <label class="col-sm-2 control-label no-padding-right"> 发货日期： </label>
                     <div class="col-sm-2">
-                        <input type="text" style="width:250px;" name="send_time" value="${(data.send_time)?string('yyyy-MM-dd')}"
+                        <input type="text" style="width:250px;" name="send_time" <#if (data.send_time)??>value="${(data.send_time)?string('yyyy-MM-dd')}"</#if>
                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
 
                     <label class="col-sm-2 control-label no-padding-right"> 卸货日期： </label>
                     <div class="col-sm-2">
-                        <input type="text" style="width:250px;" id="endTime" name="off_time" value="${(data.off_time)?string('yyyy-MM-dd')}"
+                        <input type="text" style="width:250px;" id="endTime" name="off_time" <#if (data.off_time)??>value="${(data.off_time)?string('yyyy-MM-dd')}"</#if>
                                onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,skin:'twoer', readOnly: true})" class="Wdate"/>
                     </div>
                 </div>
