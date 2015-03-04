@@ -49,7 +49,7 @@
 
     <tr>
         <td>运输费</td>
-        <td colspan="2">${data.transport_fee}</td>
+        <td colspan="2">${data.fee}</td>
         <td>加工费</td>
         <td colspan="2">${data.process_fee}</td>
     </tr>
@@ -92,7 +92,7 @@
     <tr>
         <td>过磅人签字</td>
         <td>${data.weight_person_sign}</td>
-        <td>联系电话</td>
+        <td>过磅人电话</td>
         <td>${data.phone}</td>
         <td>运输车号</td>
         <td>${data.car_num}</td>
